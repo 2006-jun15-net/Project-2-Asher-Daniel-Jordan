@@ -6,14 +6,66 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+# solutionPath needs to be changed
+variables:
+  solutionPath: StoreApplication
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+jobs:
+  - job: build_linux
+    pool:
+      vmImage: 'ubuntu-latest'
+  
+    steps:
+      - task: SonarCloudPrepare@1
+        inputs:
+          SonarCloud: 'SonarCloud-Project2'
+          organization: '2006-jun15-net'
+          scannerMode: 'MSBuild'
+          projectKey: '2006-jun15-net_Project-2-Asher-Daniel-Jordan'
+          projectName: 'Hospital Management'
+          extraProperties: |
+            sonar.exclusions=**/lib/**
+            sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+            sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      - script: dotnet build -c Release
+        displayName: Build Project/Application and Release Config
+        workingDirectory: $(solutionPath)
+
+      - task: DotNetCoreCLI@2
+        displayName: Run project tests
+        inputs:
+          command: 'test'
+          projects: '$(solutionPath)'
+          arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
+          testRunTitle: 'ubuntu'
+      
+      - task: SonarCloudAnalyze@1
+        displayName: Run SonarCloud Analysis
+      
+      - task: SonarCloudPublish@1
+        displayName: Publish Analysis
+        inputs:
+          pollingTimeoutSec: '300'
+      
+      # need to create the cobertura file
+      - task: PublishCodeCoverageResults@1
+        displayName: Publish Code Coverage
+        inputs:
+          codeCoverageTool: 'Cobertura'
+          summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+          failIfCoverageEmpty: true
+      
+      - script: dotnet publish -c Release -o ../publish
+        displayName: Publish our application
+        workingDirectory: $(solutionPath)
+      
+      # azureSubscription needs to be changed to match
+      - task: AzureRmWebAppDeployment@4
+        displayName: Azure App Service Deployment
+        inputs:
+          ConnectionType: 'AzureRM'
+          #azureSubscription: 'Azure subscription 1(6bfb27c8-f9ac-40e8-9b4f-55922e406dbf)'
+          appType: 'webApp'
+          #WebAppName: 'Store-Applicatoin'
+          packageForLinux: '$(System.DefaultWorkingDirectory)/publish'
