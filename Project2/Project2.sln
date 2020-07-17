@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2.Domain", "Project2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2.Data", "Project2.Data\Project2.Data.csproj", "{1BBA6DF7-72C5-4F19-B95B-EB85B25520E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2.Test", "Project2.Test\Project2.Test.csproj", "{0732C390-B250-4D2C-9797-5F7B60B86748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2.Test", "Project2.Test\Project2.Test.csproj", "{0732C390-B250-4D2C-9797-5F7B60B86748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2.API", "Project2.API\Project2.API.csproj", "{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0732C390-B250-4D2C-9797-5F7B60B86748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0732C390-B250-4D2C-9797-5F7B60B86748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0732C390-B250-4D2C-9797-5F7B60B86748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
