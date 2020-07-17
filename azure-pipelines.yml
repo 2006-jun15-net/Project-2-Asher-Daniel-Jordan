@@ -8,7 +8,7 @@ trigger:
 
 # solutionPath needs to be changed
 variables:
-  solutionPath: Project2.API
+  solutionPath: Project2/Project2.sln
 
 jobs:
   - job: build_linux
