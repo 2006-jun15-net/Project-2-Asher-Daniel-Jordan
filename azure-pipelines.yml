@@ -32,7 +32,7 @@ jobs:
         displayName: Build Project/Application and Release Config
         workingDirectory: $(solutionPath)
 
-      - script: dotnet test --collect:"XPlat Code Coverage"
+      - script: dotnet test -c Release --collect:"XPlat Code Coverage"
         displayName: Run Project Tests
         workingDirectory: $(solutionPath)
       
