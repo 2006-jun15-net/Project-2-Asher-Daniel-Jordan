@@ -30,10 +30,18 @@ namespace Project2.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen();
+            
             services.AddDbContext<Project2Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
 
             services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IIllnessRepository, IllnessRepository>();
+            services.AddScoped<INurseRepository, NurseRepository>();
+            services.AddScoped<IOpsRoomRepository, OpsRoomRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<ITreatmentDetailsRepository, TreatmentDetailsRepository>();
+            services.AddScoped<ITreatmentRepository, TreatmentRepository>();
+            services.AddScoped<IWorkingDetailsRepository, WorkingDetailsRepository>();
             services.AddControllers();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Project2.Domain.Interface;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,11 +13,18 @@ namespace Project2.API.Controllers
     [ApiController]
     public class OpsRoomsController : ControllerBase
     {
+        private readonly IOpsRoomRepository opsroomRepo;
+
+        public OpsRoomsController(IOpsRoomRepository orr)
+        {
+            opsroomRepo = orr;
+
+        }
         // GET: api/OpsRooms
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok();
         }
 
         // GET api/OpsRooms/5

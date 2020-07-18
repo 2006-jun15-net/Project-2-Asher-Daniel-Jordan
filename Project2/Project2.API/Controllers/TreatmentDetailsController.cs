@@ -11,41 +11,41 @@ namespace Project2.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientsController : ControllerBase
+    public class TreatmentDetailsController : ControllerBase
     {
-        private readonly IPatientRepository pRepo;
+        private readonly ITreatmentDetailsRepository tdetailsRepo;
 
-        public PatientsController(IPatientRepository patientRepository)
+        public TreatmentDetailsController(ITreatmentDetailsRepository treatmentDetailsRepository)
         {
-            pRepo = patientRepository;
+            tdetailsRepo = treatmentDetailsRepository;
         }
-        // GET: api/Patients
+        // GET: api/<TreatmentDetailsController>
         [HttpGet]
         public IActionResult Get()
         {
             return Ok();
         }
 
-        // GET api/Patients/5
+        // GET api/<TreatmentDetailsController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/Patients
+        // POST api/<TreatmentDetailsController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/Patients/5
+        // PUT api/<TreatmentDetailsController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/Patients/5
+        // DELETE api/<TreatmentDetailsController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
