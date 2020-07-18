@@ -20,4 +20,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Project2.API\Project2.API.csproj" />
+    <ProjectReference Include="..\Project2.Data\Project2.Data.csproj" />
+    <ProjectReference Include="..\Project2.Domain\Project2.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
