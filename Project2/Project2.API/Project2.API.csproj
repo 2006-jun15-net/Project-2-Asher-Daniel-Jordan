@@ -16,6 +16,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Project2.Data\Project2.Data.csproj" />
     <ProjectReference Include="..\Project2.Domain\Project2.Domain.csproj" />
+
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+
   </ItemGroup>
 
 
