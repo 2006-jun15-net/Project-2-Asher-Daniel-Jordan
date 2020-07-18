@@ -34,8 +34,7 @@ jobs:
 
       - script: dotnet test -c Release --collect:"XPlat Code Coverage"
         displayName: Run Project Tests
-        workingDirectory: $(solutionPath)
-      
+        workingDirectory: $(solutionPath)/Project2.Test
       
       - task: SonarCloudAnalyze@1
         displayName: Run SonarCloud Analysis
