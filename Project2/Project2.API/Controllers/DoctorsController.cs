@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Project2.Data.Repository;
+using Project2.Domain.Interface;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,11 +14,18 @@ namespace Project2.API.Controllers
     [ApiController]
     public class DoctorsController : ControllerBase
     {
+        private readonly IDoctorRepository drepo;
+
+        public DoctorsController(IDoctorRepository doctorRepository)
+        {
+            drepo = doctorRepository;
+        }
         // GET: api/Doctors
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var Doctors = drepo.GetAll();
+            return Ok(Doctors);
         }
 
         // GET api/Doctors/5

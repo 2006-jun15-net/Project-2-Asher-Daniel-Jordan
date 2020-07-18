@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Project2.Data.Model;
+using Project2.Data.Repository;
+using Project2.Domain.Interface;
 
 namespace Project2.API
 {
@@ -26,6 +30,10 @@ namespace Project2.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen();
+            services.AddDbContext<Project2Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
+
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddControllers();
         }
 
