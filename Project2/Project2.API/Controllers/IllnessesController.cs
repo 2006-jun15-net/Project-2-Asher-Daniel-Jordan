@@ -12,33 +12,33 @@ namespace Project2.API.Controllers
     [ApiController]
     public class IllnessesController : ControllerBase
     {
-        // GET: api/<IllnessesController>
+        // GET: api/Illnesses
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<IllnessesController>/5
+        // GET api/Ilnesses/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<IllnessesController>
+        // POST api/Illnesses
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<IllnessesController>/5
+        // PUT api/Illnesses/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<IllnessesController>/5
+        // DELETE api/Illnesses/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

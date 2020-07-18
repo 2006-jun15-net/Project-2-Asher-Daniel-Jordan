@@ -12,33 +12,33 @@ namespace Project2.API.Controllers
     [ApiController]
     public class OpsRoomsController : ControllerBase
     {
-        // GET: api/<OpsRoomsController>
+        // GET: api/OpsRooms
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<OpsRoomsController>/5
+        // GET api/OpsRooms/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<OpsRoomsController>
+        // POST api/OpsRooms
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<OpsRoomsController>/5
+        // PUT api/OpsRooms/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<OpsRoomsController>/5
+        // DELETE api/OpsRooms/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
