@@ -25,7 +25,8 @@ namespace Project2.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var nurses = nRepo.GetAll();
+            return Ok(nurses);
         }
 
         // GET api/Nurses/5

@@ -24,7 +24,8 @@ namespace Project2.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var opsRooms = opsroomRepo.GetAll();
+            return Ok(opsRooms);
         }
 
         // GET api/OpsRooms/5

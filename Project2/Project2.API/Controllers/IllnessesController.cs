@@ -23,7 +23,8 @@ namespace Project2.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var illnesses = iRepo.GetAll();
+            return Ok(illnesses);
         }
 
         // GET api/Ilnesses/5

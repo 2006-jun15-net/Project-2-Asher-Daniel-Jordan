@@ -23,7 +23,8 @@ namespace Project2.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var patientRooms = proomRepo.GetAll();
+            return Ok(patientRooms);
         }
 
         // GET api/PatientRooms/5
