@@ -3,6 +3,7 @@ using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Project2.Data.Repository
@@ -18,7 +19,14 @@ namespace Project2.Data.Repository
 
         public IEnumerable<PatientRoom> GetAll()
         {
-            throw new NotImplementedException();
+            var Entities = _context.PatientRoomEntity.ToList();
+
+            return Entities.Select(e => new PatientRoom(e.PatientRoomId, e.Available));
         }
+
+
+
+
     }
 }
+
