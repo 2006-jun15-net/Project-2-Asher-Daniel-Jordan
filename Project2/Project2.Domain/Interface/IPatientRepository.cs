@@ -8,5 +8,9 @@ namespace Project2.Domain.Interface
     public interface IPatientRepository
     {
         IEnumerable<Patient> GetAll();
+
+        IEnumerable<Patient> GetByNurse(int nurseId);
+
+        IEnumerable<Patient> GetByDoctor(int doctorId);
     }
 }
