@@ -44,7 +44,7 @@ jobs:
         inputs:
           pollingTimeoutSec: '300'
       
-      - script: cat /Project2.Test/TestResults/*/coverage.cobertura.xml
+      - script: cat Project2.Test/TestResults/*/coverage.cobertura.xml
         displayName: Open test file
         workingDirectory: $(solutionPath)
       
