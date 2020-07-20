@@ -50,7 +50,7 @@ jobs:
         inputs:
           codeCoverageTool: 'Cobertura'
           summaryFileLocation: '**/TestResults/*/coverage.cobertura.xml'
-          failIfCoverageEmpty: false
+          failIfCoverageEmpty: true
       
       - script: dotnet publish -c Release -o ../publish
         displayName: Publish our application
