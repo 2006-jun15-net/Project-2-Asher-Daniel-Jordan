@@ -27,16 +27,6 @@ namespace Project2.API.Controllers
             var treatments = tRepo.GetAll();
             return Ok(treatments);
         }
-
-        
-        // GET: api/Treatments/GetByDoctor/2
-        [HttpGet]
-        [Route("/GetByDoctor/{id}")]
-        public IActionResult GetTreatments(int id)
-        {
-            var treatments = tRepo.GetAllByDoctor(id);
-            return Ok(treatments);
-        }
         
         // GET api/Treatments/5
         [HttpGet("{id}")]
