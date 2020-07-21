@@ -21,7 +21,7 @@ namespace Project2.Data.Repository
         {
             var Entities = _context.TreatmentEntity.ToList();
 
-            return Entities.Select(e => new Treatment(e.DoctorId, e.IllnessId, e.Name));
+            return Entities.Select(e => new Treatment(e.DoctorId, e.IllnessId, e.Name, e.TimeToTreat));
         }
     }
 }

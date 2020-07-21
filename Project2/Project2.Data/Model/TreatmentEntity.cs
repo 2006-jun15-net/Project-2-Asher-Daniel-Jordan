@@ -8,6 +8,7 @@ namespace Project2.Data.Model
         public int IllnessId { get; set; }
         public int DoctorId { get; set; }
         public string Name { get; set; }
+        public int TimeToTreat { get; set; }
 
         public virtual DoctorEntity Doctor { get; set; }
         public virtual IllnessEntity Illness { get; set; }

@@ -17,6 +17,11 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public PatientRoom Create(PatientRoom patientRoom)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<PatientRoom> GetAll()
         {
             var Entities = _context.PatientRoomEntity.ToList();
@@ -24,9 +29,10 @@ namespace Project2.Data.Repository
             return Entities.Select(e => new PatientRoom(e.PatientRoomId, e.Available));
         }
 
-
-
-
+        public PatientRoom Update(PatientRoom patientRoom)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
