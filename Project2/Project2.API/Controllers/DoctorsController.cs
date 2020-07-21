@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Data.Repository;
 using Project2.Domain.Interface;
+using Project2.Domain.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,6 +21,7 @@ namespace Project2.API.Controllers
         {
             drepo = doctorRepository;
         }
+
         // GET: api/Doctors
         [HttpGet]
         public IActionResult Get()
@@ -30,9 +32,10 @@ namespace Project2.API.Controllers
 
         // GET api/Doctors/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Doctor Get(int id)
         {
-            return "value";
+            var doctor = drepo.GetbyId(id);
+            return doctor;
         }
 
         // POST api/Doctors

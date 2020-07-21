@@ -24,5 +24,12 @@ namespace Project2.Data.Repository
 
             return Entities.Select(e => new Doctor(e.DoctorId, e.FirstName, e.LastName));
         }
+
+        public Doctor GetbyId(int id)
+        {
+            var entity = _context.DoctorEntity.Find(id);
+
+            return new Doctor(entity.DoctorId, entity.FirstName, entity.LastName);
+        }
     }
 }
