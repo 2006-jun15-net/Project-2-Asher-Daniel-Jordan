@@ -21,7 +21,15 @@ namespace Project2.Data.Repository
         {
             var Entities = _context.TreatmentEntity.ToList();
 
-            return Entities.Select(e => new Treatment(e.DoctorId, e.IllnessId, e.Name));
+            return Entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name));
+        }
+
+        public IEnumerable<Treatment> GetAllByDoctor(int id)
+        {
+            var entities = _context.TreatmentEntity.ToList();
+            var filteredEntities = entities.Where(e => e.DoctorId == id).ToList();
+
+            return filteredEntities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name));
         }
     }
 }
