@@ -8,5 +8,6 @@ namespace Project2.Domain.Interface
     public interface IDoctorRepository
     {
         IEnumerable<Doctor> GetAll();
+        Doctor GetbyId(int id);
     }
 }

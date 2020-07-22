@@ -23,10 +23,10 @@ jobs:
           scannerMode: 'MSBuild'
           projectKey: '2006-jun15-net_Project-2-Asher-Daniel-Jordan'
           projectName: 'Hospital Management'
-          #extraProperties: |
-            #sonar.exclusions=**/lib/**
-            #sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-            #sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
+          extraProperties: |
+            sonar.exclusions=**/lib/**
+            sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+            sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
       - script: dotnet build -c Release
         displayName: Build Project/Application and Release Config
@@ -34,7 +34,7 @@ jobs:
 
       - script: dotnet test -c Release --collect:"XPlat Code Coverage"
         displayName: Run Project Tests
-        workingDirectory: $(solutionPath)/Project2.Test
+        workingDirectory: $(solutionPath)
       
       - task: SonarCloudAnalyze@1
         displayName: Run SonarCloud Analysis
@@ -44,13 +44,17 @@ jobs:
         inputs:
           pollingTimeoutSec: '300'
       
+      - script: cat Project2.Test/TestResults/*/coverage.cobertura.xml
+        displayName: Open test file
+        workingDirectory: $(solutionPath)
+      
       # $(Agent.TempDirectory)/*/coverage.cobertura.xml
       - task: PublishCodeCoverageResults@1
         displayName: Publish Code Coverage
         inputs:
           codeCoverageTool: 'Cobertura'
-          summaryFileLocation: '**/TestResults/*/coverage.cobertura.xml'
-          failIfCoverageEmpty: false
+          summaryFileLocation: '$(solutionPath)/Project2.Test/TestResults/*/coverage.cobertura.xml'
+          failIfCoverageEmpty: true
       
       - script: dotnet publish -c Release -o ../publish
         displayName: Publish our application
@@ -63,5 +67,5 @@ jobs:
           ConnectionType: 'AzureRM'
           azureSubscription: 'Azure subscription 1(6bfb27c8-f9ac-40e8-9b4f-55922e406dbf)'
           appType: 'webApp'
-          WebAppName: 'Project-2-Asher-Daniel-Jordan'
+          WebAppName: 'Project2-Hospital'
           packageForLinux: '$(System.DefaultWorkingDirectory)/publish'

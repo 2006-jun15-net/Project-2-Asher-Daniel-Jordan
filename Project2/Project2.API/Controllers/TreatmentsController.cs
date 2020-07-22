@@ -19,6 +19,7 @@ namespace Project2.API.Controllers
         {
             tRepo = treatmentRepository;
         }
+
         // GET: api/Treatments
         [HttpGet]
         public IActionResult Get()
@@ -26,6 +27,7 @@ namespace Project2.API.Controllers
             var treatments = tRepo.GetAll();
             return Ok(treatments);
         }
+
 
         // GET: api/Treatments/GetByDoctor/2
         [HttpGet]
@@ -35,6 +37,9 @@ namespace Project2.API.Controllers
             var treatments = tRepo.GetAllByDoctor(id);
             return Ok(treatments);
         }
+
+
+        
 
         // GET api/Treatments/5
         [HttpGet("{id}")]
@@ -48,7 +53,7 @@ namespace Project2.API.Controllers
         public void Post([FromBody] string value)
         {
         }
-
+        
         // PUT api/Treatments/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
+using Project2.Domain.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,9 +36,12 @@ namespace Project2.API.Controllers
         }
 
         // POST api/Patients
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("Patients")]
+        public IActionResult Post([FromBody] Patient patient)
         {
+            var person = pRepo.Create(patient);
+
+            return Ok(person);
         }
 
         // PUT api/Patients/5

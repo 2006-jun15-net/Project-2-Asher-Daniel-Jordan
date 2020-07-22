@@ -42,6 +42,7 @@ namespace Project2.API
             services.AddScoped<ITreatmentDetailsRepository, TreatmentDetailsRepository>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<IWorkingDetailsRepository, WorkingDetailsRepository>();
+            services.AddScoped<IPatientRoomRepository, PatientRoomRepository>();
             services.AddControllers();
         }
 
