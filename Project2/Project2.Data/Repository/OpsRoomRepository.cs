@@ -23,10 +23,13 @@ namespace Project2.Data.Repository
 
             return Entities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
         }
-    
-    
-    
-    
-    
+
+        public IEnumerable<OpsRoom> GetAvailableRooms()
+        {
+            var entities = _context.OpsRoomEntity.ToList();
+            var filteredEntities = entities.Where(e => e.Available == true).ToList();
+
+            return filteredEntities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
+        }
     }
 }

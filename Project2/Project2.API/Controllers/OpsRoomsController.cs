@@ -28,6 +28,15 @@ namespace Project2.API.Controllers
             return Ok(opsRooms);
         }
 
+        // GET: api/OpsRooms/AvailableRooms
+        [HttpGet]
+        [Route("/AvailableRooms")]
+        public IActionResult GetAvailableRooms()
+        {
+            var opsRooms = opsroomRepo.GetAvailableRooms();
+            return Ok(opsRooms);
+        }
+
         // GET api/OpsRooms/5
         [HttpGet("{id}")]
         public string Get(int id)

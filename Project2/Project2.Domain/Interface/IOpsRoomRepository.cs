@@ -8,5 +8,6 @@ namespace Project2.Domain.Interface
     public interface IOpsRoomRepository
     {
         IEnumerable<OpsRoom> GetAll();
+        IEnumerable<OpsRoom> GetAvailableRooms();
     }
 }
