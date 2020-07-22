@@ -35,6 +35,20 @@ namespace Project2.API.Controllers
             return "value";
         }
 
+        [HttpGet("Nurses/{id}")]
+
+        public IActionResult GetByNurse(int nurseId)
+        {
+            return Ok(pRepo.GetByNurse(nurseId));
+        }
+
+        [HttpGet("Doctors/{id}")]
+
+        public IActionResult GetByDoctor(int doctorId)
+        {
+            return Ok(pRepo.GetByDoctor(doctorId));
+        }
+
         // POST api/Patients
         [HttpPost("Patients")]
         public IActionResult Post([FromBody] Patient patient)
