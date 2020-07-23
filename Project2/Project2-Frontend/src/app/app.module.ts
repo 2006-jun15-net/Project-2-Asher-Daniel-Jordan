@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppService } from './app.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DoctorComponent } from './doctor/doctor.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DoctorComponent } from './doctor/doctor.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,

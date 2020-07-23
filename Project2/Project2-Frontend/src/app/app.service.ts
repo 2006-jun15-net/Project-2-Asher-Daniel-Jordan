@@ -12,7 +12,7 @@ import Doctor from './models/doctor';
 })
 export class AppService {
 
-  private serviceUrl = 'https://localhost:44362/';
+  private serviceUrl = 'https://localhost:44362';
   //private serviceUrl = 'https://project2-hospital.azurewebsites.net/';
 
   httpOptions = {
