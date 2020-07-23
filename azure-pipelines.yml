@@ -52,16 +52,17 @@ jobs:
         inputs:
           pollingTimeoutSec: '300'
       
-      - script: cat Project2.Test/TestResults/*/coverage.cobertura.xml
-        displayName: Open test file
-        workingDirectory: $(solutionPath)
+      #- script: cat Project2.Test/TestResults/*/coverage.cobertura.xml
+        #displayName: Open test file
+        #workingDirectory: $(solutionPath)
       
       # $(Agent.TempDirectory)/*/coverage.cobertura.xml
+      # $(solutionPath)/Project2.Test/TestResults/*/coverage.cobertura.xml
       - task: PublishCodeCoverageResults@1
         displayName: Publish Code Coverage
         inputs:
           codeCoverageTool: 'Cobertura'
-          summaryFileLocation: '$(solutionPath)/Project2.Test/TestResults/*/coverage.cobertura.xml'
+          summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
           failIfCoverageEmpty: true
       
       - script: dotnet publish -c Release -o ../publish
