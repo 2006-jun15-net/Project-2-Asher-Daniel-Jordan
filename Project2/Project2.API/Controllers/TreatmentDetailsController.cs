@@ -21,9 +21,9 @@ namespace Project2.API.Controllers
         }
         // GET: api/<TreatmentDetailsController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var treatmentDetails = tdetailsRepo.GetAll();
+            var treatmentDetails = await tdetailsRepo.GetAllAsync();
             return Ok(treatmentDetails);
         }
 

@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Domain.Interface
 {
     public interface ITreatmentDetailsRepository
     {
-        IEnumerable<TreatmentDetails> GetAll();
+        Task<IEnumerable<TreatmentDetails>> GetAllAsync();
     }
 }
