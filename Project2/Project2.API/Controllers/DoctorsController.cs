@@ -24,17 +24,17 @@ namespace Project2.API.Controllers
 
         // GET: api/Doctors
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var Doctors = drepo.GetAll();
+            var Doctors = await drepo.GetDoctorsAsync();
             return Ok(Doctors);
         }
 
         // GET api/Doctors/5
         [HttpGet("{id}")]
-        public Doctor Get(int id)
+        public async Task<Doctor> Get(int id)
         {
-            var doctor = drepo.GetbyId(id);
+            var doctor = await drepo.GetDoctorAsync(id);
             return doctor;
         }
 
