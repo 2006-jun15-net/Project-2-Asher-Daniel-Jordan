@@ -6,7 +6,6 @@
 trigger:
 - master
 
-# solutionPath needs to be changed
 variables:
   solutionPath: Project2
 
@@ -40,10 +39,6 @@ jobs:
           arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
           testRunTitle: 'ubuntu'
       
-      #- script: dotnet test -c Release --collect:"XPlat Code Coverage"
-        #displayName: Run Project Tests
-        #workingDirectory: $(solutionPath)
-      
       - task: SonarCloudAnalyze@1
         displayName: Run SonarCloud Analysis
       
@@ -52,12 +47,6 @@ jobs:
         inputs:
           pollingTimeoutSec: '300'
       
-      #- script: cat Project2.Test/TestResults/*/coverage.cobertura.xml
-        #displayName: Open test file
-        #workingDirectory: $(solutionPath)
-      
-      # $(Agent.TempDirectory)/*/coverage.cobertura.xml
-      # $(solutionPath)/Project2.Test/TestResults/*/coverage.cobertura.xml
       - task: PublishCodeCoverageResults@1
         displayName: Publish Code Coverage
         inputs:
@@ -69,7 +58,6 @@ jobs:
         displayName: Publish our application
         workingDirectory: $(solutionPath)
       
-      # azureSubscription needs to be changed to match
       - task: AzureRmWebAppDeployment@4
         displayName: Azure App Service Deployment
         inputs:
