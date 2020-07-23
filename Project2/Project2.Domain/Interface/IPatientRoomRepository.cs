@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Domain.Interface
 {
     public interface IPatientRoomRepository
     {
-        IEnumerable<PatientRoom> GetAll();
-
+        Task<IEnumerable<PatientRoom>> GetRoomsAsync();
+        Task<PatientRoom> GetRoomAsync(int? id);
         PatientRoom Create(PatientRoom patientRoom);
-
-        PatientRoom Update(PatientRoom patientRoom);
+        Task Update(PatientRoom patientRoom);
+        Task SaveAsync();
     }
 }
