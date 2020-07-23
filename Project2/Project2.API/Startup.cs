@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace Project2.API
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,19 +31,20 @@ namespace Project2.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            /*
             services.AddCors(options =>
         {
             options.AddPolicy(name: MyAllowSpecificOrigins,
                               builder =>
                               {
                                   builder.WithOrigins("https://localhost:5001/",
+                                                       "https://localhost:44362/",
                                                       "https://localhost:4200/")
                                                       .AllowAnyHeader()
                                                       .AllowAnyMethod();
                               });
         });
-
+            */
 
 
             services.AddSwaggerGen();
@@ -77,7 +79,7 @@ namespace Project2.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project 2 API V1");
             });
 
-            app.UseCors(MyAllowSpecificOrigins);
+           // app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 
@@ -87,7 +89,12 @@ namespace Project2.API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/echo",
+                    context => context.Response.WriteAsync("echo"));
+                //.RequireCors(MyAllowSpecificOrigins);
+
                 endpoints.MapControllers();
+                        // .RequireCors(MyAllowSpecificOrigins);
             });
         }
     }
