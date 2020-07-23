@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Domain.Interface
 {
     public interface ITreatmentRepository
     {
-        IEnumerable<Treatment> GetAll();
-        IEnumerable<Treatment> GetAllByDoctor(int id);
+        Task<IEnumerable<Treatment>> GetTreatmentsAsync();
+        Task<IEnumerable<Treatment>> GetDoctorTreatmentsAsync(int id);
+        Task<Treatment> GetTreatmentAsync(int id);
     }
 }

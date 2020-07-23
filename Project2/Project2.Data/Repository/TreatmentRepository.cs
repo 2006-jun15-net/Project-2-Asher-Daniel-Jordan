@@ -1,10 +1,12 @@
-﻿using Project2.Data.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Project2.Data.Model;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Data.Repository
 {
@@ -17,21 +19,28 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<Treatment> GetAll()
+        public async Task<IEnumerable<Treatment>> GetTreatmentsAsync()
         {
-            var Entities = _context.TreatmentEntity.ToList();
+            var Entities = await _context.TreatmentEntity.ToListAsync();
 
-
-            return Entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name));
+            return Entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
         }
 
-        public IEnumerable<Treatment> GetAllByDoctor(int id)
+        public async Task<IEnumerable<Treatment>> GetDoctorTreatmentsAsync(int id)
         {
-            var entities = _context.TreatmentEntity.ToList();
-            var filteredEntities = entities.Where(e => e.DoctorId == id).ToList();
+            var entities = await _context.TreatmentEntity
+                .Where(e => e.DoctorId == id)
+                .ToListAsync();
 
-            return filteredEntities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
+            return entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
 
+        }
+
+        public async Task<Treatment> GetTreatmentAsync(int id)
+        {
+            var entity = await _context.TreatmentEntity.FindAsync(id);
+
+            return new Treatment(entity.IllnessId, entity.DoctorId, entity.Name, entity.TimeToTreat);
         }
     }
 }

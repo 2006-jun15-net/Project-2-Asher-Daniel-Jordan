@@ -19,6 +19,7 @@ namespace Project2.API.Controllers
         {
             iRepo = illnessRepository;
         }
+
         // GET: api/Illnesses
         [HttpGet]
         public IActionResult Get()

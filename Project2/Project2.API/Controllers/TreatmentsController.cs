@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
+using Project2.Domain.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,9 +23,9 @@ namespace Project2.API.Controllers
 
         // GET: api/Treatments
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var treatments = tRepo.GetAll();
+            var treatments = await tRepo.GetTreatmentsAsync();
             return Ok(treatments);
         }
 
@@ -32,20 +33,23 @@ namespace Project2.API.Controllers
         // GET: api/Treatments/GetByDoctor/2
         [HttpGet]
         [Route("/GetByDoctor/{id}")]
-        public IActionResult GetTreatments(int id)
+        public async Task<IActionResult> GetTreatments(int id)
         {
-            var treatments = tRepo.GetAllByDoctor(id);
+            var treatments = await tRepo.GetDoctorTreatmentsAsync(id);
             return Ok(treatments);
         }
 
-
-        
-
         // GET api/Treatments/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Treatment>> Get(int id)
         {
-            return "value";
+            var treatment = await tRepo.GetTreatmentAsync(id);
+           if(treatment is Treatment item)
+           {
+                return item;
+           }
+
+            return NotFound();
         }
 
         // POST api/Treatments
