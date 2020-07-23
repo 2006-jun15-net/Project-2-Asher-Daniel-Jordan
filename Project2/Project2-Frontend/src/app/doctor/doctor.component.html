@@ -1,0 +1,22 @@
+<div>(doctor)</div>
+
+<button (click)="reloadDoctors()">Reload</button>
+
+<div *ngIf="error">
+    error: {{ error }}
+</div>
+
+
+<div *nfIf="!doctors">
+    (loading...)
+</div>
+<div *ngIf="doctors">
+    <div *nfIf="doctors.length === 0">
+        empty
+    </div>
+</div>
+<ul>
+    <li *ngfor ="let item of doctors">
+        {{ item.FirstName }}
+    </li>
+</ul>>
