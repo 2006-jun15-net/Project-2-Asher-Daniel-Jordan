@@ -1,10 +1,12 @@
-﻿using Project2.Data.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Project2.Data.Model;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Data.Repository
 {
@@ -17,9 +19,9 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<Illness> GetAll()
+        public async Task<IEnumerable<Illness>> GetAllAsync()
         {
-            var Entities = _context.IllnessEntity.ToList();
+            var Entities = await _context.IllnessEntity.ToListAsync();
 
             return Entities.Select(e => new Illness(e.IllnessId, e.Name));
         }
