@@ -7,16 +7,19 @@
 </div>
 
 
-<div *nfIf="!doctors">
+<div *ngIf="!doctors">
     (loading...)
 </div>
 <div *ngIf="doctors">
-    <div *nfIf="doctors.length === 0">
+    <div *ngIf="doctors.length === 0">
         empty
     </div>
 </div>
 <ul>
-    <li *ngfor ="let item of doctors">
+    <li *ngFor="let item of doctors">
+        <span class="badge">
+            {{item.DoctorId}}
+        </span>
         {{ item.FirstName }}
     </li>
 </ul>>
