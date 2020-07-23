@@ -19,6 +19,7 @@ namespace Project2.API
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +30,21 @@ namespace Project2.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                              builder =>
+                              {
+                                  builder.WithOrigins("https://localhost:5001/",
+                                                      "https://localhost:4200/")
+                                                      .AllowAnyHeader()
+                                                      .AllowAnyMethod();
+                              });
+        });
+
+
+
             services.AddSwaggerGen();
             
             services.AddDbContext<Project2Context>(options =>
@@ -60,6 +76,8 @@ namespace Project2.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project 2 API V1");
             });
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 
