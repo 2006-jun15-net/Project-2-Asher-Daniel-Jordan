@@ -23,9 +23,9 @@ namespace Project2.API.Controllers
         }
         // GET: api/Nurses
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var nurses = nRepo.GetAll();
+            var nurses = await nRepo.GetNursesAsync();
             return Ok(nurses);
         }
 
