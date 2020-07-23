@@ -68,7 +68,7 @@ namespace Project2.API.Controllers
                 return BadRequest();
             }
 
-            opsroomRepo.Update(value);
+            await opsroomRepo.Update(value);
 
             try
             {

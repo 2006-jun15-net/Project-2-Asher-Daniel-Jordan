@@ -45,10 +45,16 @@ namespace Project2.Data.Repository
             return entities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
         }
 
-        public void Update(OpsRoom opsRoom)
+        public async Task Update(OpsRoom opsRoom)
         {
-            _context.Attach(opsRoom);
-            _context.Entry(opsRoom).State = EntityState.Modified;
+            var entity = await _context.OpsRoomEntity.FindAsync(opsRoom.OpsRoomId);
+            var newEntity = new OpsRoomEntity
+            {
+                OpsRoomId = opsRoom.OpsRoomId,
+                Available = opsRoom.Available
+            };
+
+            _context.Entry(entity).CurrentValues.SetValues(newEntity);
         }
 
         public async Task SaveAsync()

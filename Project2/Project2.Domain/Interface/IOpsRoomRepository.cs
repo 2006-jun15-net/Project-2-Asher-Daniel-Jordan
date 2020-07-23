@@ -11,7 +11,7 @@ namespace Project2.Domain.Interface
         Task<IEnumerable<OpsRoom>> GetAllRoomsAsync();
         Task<OpsRoom> GetOpsRoomAsync(int? id);
         Task<IEnumerable<OpsRoom>> GetAvailableRoomsAsync();
-        void Update(OpsRoom opsRoom);
+        Task Update(OpsRoom opsRoom);
         Task SaveAsync();
     }
 }
