@@ -19,11 +19,12 @@ namespace Project2.API.Controllers
         {
             iRepo = illnessRepository;
         }
+
         // GET: api/Illnesses
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var illnesses = iRepo.GetAll();
+            var illnesses = await iRepo.GetAllAsync();
             return Ok(illnesses);
         }
 

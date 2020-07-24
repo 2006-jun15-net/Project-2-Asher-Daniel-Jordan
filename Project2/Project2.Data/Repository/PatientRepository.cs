@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Data.Repository
 {
@@ -18,51 +19,52 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Patient Create(Patient patient)
+        public async Task<Patient> CreateAsync(Patient patient)
         {
             var Entity = new PatientEntity { DoctorId = patient.DoctorId, FirstName = patient.FirstName, LastName = patient.LastName };
 
             _context.PatientEntity.Add(Entity);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return patient;
         }
 
-        public IEnumerable<Patient> GetAll()
+        public async Task<IEnumerable<Patient>> GetPatientsAsync()
         {
-            var Entities = _context.PatientEntity.ToList();
+            var Entities = await _context.PatientEntity.ToListAsync();
 
             return Entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.DoctorId, e.FirstName, e.LastName));
         }
 
 
-        public void Update(Patient patient)
+        public async Task UpdateAsync(Patient patient)
         {
-            PatientEntity currentPatient = _context.PatientEntity.Find(patient.PatientId);
+            PatientEntity currentPatient = await _context.PatientEntity.FindAsync(patient.PatientId);
             var Entity = new PatientEntity { FirstName = patient.FirstName, LastName = patient.LastName, DoctorId = patient.DoctorId, PatientRoomId = patient.PatientRoomId };
 
             _context.Entry(currentPatient).CurrentValues.SetValues(Entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
          }
 
-        public IEnumerable<Patient> GetByDoctor(int doctorId)
+        public async Task<IEnumerable<Patient>> GetByDoctorAsync(int doctorId)
         {
-            var entities = _context.PatientEntity.ToList();
-            var filteredEntities = entities.Where(e => e.DoctorId == doctorId).ToList();
-            return filteredEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.DoctorId, e.FirstName, e.LastName));
+            var entities = await _context.PatientEntity
+                .Where(e => e.DoctorId == doctorId)
+                .ToListAsync();
+            return entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.DoctorId, e.FirstName, e.LastName));
         }
 
-        public IEnumerable<Patient> GetByNurse(int nurseId)
+        public async Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId)
         {
             List <PatientEntity> filteredEntities = new List<PatientEntity>();
-            List<int> doctorIds = _context.WorkingDetailsEntity
+            List<int> doctorIds = await _context.WorkingDetailsEntity
                     .Where(wd => wd.NurseId == nurseId)
                     .Select(wd => wd.DoctorId)
-                    .ToList();
+                    .ToListAsync();
             foreach (var id in doctorIds)
             {
-                filteredEntities.AddRange( _context.PatientEntity.Where(p => p.DoctorId == id).ToList());
+                filteredEntities.AddRange( await _context.PatientEntity.Where(p => p.DoctorId == id).ToListAsync());
             }
 
 

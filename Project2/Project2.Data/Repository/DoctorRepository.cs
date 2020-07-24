@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Project2.Data.Model;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
@@ -18,16 +20,16 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<Doctor> GetAll()
+        public async Task<IEnumerable<Doctor>> GetDoctorsAsync()
         {
-            var Entities = _context.DoctorEntity.ToList();
+            var Entities = await _context.DoctorEntity.ToListAsync();
 
             return Entities.Select(e => new Doctor(e.DoctorId, e.FirstName, e.LastName));
         }
 
-        public Doctor GetbyId(int id)
+        public async Task<Doctor> GetDoctorAsync(int id)
         {
-            var entity = _context.DoctorEntity.Find(id);
+            var entity = await _context.DoctorEntity.FindAsync(id);
 
             return new Doctor(entity.DoctorId, entity.FirstName, entity.LastName);
         }

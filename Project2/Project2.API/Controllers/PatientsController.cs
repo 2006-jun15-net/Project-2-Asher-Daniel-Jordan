@@ -22,9 +22,9 @@ namespace Project2.API.Controllers
         }
         // GET: api/Patients
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var patients = pRepo.GetAll();
+            var patients = await pRepo.GetPatientsAsync();
             return Ok(patients);
         }
 
@@ -51,9 +51,9 @@ namespace Project2.API.Controllers
 
         // POST api/Patients
         [HttpPost("Patients")]
-        public IActionResult Post([FromBody] Patient patient)
+        public async Task<IActionResult> Post([FromBody] Patient patient)
         {
-            var person = pRepo.Create(patient);
+            var person = await pRepo.CreateAsync(patient);
 
             return Ok(person);
         }

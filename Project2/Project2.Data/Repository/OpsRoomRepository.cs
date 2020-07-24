@@ -1,10 +1,12 @@
-﻿using Project2.Data.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Project2.Data.Model;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Project2.Data.Repository
 {
@@ -17,19 +19,47 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<OpsRoom> GetAll()
+        public async Task<IEnumerable<OpsRoom>> GetAllRoomsAsync()
         {
-            var Entities = _context.OpsRoomEntity.ToList();
+            var entities = await _context.OpsRoomEntity.ToListAsync();
 
-            return Entities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
+            return entities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
         }
 
-        public IEnumerable<OpsRoom> GetAvailableRooms()
+        public async Task<OpsRoom> GetOpsRoomAsync(int? id)
         {
-            var entities = _context.OpsRoomEntity.ToList();
-            var filteredEntities = entities.Where(e => e.Available == true).ToList();
+            if(id == null)
+            {
+                throw new ArgumentNullException("ID cannot be null", nameof(id));
+            }
 
-            return filteredEntities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
+            var entity = await _context.OpsRoomEntity.FindAsync(id);
+
+            return new OpsRoom(entity.OpsRoomId, entity.Available);
+        }
+
+        public async Task<IEnumerable<OpsRoom>> GetAvailableRoomsAsync()
+        {
+            var entities = await _context.OpsRoomEntity.Where(e => e.Available == true).ToListAsync();
+
+            return entities.Select(e => new OpsRoom(e.OpsRoomId, e.Available));
+        }
+
+        public async Task Update(OpsRoom opsRoom)
+        {
+            var entity = await _context.OpsRoomEntity.FindAsync(opsRoom.OpsRoomId);
+            var newEntity = new OpsRoomEntity
+            {
+                OpsRoomId = opsRoom.OpsRoomId,
+                Available = opsRoom.Available
+            };
+
+            _context.Entry(entity).CurrentValues.SetValues(newEntity);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
