@@ -33,5 +33,16 @@ namespace Project2.Data.Repository
 
             return new Doctor(entity.DoctorId, entity.FirstName, entity.LastName);
         }
+
+        public async Task<Doctor> CreateDoctorAsync(Doctor doctor)
+        {
+            var Entity = new DoctorEntity { DoctorId = doctor.DoctorId, FirstName = doctor.FirstName, LastName = doctor.LastName };
+
+            _context.DoctorEntity.Add(Entity);
+
+            await _context.SaveChangesAsync();
+
+            return doctor;
+        }
     }
 }
