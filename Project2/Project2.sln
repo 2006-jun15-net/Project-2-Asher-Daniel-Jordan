@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2.Data", "Project2.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2.Test", "Project2.Test\Project2.Test.csproj", "{0732C390-B250-4D2C-9797-5F7B60B86748}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2.API", "Project2.API\Project2.API.csproj", "{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2.API", "Project2.API\Project2.API.csproj", "{10FC8809-ACCE-441D-ADB6-FBACCB18BF4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
