@@ -12,5 +12,9 @@ namespace Project2.Domain.Interface
         Task<Doctor> GetDoctorAsync(int id);
 
         Task<Doctor> CreateDoctorAsync(Doctor doctor);
+
+        Task<Doctor> UpdateDoctorAsync(Doctor doctor);
+
+        Task<Doctor> DeleteDoctorAsync(Doctor doctor);
     }
 }

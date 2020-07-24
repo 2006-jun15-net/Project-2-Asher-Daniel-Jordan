@@ -60,14 +60,46 @@ namespace Project2.API.Controllers
 
         // PUT api/Doctors/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> Put(int id, [FromBody] Doctor doctor)
         {
+            var existingDoctor = await drepo.GetDoctorAsync(id);
+
+            if(existingDoctor != null)
+            {
+                await drepo.UpdateDoctorAsync(existingDoctor);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
+
         }
 
         // DELETE api/Doctors/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingDoctor = await drepo.GetDoctorAsync(id);
+
+            if (existingDoctor != null)
+            {
+                await drepo.DeleteDoctorAsync(existingDoctor);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
