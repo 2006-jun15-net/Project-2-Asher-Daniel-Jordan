@@ -121,9 +121,9 @@ INSERT INTO TreatmentEntity(Name, DoctorID, IllnessID, TimeToTreat) VALUES
 		('Give Antipyretic', 1, 3, 4),('Dental Cleaning', 3, 4, 6),('Pain-relieving Drugs', 5, 1, 3),('Give Analgesics', 5, 2, 10),
 		('Give Metronidazole', 1, 5, 3),('Give Metronidazole', 3, 6, 8),('Give Antipyretic', 4, 3, 4),('Dental Cleaning', 1, 4, 5)
 
-INSERT INTO PatientEntity(FirstName, LastName, IllnessID, DoctorID) VALUES
-		('Angus', 'Hogg', 5, 4),('Brittney', 'Senior', 2, 1),('Anabelle', 'Keeling', 3, 1),
-		('Francisco', 'Olson', 6, 3),('Janine', 'Medrano', 4, 5)
+INSERT INTO PatientEntity(PatientRoomID, IllnessID, DoctorID, FirstName, LastName) VALUES
+		(null, 5, 4, 'Angus', 'Hogg'),(null, 2, 1, 'Brittney', 'Senior'),(null, 3, 1, 'Anabelle', 'Keeling'),
+		(null, 6, 3, 'Francisco', 'Olson'),(null, 4, 5, 'Janine', 'Medrano')
 
 --drop table DoctorEntity
 --drop table IllnessEntity
@@ -134,3 +134,6 @@ INSERT INTO PatientEntity(FirstName, LastName, IllnessID, DoctorID) VALUES
 --drop table TreatmentDetailsEntity
 --drop table WorkingDetailsEntity
 --drop table TreatmentEntity
+
+select *
+from PatientEntity

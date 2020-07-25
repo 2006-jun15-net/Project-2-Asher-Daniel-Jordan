@@ -39,14 +39,18 @@ namespace Project2.API.Controllers
 
         public async Task<IActionResult> GetByNurse(int nurseId)
         {
+
             return Ok( await pRepo.GetByNurseAsync(nurseId));
+
         }
 
         [HttpGet("Doctors/{id}")]
 
         public async Task<IActionResult> GetByDoctor(int doctorId)
         {
+
             return Ok(await pRepo.GetByDoctorAsync(doctorId));
+
         }
 
         // POST api/Patients
