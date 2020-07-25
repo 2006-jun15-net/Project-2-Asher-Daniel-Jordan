@@ -38,11 +38,12 @@ namespace Project2.Domain.Model
             }
         }
 
-        public Patient(int patientid, int? patientroomid, int illnessid, string firstname, string lastname)
+        public Patient(int patientid, int? patientroomid, int illnessid, int doctorid, string firstname, string lastname)
         {
             PatientId = patientid;
             PatientRoomId = patientroomid;
             IllnessId = illnessid;
+            DoctorId = doctorid;
             FirstName = firstname;
             LastName = lastname;
         }
