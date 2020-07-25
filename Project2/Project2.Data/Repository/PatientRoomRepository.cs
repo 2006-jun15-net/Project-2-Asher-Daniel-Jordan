@@ -19,9 +19,18 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public PatientRoom Create(PatientRoom patientRoom)
+        public async Task CreateAsync(PatientRoom patientRoom)
         {
-            throw new NotImplementedException();
+            var prEntity = new PatientRoomEntity
+            {
+                PatientRoomId = patientRoom.PatientRoomId,
+                Available = patientRoom.Available
+            };
+
+            _context.PatientRoomEntity.Add(prEntity);
+
+            await SaveAsync();
+
         }
 
         public async Task<IEnumerable<PatientRoom>> GetRoomsAsync()
@@ -59,6 +68,19 @@ namespace Project2.Data.Repository
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(PatientRoom patientRoom)
+        {
+            var pRoomEntity = new PatientRoomEntity
+            {
+                PatientRoomId = patientRoom.PatientRoomId,
+                Available = patientRoom.Available
+            };
+
+            _context.PatientRoomEntity.Remove(pRoomEntity);
+
+            await SaveAsync();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Project2.Data.Repository
         {
             var Entities = await _context.PatientEntity.ToListAsync();
 
-            return Entities.Select(e => new Patient(e.PatientId, e.PatientRoomId,e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
+            return Entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
         }
 
 
@@ -42,17 +42,17 @@ namespace Project2.Data.Repository
         {
             PatientEntity currentPatient = await _context.PatientEntity.FindAsync(patient.PatientId);
             var Entity = new PatientEntity
-            { 
+            {
                 FirstName = patient.FirstName,
-                LastName = patient.LastName, 
+                LastName = patient.LastName,
                 DoctorId = patient.DoctorId,
-                PatientRoomId = patient.PatientRoomId 
+                PatientRoomId = patient.PatientRoomId
             };
 
             _context.Entry(currentPatient).CurrentValues.SetValues(Entity);
 
             await _context.SaveChangesAsync();
-         }
+        }
 
         public async Task<IEnumerable<Patient>> GetByDoctorAsync(int doctorId)
         {
@@ -65,7 +65,7 @@ namespace Project2.Data.Repository
 
         public async Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId)
         {
-            List <PatientEntity> filteredEntities = new List<PatientEntity>();
+            List<PatientEntity> filteredEntities = new List<PatientEntity>();
 
             List<int> doctorIds = await _context.WorkingDetailsEntity
                     .Where(wd => wd.NurseId == nurseId)
@@ -74,12 +74,27 @@ namespace Project2.Data.Repository
 
             foreach (var id in doctorIds)
             {
-                filteredEntities.AddRange( await _context.PatientEntity.Where(p => p.DoctorId == id).ToListAsync());
+                filteredEntities.AddRange(await _context.PatientEntity.Where(p => p.DoctorId == id).ToListAsync());
             }
 
 
             return filteredEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
 
+        }
+
+        public async Task<Patient> GetByIdAsync(int id)
+        {
+            var patientEntitiy = await _context.PatientEntity.FindAsync(id);
+
+            return new Patient
+                (
+                patientEntitiy.PatientId,
+                patientEntitiy.PatientRoomId,
+                patientEntitiy.IllnessId,
+                patientEntitiy.DoctorId,
+                patientEntitiy.FirstName,
+                patientEntitiy.LastName
+                );
         }
     }
 }

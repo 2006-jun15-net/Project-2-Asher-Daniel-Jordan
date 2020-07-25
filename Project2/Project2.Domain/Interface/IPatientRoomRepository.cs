@@ -10,7 +10,9 @@ namespace Project2.Domain.Interface
     {
         Task<IEnumerable<PatientRoom>> GetRoomsAsync();
         Task<PatientRoom> GetRoomAsync(int? id);
-        PatientRoom Create(PatientRoom patientRoom);
+        Task CreateAsync(PatientRoom patientRoom);
+
+        Task DeleteAsync(PatientRoom patientRoom);
         Task Update(PatientRoom patientRoom);
         Task SaveAsync();
     }

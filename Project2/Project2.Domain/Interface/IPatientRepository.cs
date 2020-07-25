@@ -9,6 +9,8 @@ namespace Project2.Domain.Interface
     public interface IPatientRepository
     {
         Task<IEnumerable<Patient>> GetPatientsAsync();
+
+        Task<Patient> GetByIdAsync(int id);
         Task<Patient> CreateAsync(Patient patient);
         Task UpdateAsync(Patient patient);
         Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId);
