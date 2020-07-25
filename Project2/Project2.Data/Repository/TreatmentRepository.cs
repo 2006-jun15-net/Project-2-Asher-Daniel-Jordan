@@ -23,6 +23,7 @@ namespace Project2.Data.Repository
         {
             var Entities = await _context.TreatmentEntity.ToListAsync();
 
+
             return Entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
         }
 
