@@ -46,6 +46,7 @@ namespace Project2.Data.Repository
         public async Task Update(PatientRoom patientRoom)
         {
             var entity = await _context.PatientRoomEntity.FindAsync(patientRoom.PatientRoomId);
+
             var newEntity = new PatientRoomEntity
             {
                 PatientRoomId = patientRoom.PatientRoomId,

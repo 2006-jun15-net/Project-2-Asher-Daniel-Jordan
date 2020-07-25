@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
+using Project2.Domain.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,27 +32,72 @@ namespace Project2.API.Controllers
 
         // GET api/Ilnesses/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetByIllnessId(int id)
         {
-            return "value";
+            return Ok(await iRepo.GetByIdAsync(id));
         }
 
         // POST api/Illnesses
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> PostIllness([FromBody] Illness illness)
         {
+            if (iRepo.GetAllAsync().Result.Any(i => i.IllnessId == illness.IllnessId))
+            {
+                return Conflict();
+            }
+
+            await iRepo.CreateAsync(illness);
+
+            return CreatedAtAction(
+                actionName: nameof(GetByIllnessId),
+                routeValues: new { id = illness.IllnessId },
+                value: illness);
         }
 
         // PUT api/Illnesses/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> Put(int id, [FromBody] Illness illness)
         {
+            var existingIllness = await iRepo.GetByIdAsync(id);
+
+            if (existingIllness != null)
+            {
+                await iRepo.UpdateIllnessAsync(existingIllness);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
+
         }
 
         // DELETE api/Illnesses/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingIllness = await iRepo.GetByIdAsync(id);
+
+            if (existingIllness != null)
+            {
+                await iRepo.DeleteIllnessAsync(existingIllness);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

@@ -41,9 +41,16 @@ namespace Project2.Data.Repository
         public async Task UpdateAsync(Patient patient)
         {
             PatientEntity currentPatient = await _context.PatientEntity.FindAsync(patient.PatientId);
-            var Entity = new PatientEntity { FirstName = patient.FirstName, LastName = patient.LastName, DoctorId = patient.DoctorId, PatientRoomId = patient.PatientRoomId };
+            var Entity = new PatientEntity
+            { 
+                FirstName = patient.FirstName,
+                LastName = patient.LastName, 
+                DoctorId = patient.DoctorId,
+                PatientRoomId = patient.PatientRoomId 
+            };
 
             _context.Entry(currentPatient).CurrentValues.SetValues(Entity);
+
             await _context.SaveChangesAsync();
          }
 
@@ -53,15 +60,18 @@ namespace Project2.Data.Repository
                 .Where(e => e.DoctorId == doctorId)
                 .ToListAsync();
             return entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
+
         }
 
         public async Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId)
         {
             List <PatientEntity> filteredEntities = new List<PatientEntity>();
+
             List<int> doctorIds = await _context.WorkingDetailsEntity
                     .Where(wd => wd.NurseId == nurseId)
                     .Select(wd => wd.DoctorId)
                     .ToListAsync();
+
             foreach (var id in doctorIds)
             {
                 filteredEntities.AddRange( await _context.PatientEntity.Where(p => p.DoctorId == id).ToListAsync());

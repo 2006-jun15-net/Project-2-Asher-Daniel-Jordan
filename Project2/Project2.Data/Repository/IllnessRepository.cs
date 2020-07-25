@@ -19,11 +19,58 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task<Illness> CreateAsync(Illness illness)
+        {
+            var illnessEntity = new IllnessEntity { IllnessId = illness.IllnessId, Name = illness.Name };
+
+            _context.IllnessEntity.Add(illnessEntity);
+
+            await _context.SaveChangesAsync();
+
+            return illness;
+
+        }
+
+        public async Task<Illness> DeleteIllnessAsync(Illness illness)
+        {
+            var Entity = new IllnessEntity
+            {
+                IllnessId = illness.IllnessId,
+                Name = illness.Name  
+
+            };
+
+            _context.IllnessEntity.Remove(Entity);
+
+            await _context.SaveChangesAsync();
+
+            return illness;
+        }
+
         public async Task<IEnumerable<Illness>> GetAllAsync()
         {
             var Entities = await _context.IllnessEntity.ToListAsync();
 
             return Entities.Select(e => new Illness(e.IllnessId, e.Name));
+        }
+
+        public async Task<Illness> GetByIdAsync(int id)
+        {
+            var illnessEntity = await _context.IllnessEntity.FindAsync(id);
+
+            return (new Illness(illnessEntity.IllnessId, illnessEntity.Name));
+        }
+
+        public async Task<Illness> UpdateIllnessAsync(Illness illness)
+        {
+
+            var Entity = new IllnessEntity { IllnessId = illness.IllnessId, Name = illness.Name };
+
+            _context.Entry(Entity).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return illness;
         }
     }
 }
