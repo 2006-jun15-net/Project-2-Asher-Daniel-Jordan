@@ -39,6 +39,15 @@ namespace Project2.API.Controllers
             return Ok(treatments);
         }
 
+        // GET: api/Treatments/GetByIllness/3
+        [HttpGet]
+        [Route("/GetByIllness/{id}")]
+        public async Task<IActionResult> GetIllnessTreatments(int id)
+        {
+            var treatments = await tRepo.TreatmentsByIlllnessAsync(id);
+            return Ok(treatments);
+        }
+
         // GET api/Treatments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Treatment>> Get(int id)

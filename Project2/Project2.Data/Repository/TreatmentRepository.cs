@@ -37,6 +37,15 @@ namespace Project2.Data.Repository
 
         }
 
+        public async Task<IEnumerable<Treatment>> TreatmentsByIlllnessAsync(int id)
+        {
+            var entities = await _context.TreatmentEntity
+                .Where(e => e.IllnessId == id)
+                .ToListAsync();
+
+            return entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
+        }
+
         public async Task<Treatment> GetTreatmentAsync(int id)
         {
             var entity = await _context.TreatmentEntity.FindAsync(id);
