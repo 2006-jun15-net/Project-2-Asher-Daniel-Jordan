@@ -71,7 +71,7 @@ namespace Project2.API.Controllers
 
             if (existingNurse != null)
             {
-                await nRepo.UpdateNurseAsync(existingNurse);
+                await nRepo.UpdateNurseAsync(nurse);
             }
             else
             {

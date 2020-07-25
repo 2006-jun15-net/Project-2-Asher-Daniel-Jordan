@@ -68,7 +68,7 @@ namespace Project2.API.Controllers
 
             if (existingIllness != null)
             {
-                await iRepo.UpdateIllnessAsync(existingIllness);
+                await iRepo.UpdateIllnessAsync(illness);
             }
             else
             {

@@ -14,7 +14,7 @@ namespace Project2.Domain.Interface
 
         Task<Nurse> CreateNurseAsync(Nurse nurse);
 
-        Task<Nurse> UpdateNurseAsync(Nurse nurse);
+        Task UpdateNurseAsync(Nurse nurse);
 
         Task<Nurse> DeleteNurseAsync(Nurse nurse);
     }

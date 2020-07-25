@@ -70,7 +70,7 @@ namespace Project2.API.Controllers
 
             if(existingDoctor != null)
             {
-                await drepo.UpdateDoctorAsync(existingDoctor);
+                await drepo.UpdateDoctorAsync(doctor);
             }
             else
             {

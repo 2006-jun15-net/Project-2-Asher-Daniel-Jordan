@@ -61,16 +61,21 @@ namespace Project2.Data.Repository
             return (new Illness(illnessEntity.IllnessId, illnessEntity.Name));
         }
 
-        public async Task<Illness> UpdateIllnessAsync(Illness illness)
+        public async Task UpdateIllnessAsync(Illness illness)
         {
 
-            var Entity = new IllnessEntity { IllnessId = illness.IllnessId, Name = illness.Name };
+            var entity = await _context.IllnessEntity.FindAsync(illness.IllnessId);
+            var newEntity = new IllnessEntity
+            {
+                IllnessId = illness.IllnessId,
+                Name = illness.Name,
+                
+   
+            };
 
-            _context.Entry(Entity).State = EntityState.Modified;
+            _context.Entry(entity).CurrentValues.SetValues(newEntity);
 
             await _context.SaveChangesAsync();
-
-            return illness;
         }
     }
 }

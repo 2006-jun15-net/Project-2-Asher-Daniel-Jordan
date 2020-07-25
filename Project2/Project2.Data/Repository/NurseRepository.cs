@@ -66,20 +66,19 @@ namespace Project2.Data.Repository
             return Entities.Select(e => new Nurse(e.NurseId, e.FirstName, e.LastName));
         }
 
-        public async Task<Nurse> UpdateNurseAsync(Nurse nurse)
+        public async Task UpdateNurseAsync(Nurse nurse)
         {
-            var Entity = new NurseEntity
+            var entity = await _context.DoctorEntity.FindAsync(nurse.NurseId);
+            var newEntity = new NurseEntity
             {
                 NurseId = nurse.NurseId,
                 FirstName = nurse.FirstName,
                 LastName = nurse.LastName
             };
 
-            _context.Entry(Entity).State = EntityState.Modified;
+            _context.Entry(entity).CurrentValues.SetValues(newEntity);
 
             await _context.SaveChangesAsync();
-
-            return nurse;
         }
     }
 }
