@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
@@ -65,14 +66,46 @@ namespace Project2.API.Controllers
 
         // PUT api/Patients/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> Put(int id, [FromBody] Patient patient)
         {
+            var existingPatient = await pRepo.GetByIdAsync(id);
+
+            if (existingPatient != null)
+            {
+                await pRepo.UpdateAsync(patient);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
+
         }
 
         // DELETE api/Patients/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingPatient = await pRepo.GetByIdAsync(id);
+
+            if (existingPatient != null)
+            {
+                await pRepo.DeletePatientAsync(existingPatient);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Project2.Domain.Interface
 
         Task<Patient> GetByIdAsync(int id);
         Task<Patient> CreateAsync(Patient patient);
+
+        Task DeletePatientAsync(Patient patient);
         Task UpdateAsync(Patient patient);
         Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId);
         Task<IEnumerable<Patient>> GetByDoctorAsync(int doctorId);

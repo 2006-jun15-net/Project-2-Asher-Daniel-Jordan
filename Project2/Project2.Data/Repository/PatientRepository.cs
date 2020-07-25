@@ -96,5 +96,22 @@ namespace Project2.Data.Repository
                 patientEntitiy.LastName
                 );
         }
+
+        public async Task DeletePatientAsync(Patient patient)
+        {
+            var patientEntiy = new PatientEntity
+            {
+                PatientId = patient.PatientId,
+                FirstName = patient.FirstName,
+                LastName = patient.LastName,
+                PatientRoomId = patient.PatientRoomId,
+                IllnessId = patient.IllnessId
+            };
+
+            _context.PatientEntity.Remove(patientEntiy);
+
+            await _context.SaveChangesAsync();
+            
+        }
     }
 }
