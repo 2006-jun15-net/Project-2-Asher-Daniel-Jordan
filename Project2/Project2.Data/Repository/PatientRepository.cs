@@ -34,7 +34,7 @@ namespace Project2.Data.Repository
         {
             var Entities = await _context.PatientEntity.ToListAsync();
 
-            return Entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.DoctorId, e.FirstName, e.LastName));
+            return Entities.Select(e => new Patient(e.PatientId, e.PatientRoomId,e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
         }
 
 
@@ -52,7 +52,7 @@ namespace Project2.Data.Repository
             var entities = await _context.PatientEntity
                 .Where(e => e.DoctorId == doctorId)
                 .ToListAsync();
-            return entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.DoctorId, e.FirstName, e.LastName));
+            return entities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
         }
 
         public async Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId)
@@ -68,7 +68,7 @@ namespace Project2.Data.Repository
             }
 
 
-            return filteredEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.DoctorId, e.FirstName, e.LastName));
+            return filteredEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId, e.IllnessId, e.DoctorId, e.FirstName, e.LastName));
 
         }
     }

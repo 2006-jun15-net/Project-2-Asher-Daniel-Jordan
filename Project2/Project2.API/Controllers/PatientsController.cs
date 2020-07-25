@@ -39,14 +39,16 @@ namespace Project2.API.Controllers
 
         public IActionResult GetByNurse(int nurseId)
         {
-            return Ok(pRepo.GetByNurse(nurseId));
+            //return Ok(pRepo.GetByNurse(nurseId));
+            throw new NotImplementedException();
         }
 
         [HttpGet("Doctors/{id}")]
 
         public IActionResult GetByDoctor(int doctorId)
         {
-            return Ok(pRepo.GetByDoctor(doctorId));
+            //return Ok(pRepo.GetByDoctor(doctorId));
+            throw new NotImplementedException();
         }
 
         // POST api/Patients
