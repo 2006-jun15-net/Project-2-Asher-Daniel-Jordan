@@ -37,16 +37,16 @@ namespace Project2.API.Controllers
 
         [HttpGet("Nurses/{id}")]
 
-        public IActionResult GetByNurse(int nurseId)
+        public async Task<IActionResult> GetByNurse(int nurseId)
         {
-            return Ok(pRepo.GetByNurse(nurseId));
+            return Ok(await pRepo.GetByNurseAsync(nurseId));
         }
 
         [HttpGet("Doctors/{id}")]
 
-        public IActionResult GetByDoctor(int doctorId)
+        public async Task<IActionResult> GetByDoctor(int doctorId)
         {
-            return Ok(pRepo.GetByDoctor(doctorId));
+            return Ok(await pRepo.GetByDoctorAsync(doctorId));
         }
 
         // POST api/Patients

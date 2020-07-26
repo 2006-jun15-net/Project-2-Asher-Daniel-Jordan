@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
 
@@ -15,10 +16,12 @@ namespace Project2.API.Controllers
     public class TreatmentsController : ControllerBase
     {
         private readonly ITreatmentRepository tRepo;
+        private readonly ILogger<TreatmentsController> _logger;
 
-        public TreatmentsController(ITreatmentRepository treatmentRepository)
+        public TreatmentsController(ITreatmentRepository treatmentRepository, ILogger<TreatmentsController> logger)
         {
             tRepo = treatmentRepository;
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
         // GET: api/Treatments
@@ -44,6 +47,7 @@ namespace Project2.API.Controllers
         [Route("/GetByIllness/{id}")]
         public async Task<IActionResult> GetIllnessTreatments(int id)
         {
+            _logger.LogInformation("Entered getIllnessTreatments method");
             var treatments = await tRepo.TreatmentsByIlllnessAsync(id);
             return Ok(treatments);
         }
