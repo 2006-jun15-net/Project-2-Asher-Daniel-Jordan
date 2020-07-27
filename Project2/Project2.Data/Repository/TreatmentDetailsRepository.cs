@@ -25,7 +25,8 @@ namespace Project2.Data.Repository
             {
                 StartTime = td.StartTime,
                 PatientId = td.PatientId,
-                OpsRoomId = td.OpsRoomId
+                OpsRoomId = td.OpsRoomId,
+                TreatmentId = td.TreatmentId
             };
 
             _context.TreatmentDetailsEntity.Add(tdEntity);
