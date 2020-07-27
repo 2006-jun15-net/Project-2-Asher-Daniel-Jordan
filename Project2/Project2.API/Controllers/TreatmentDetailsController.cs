@@ -27,11 +27,11 @@ namespace Project2.API.Controllers
             return Ok(treatmentDetails);
         }
 
-        // GET api/<TreatmentDetailsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/TreatmentDetails/5/2
+        [HttpGet("{roomId}/{patientId}")]
+        public async Task<IActionResult> Get(int roomId, int patientId)
         {
-            return "value";
+            return Ok(await tdetailsRepo.GetDetailsAsync(roomId, patientId));
         }
 
         // POST api/<TreatmentDetailsController>

@@ -23,7 +23,14 @@ namespace Project2.Data.Repository
         {
             var Entities = await _context.TreatmentDetailsEntity.ToListAsync();
 
-            return Entities.Select(e => new TreatmentDetails(e.PatientId, e.OpsRoomId, e.StartTime));
+            return Entities.Select(e => new TreatmentDetails(e.OpsRoomId, e.PatientId, e.StartTime));
+        }
+
+        public async Task<TreatmentDetails> GetDetailsAsync(int roomId, int patientId)
+        {
+            var entity = await _context.TreatmentDetailsEntity.FindAsync(roomId, patientId);
+
+            return new TreatmentDetails(entity.OpsRoomId, entity.PatientId, entity.StartTime);
         }
     }
 }

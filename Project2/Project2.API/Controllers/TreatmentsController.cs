@@ -47,7 +47,7 @@ namespace Project2.API.Controllers
         [Route("GetByIllness/{doctorId}/{illnessId}")]
         public async Task<IActionResult> GetIllnessTreatments(int doctorId, int illnessId)
         {
-            var treatments = await tRepo.TreatmentsByIlllnessAsync(id);
+            var treatments = await tRepo.TreatmentsByIlllnessAsync(doctorId, illnessId);
             return Ok(treatments);
         }
 
