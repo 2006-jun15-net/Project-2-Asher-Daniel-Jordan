@@ -37,18 +37,18 @@ namespace Project2.Data.Repository
 
         }
 
-        public async Task<IEnumerable<Treatment>> TreatmentsByIlllnessAsync(int id)
+        public async Task<IEnumerable<Treatment>> TreatmentsByIlllnessAsync(int doctorId, int illnessId)
         {
             var entities = await _context.TreatmentEntity
-                .Where(e => e.IllnessId == id)
+                .Where(e => e.IllnessId == illnessId && e.DoctorId == doctorId)
                 .ToListAsync();
 
             return entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
         }
 
-        public async Task<Treatment> GetTreatmentAsync(int id)
+        public async Task<Treatment> GetTreatmentAsync(int doctorId, int illnessId)
         {
-            var entity = await _context.TreatmentEntity.FindAsync(id);
+            var entity = await _context.TreatmentEntity.FindAsync(illnessId, doctorId);
 
             return new Treatment(entity.IllnessId, entity.DoctorId, entity.Name, entity.TimeToTreat);
         }

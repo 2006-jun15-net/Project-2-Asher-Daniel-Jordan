@@ -32,27 +32,27 @@ namespace Project2.API.Controllers
 
         // GET: api/Treatments/GetByDoctor/2
         [HttpGet]
-        [Route("/GetByDoctor/{id}")]
+        [Route("GetByDoctor/{id}")]
         public async Task<IActionResult> GetTreatments(int id)
         {
             var treatments = await tRepo.GetDoctorTreatmentsAsync(id);
             return Ok(treatments);
         }
 
-        // GET: api/Treatments/GetByIllness/3
+        // GET: api/Treatments/GetByIllness/3/1
         [HttpGet]
-        [Route("/GetByIllness/{id}")]
-        public async Task<IActionResult> GetIllnessTreatments(int id)
+        [Route("GetByIllness/{doctorId}/{illnessId}")]
+        public async Task<IActionResult> GetIllnessTreatments(int doctorId, int illnessId)
         {
-            var treatments = await tRepo.TreatmentsByIlllnessAsync(id);
+            var treatments = await tRepo.TreatmentsByIlllnessAsync(doctorId, illnessId);
             return Ok(treatments);
         }
 
         // GET api/Treatments/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Treatment>> Get(int id)
+        [HttpGet("{doctorId}/{illnessId}")]
+        public async Task<ActionResult<Treatment>> Get(int doctorId, int illnessId)
         {
-            var treatment = await tRepo.GetTreatmentAsync(id);
+            var treatment = await tRepo.GetTreatmentAsync(doctorId, illnessId);
            if(treatment is Treatment item)
            {
                 return item;
