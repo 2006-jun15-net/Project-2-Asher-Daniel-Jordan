@@ -14,7 +14,7 @@ namespace Project2.Domain.Interface
 
         Task<Illness> CreateAsync(Illness illness);
 
-        Task<Illness> UpdateIllnessAsync(Illness illness);
+        Task UpdateIllnessAsync(Illness illness);
 
         Task<Illness> DeleteIllnessAsync(Illness illness);
     }

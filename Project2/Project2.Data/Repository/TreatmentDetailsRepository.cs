@@ -19,18 +19,42 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task<TreatmentDetails> CreateAsync(TreatmentDetails td)
+        {
+            var tdEntity = new TreatmentDetailsEntity
+            {
+                StartTime = td.StartTime,
+                PatientId = td.PatientId,
+                OpsRoomId = td.OpsRoomId
+            };
+
+            _context.TreatmentDetailsEntity.Add(tdEntity);
+
+            await _context.SaveChangesAsync();
+
+            return td;
+        }
+
+        public Task DeleteAsync(TreatmentDetails td)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<TreatmentDetails>> GetAllAsync()
         {
             var Entities = await _context.TreatmentDetailsEntity.ToListAsync();
 
-            return Entities.Select(e => new TreatmentDetails(e.OpsRoomId, e.PatientId, e.StartTime));
+            return Entities.Select(e => new TreatmentDetails((int)e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
         }
 
-        public async Task<TreatmentDetails> GetDetailsAsync(int roomId, int patientId)
+        public Task<TreatmentDetails> GetByIdAsync()
         {
-            var entity = await _context.TreatmentDetailsEntity.FindAsync(roomId, patientId);
+            throw new NotImplementedException();
+        }
 
-            return new TreatmentDetails(entity.OpsRoomId, entity.PatientId, entity.StartTime);
+        public Task UpdateAsync(TreatmentDetails td)
+        {
+            throw new NotImplementedException();
         }
     }
 }

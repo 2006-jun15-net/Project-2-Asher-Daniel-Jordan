@@ -11,8 +11,7 @@ namespace Project2.Domain.Model
 
         public int PatientId { get; set; }
         public int? PatientRoomId { get; set; }
-        public int IllnessId { get; set; }
-        public int DoctorId { get; set; }
+        
         public string FirstName 
         {
             get => _firstName; 
@@ -38,12 +37,10 @@ namespace Project2.Domain.Model
             }
         }
 
-        public Patient(int patientid, int? patientroomid, int illnessid, int doctorid, string firstname, string lastname)
+        public Patient(int patientid, int? patientroomid,  string firstname, string lastname)
         {
             PatientId = patientid;
             PatientRoomId = patientroomid;
-            IllnessId = illnessid;
-            DoctorId = doctorid;
             FirstName = firstname;
             LastName = lastname;
         }

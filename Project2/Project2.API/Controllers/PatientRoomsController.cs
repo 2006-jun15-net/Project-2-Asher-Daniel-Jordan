@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2.Domain.Interface;
@@ -31,15 +32,29 @@ namespace Project2.API.Controllers
 
         // GET api/PatientRooms/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetRoomById(int id)
         {
-            return "value";
+            return Ok(await proomRepo.GetRoomAsync(id));
+            
         }
 
         // POST api/PatientRooms
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> Post([FromBody] PatientRoom pRoom)
         {
+            if (proomRepo.GetRoomsAsync().Result.Any(pr => pr.PatientRoomId == pRoom.PatientRoomId))
+            {
+                return Conflict();
+            }
+
+            await proomRepo.CreateAsync(pRoom);
+
+            return CreatedAtAction(
+                actionName: nameof(GetRoomById),
+                routeValues: new { id = pRoom.PatientRoomId },
+                value: pRoom);
         }
 
         // PUT api/PatientRooms/5
@@ -74,8 +89,23 @@ namespace Project2.API.Controllers
 
         // DELETE api/PatientRooms/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingPRoom = await proomRepo.GetRoomAsync(id);
+
+            if (existingPRoom != null)
+            {
+                await proomRepo.DeleteAsync(existingPRoom);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

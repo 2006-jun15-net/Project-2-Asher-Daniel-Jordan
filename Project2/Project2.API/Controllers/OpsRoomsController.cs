@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2.Domain.Interface;
@@ -55,8 +56,21 @@ namespace Project2.API.Controllers
 
         // POST api/OpsRooms
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> PostIllness([FromBody] OpsRoom opsRoom)
         {
+            if (opsroomRepo.GetAllRoomsAsync().Result.Any(or => or.OpsRoomId == opsRoom.OpsRoomId))
+            {
+                return Conflict();
+            }
+
+            await opsroomRepo.CreateOpsRoomAsync(opsRoom);
+
+            return CreatedAtAction(
+                actionName: nameof(Get),
+                routeValues: new { id = opsRoom.OpsRoomId},
+                value: opsRoom);
         }
 
         // PUT api/OpsRooms/5
@@ -91,8 +105,23 @@ namespace Project2.API.Controllers
 
         // DELETE api/OpsRooms/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingOpsRoom = await opsroomRepo.GetOpsRoomAsync(id);
+
+            if (existingOpsRoom != null)
+            {
+                await opsroomRepo.DeleteAsync(existingOpsRoom);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
