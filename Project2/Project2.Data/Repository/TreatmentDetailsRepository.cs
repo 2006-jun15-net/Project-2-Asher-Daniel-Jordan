@@ -19,11 +19,42 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task<TreatmentDetails> CreateAsync(TreatmentDetails td)
+        {
+            var tdEntity = new TreatmentDetailsEntity
+            {
+                StartTime = td.StartTime,
+                PatientId = td.PatientId,
+                OpsRoomId = td.OpsRoomId
+            };
+
+            _context.TreatmentDetailsEntity.Add(tdEntity);
+
+            await _context.SaveChangesAsync();
+
+            return td;
+        }
+
+        public Task DeleteAsync(TreatmentDetails td)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<TreatmentDetails>> GetAllAsync()
         {
             var Entities = await _context.TreatmentDetailsEntity.ToListAsync();
 
-            return Entities.Select(e => new TreatmentDetails(e.PatientId, e.OpsRoomId, e.StartTime));
+            return Entities.Select(e => new TreatmentDetails((int)e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
+        }
+
+        public Task<TreatmentDetails> GetByIdAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(TreatmentDetails td)
+        {
+            throw new NotImplementedException();
         }
     }
 }

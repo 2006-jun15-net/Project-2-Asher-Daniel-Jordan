@@ -19,11 +19,66 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task<Nurse> CreateNurseAsync(Nurse nurse)
+        {
+            var nurseEntity = new NurseEntity
+            {
+                NurseId = nurse.NurseId,
+                FirstName = nurse.FirstName,
+                LastName = nurse.LastName,
+            };
+
+            _context.NurseEntity.Add(nurseEntity);
+
+            await _context.SaveChangesAsync();
+
+            return nurse;
+
+        }
+
+        public async Task<Nurse> DeleteNurseAsync(Nurse nurse)
+        {
+            var Entity = new NurseEntity
+            {
+                NurseId = nurse.NurseId,
+                FirstName = nurse.FirstName,
+                LastName = nurse.LastName
+            };
+
+            _context.NurseEntity.Remove(Entity);
+
+            await _context.SaveChangesAsync();
+
+            return nurse;
+
+        }
+
+        public async Task<Nurse> GetByNurseIdAsync(int nurseId)
+        {
+            var nurseEntity = await _context.NurseEntity.FindAsync(nurseId);
+            return new Nurse(nurseEntity.NurseId, nurseEntity.FirstName, nurseEntity.LastName);
+        }
+
         public async Task<IEnumerable<Nurse>> GetNursesAsync()
         {
             var Entities = await _context.NurseEntity.ToListAsync();
 
             return Entities.Select(e => new Nurse(e.NurseId, e.FirstName, e.LastName));
+        }
+
+        public async Task UpdateNurseAsync(Nurse nurse)
+        {
+            var entity = await _context.DoctorEntity.FindAsync(nurse.NurseId);
+            var newEntity = new NurseEntity
+            {
+                NurseId = nurse.NurseId,
+                FirstName = nurse.FirstName,
+                LastName = nurse.LastName
+            };
+
+            _context.Entry(entity).CurrentValues.SetValues(newEntity);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

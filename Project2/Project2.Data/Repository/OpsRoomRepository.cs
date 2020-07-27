@@ -61,5 +61,35 @@ namespace Project2.Data.Repository
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<OpsRoom> CreateOpsRoomAsync(OpsRoom opsRoom)
+        {
+            var opsroomEntity = new OpsRoomEntity 
+            { 
+                OpsRoomId = opsRoom.OpsRoomId,
+                Available = opsRoom.Available,
+                
+            };
+
+            _context.OpsRoomEntity.Add(opsroomEntity);
+
+            await SaveAsync();
+
+            return opsRoom;
+        }
+
+        public async Task DeleteAsync(OpsRoom opsRoom)
+        {
+            var opsRoomEntity = new OpsRoomEntity
+            {
+                OpsRoomId = opsRoom.OpsRoomId,
+                Available = opsRoom.Available
+            };
+
+            _context.OpsRoomEntity.Remove(opsRoomEntity);
+
+            await SaveAsync();
+           
+        }
     }
 }

@@ -9,5 +9,13 @@ namespace Project2.Domain.Interface
     public interface INurseRepository
     {
         Task<IEnumerable<Nurse>> GetNursesAsync();
+
+        Task<Nurse> GetByNurseIdAsync(int nureseId);
+
+        Task<Nurse> CreateNurseAsync(Nurse nurse);
+
+        Task UpdateNurseAsync(Nurse nurse);
+
+        Task<Nurse> DeleteNurseAsync(Nurse nurse);
     }
 }

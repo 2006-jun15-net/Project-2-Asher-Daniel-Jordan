@@ -45,23 +45,21 @@ namespace Project2.Data.Repository
             return doctor;
         }
 
-        public async Task<Doctor> UpdateDoctorAsync(Doctor doctor)
+        public async Task UpdateDoctorAsync(Doctor doctor)
         {
 
-            var Entity = new DoctorEntity 
-            { 
-                DoctorId = doctor.DoctorId, 
-                FirstName = doctor.FirstName, 
+            var entity = await _context.DoctorEntity.FindAsync(doctor.DoctorId);
+            var newEntity = new DoctorEntity
+            {
+                DoctorId = doctor.DoctorId,
+                FirstName = doctor.FirstName,
                 LastName = doctor.LastName
             };
 
-            _context.Entry(Entity).State = EntityState.Modified;
+            _context.Entry(entity).CurrentValues.SetValues(newEntity);
 
             await _context.SaveChangesAsync();
 
-            return doctor;
-
-            
         }
 
         public async Task<Doctor> DeleteDoctorAsync(Doctor doctor)
