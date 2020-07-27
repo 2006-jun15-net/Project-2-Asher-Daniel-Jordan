@@ -25,6 +25,15 @@ namespace Project2.Data.Model
         public virtual DbSet<TreatmentEntity> TreatmentEntity { get; set; }
         public virtual DbSet<WorkingDetailsEntity> WorkingDetailsEntity { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=tcp:2020-aasa.database.windows.net,1433;Initial Catalog=Project2;Persist Security Info=False;User ID=Daniel;Password=1Zavior@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DoctorEntity>(entity =>
@@ -84,27 +93,15 @@ namespace Project2.Data.Model
 
                 entity.Property(e => e.PatientId).HasColumnName("PatientID");
 
-                entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
-
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(200);
-
-                entity.Property(e => e.IllnessId).HasColumnName("IllnessID");
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(200);
 
                 entity.Property(e => e.PatientRoomId).HasColumnName("PatientRoomID");
-
-                entity.HasOne(d => d.Doctor)
-                    .WithMany(p => p.PatientEntity)
-                    .HasForeignKey(d => d.DoctorId);
-
-                entity.HasOne(d => d.Illness)
-                    .WithMany(p => p.PatientEntity)
-                    .HasForeignKey(d => d.IllnessId);
 
                 entity.HasOne(d => d.PatientRoom)
                     .WithMany(p => p.PatientEntity)
@@ -122,32 +119,36 @@ namespace Project2.Data.Model
 
             modelBuilder.Entity<TreatmentDetailsEntity>(entity =>
             {
-                entity.HasKey(e => new { e.OpsRoomId, e.PatientId });
+                entity.HasKey(e => new { e.TreatmentId, e.PatientId });
 
-                entity.Property(e => e.OpsRoomId).HasColumnName("OpsRoomID");
+                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
 
                 entity.Property(e => e.PatientId).HasColumnName("PatientID");
+
+                entity.Property(e => e.OpsRoomId).HasColumnName("OpsRoomID");
 
                 entity.Property(e => e.StartTime)
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.HasOne(d => d.OpsRoom)
-                    .WithMany(p => p.TreatmentDetailsEntity)
-                    .HasForeignKey(d => d.OpsRoomId);
-
                 entity.HasOne(d => d.Patient)
                     .WithMany(p => p.TreatmentDetailsEntity)
                     .HasForeignKey(d => d.PatientId);
+
+                entity.HasOne(d => d.Treatment)
+                    .WithMany(p => p.TreatmentDetailsEntity)
+                    .HasForeignKey(d => d.TreatmentId);
             });
 
             modelBuilder.Entity<TreatmentEntity>(entity =>
             {
-                entity.HasKey(e => new { e.IllnessId, e.DoctorId });
+                entity.HasKey(e => e.TreatmentId);
 
-                entity.Property(e => e.IllnessId).HasColumnName("IllnessID");
+                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
 
                 entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
+
+                entity.Property(e => e.IllnessId).HasColumnName("IllnessID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

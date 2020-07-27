@@ -43,11 +43,12 @@ CREATE TABLE IllnessEntity(
 
 
 CREATE TABLE TreatmentEntity(
+	TreatmentID INT IDENTITY(1,1) NOT NULL,
 	IllnessID INT NOT NULL,
 	DoctorID INT NOT NULL,
 	Name NVARCHAR(200) NOT NULL,
 	TimeToTreat INT NOT NULL,
-	CONSTRAINT PK_TreatmentEntity PRIMARY KEY (IllnessID, DoctorID), 
+	CONSTRAINT PK_TreatmentEntity PRIMARY KEY (TreatmentID), 
 	CONSTRAINT FK_TreatmentEntity_DoctorEntity_DoctorID FOREIGN KEY (DoctorID)
 		REFERENCES DoctorEntity (DoctorID) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_TreatmentEntity_IllnessEntity_IllnessID FOREIGN KEY (IllnessID)
@@ -60,28 +61,23 @@ CREATE TABLE TreatmentEntity(
 CREATE TABLE PatientEntity(
 	PatientID INT IDENTITY(1, 1) NOT NULL,
 	PatientRoomID INT,
-	IllnessID INT NOT NULL,
-	DoctorID INT NOT NULL,
 	FirstName NVARCHAR(200) NOT NULL,
 	LastName NVARCHAR(200) NOT NULL,
 	CONSTRAINT PK_PatientEntity PRIMARY KEY (PatientID), 
 	CONSTRAINT FK_PatientEntity_PatientRoomEntity_PatientRoomID FOREIGN KEY (PatientRoomID)
-		REFERENCES PatientRoomEntity (PatientRoomID) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT FK_PatientEntity_IllnessEntity_IllnessID FOREIGN KEY (IllnessID)
-		REFERENCES IllnessEntity (IllnessID) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT FK_PatientEntity_DoctorEntity_DoctorID FOREIGN KEY (DoctorID)
-		REFERENCES DoctorEntity (DoctorID) ON DELETE CASCADE ON UPDATE CASCADE
+		REFERENCES PatientRoomEntity (PatientRoomID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE TreatmentDetailsEntity (
-	OpsRoomID INT NOT NULL,
+	OpsRoomID INT,
 	PatientID INT NOT NULL,
+	TreatmentID INT NOT NULL,
 	StartTime NVARCHAR(200) NOT NULL,
-	CONSTRAINT PK_TreatmentDetailsEntity PRIMARY KEY (OpsRoomID, PatientID),
-	CONSTRAINT FK_TreatmentDetailsEntity_OpsRoomEntity_OpsRoomID FOREIGN KEY (OpsRoomID)
-		REFERENCES OpsRoomEntity (OpsRoomID) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT PK_TreatmentDetailsEntity PRIMARY KEY (TreatmentID, PatientID),
 	CONSTRAINT FK_TreatmentDetailsEntity_PatientEntity_PatientID FOREIGN KEY (PatientID)
-		REFERENCES PatientEntity (PatientID) ON DELETE CASCADE ON UPDATE CASCADE
+		REFERENCES PatientEntity (PatientID) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FK_TreatmentDetailsEntity_TreatmentEntity_TreatmentID FOREIGN KEY (TreatmentID)
+		REFERENCES TreatmentEntity (TreatmentID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO NurseEntity(FirstName, LastName) VALUES
@@ -121,19 +117,19 @@ INSERT INTO TreatmentEntity(Name, DoctorID, IllnessID, TimeToTreat) VALUES
 		('Give Antipyretic', 1, 3, 4),('Dental Cleaning', 3, 4, 6),('Pain-relieving Drugs', 5, 1, 3),('Give Analgesics', 5, 2, 10),
 		('Give Metronidazole', 1, 5, 3),('Give Metronidazole', 3, 6, 8),('Give Antipyretic', 4, 3, 4),('Dental Cleaning', 1, 4, 5)
 
-INSERT INTO PatientEntity(PatientRoomID, IllnessID, DoctorID, FirstName, LastName) VALUES
-		(null, 5, 4, 'Angus', 'Hogg'),(null, 2, 1, 'Brittney', 'Senior'),(null, 3, 1, 'Anabelle', 'Keeling'),
-		(null, 6, 3, 'Francisco', 'Olson'),(null, 4, 5, 'Janine', 'Medrano')
+INSERT INTO PatientEntity(PatientRoomID, FirstName, LastName) VALUES
+		(null, 'Angus', 'Hogg'),(null, 'Brittney', 'Senior'),(null, 'Anabelle', 'Keeling'),
+		(null,'Francisco', 'Olson'),(null, 'Janine', 'Medrano')
 
---drop table DoctorEntity
---drop table IllnessEntity
---drop table NurseEntity
---drop table OpsRoomEntity
---drop table PatientEntity
---drop table PatientRoomEntity
---drop table TreatmentDetailsEntity
---drop table WorkingDetailsEntity
---drop table TreatmentEntity
+drop table DoctorEntity
+drop table IllnessEntity
+drop table NurseEntity
+drop table OpsRoomEntity
+drop table PatientEntity
+drop table PatientRoomEntity
+drop table TreatmentDetailsEntity
+drop table WorkingDetailsEntity
+drop table TreatmentEntity
 
-select *
-from PatientEntity
+--select *
+--from PatientEntity

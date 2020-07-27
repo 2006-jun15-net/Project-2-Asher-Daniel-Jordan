@@ -7,7 +7,6 @@ namespace Project2.Data.Model
     {
         public DoctorEntity()
         {
-            PatientEntity = new HashSet<PatientEntity>();
             TreatmentEntity = new HashSet<TreatmentEntity>();
             WorkingDetailsEntity = new HashSet<WorkingDetailsEntity>();
         }
@@ -16,7 +15,6 @@ namespace Project2.Data.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public virtual ICollection<PatientEntity> PatientEntity { get; set; }
         public virtual ICollection<TreatmentEntity> TreatmentEntity { get; set; }
         public virtual ICollection<WorkingDetailsEntity> WorkingDetailsEntity { get; set; }
     }
