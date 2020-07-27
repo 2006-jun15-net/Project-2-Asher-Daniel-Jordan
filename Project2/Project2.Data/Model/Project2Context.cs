@@ -25,15 +25,6 @@ namespace Project2.Data.Model
         public virtual DbSet<TreatmentEntity> TreatmentEntity { get; set; }
         public virtual DbSet<WorkingDetailsEntity> WorkingDetailsEntity { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:2020-aasa.database.windows.net,1433;Initial Catalog=Project2;Persist Security Info=False;User ID=Daniel;Password=1Zavior@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DoctorEntity>(entity =>
