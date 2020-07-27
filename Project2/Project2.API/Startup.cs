@@ -21,6 +21,7 @@ namespace Project2.API
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "AllowLocalNgServe";
+        private readonly ILoggerFactory loggerFactory = new LoggerFactory();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -49,7 +50,9 @@ namespace Project2.API
             services.AddSwaggerGen();
             
             services.AddDbContext<Project2Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
+                options
+                .UseLoggerFactory(loggerFactory)
+                .UseSqlServer(Configuration.GetConnectionString("SqlServer")));
 
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IIllnessRepository, IllnessRepository>();
@@ -64,8 +67,10 @@ namespace Project2.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile("Logs/Hospital-{Date}.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
