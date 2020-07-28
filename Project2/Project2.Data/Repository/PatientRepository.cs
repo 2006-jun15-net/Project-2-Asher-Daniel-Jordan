@@ -142,6 +142,8 @@ namespace Project2.Data.Repository
                 
             };
 
+            _context.Entry(patientEntiy).State = EntityState.Deleted;
+
             _context.PatientEntity.Remove(patientEntiy);
 
             await _context.SaveChangesAsync();
