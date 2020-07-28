@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
+using Project2.Domain.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,16 +30,29 @@ namespace Project2.API.Controllers
         }
 
         // GET api/TreatmentDetails/5/2
-        [HttpGet("{roomId}/{patientId}")]
-        public async Task<IActionResult> Get(int roomId, int patientId)
+        [HttpGet("{patientId}/{treatmentId}")]
+        public async Task<IActionResult> Get(int patientId, int treatmentId)
         {
-            return Ok(await tdetailsRepo.GetDetailsAsync(roomId, patientId));
+            return Ok(await tdetailsRepo.GetByIdAsync(patientId, treatmentId));
         }
 
         // POST api/<TreatmentDetailsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> Post([FromBody] TreatmentDetails value)
         {
+            if(tdetailsRepo.GetAllAsync().Result.Any(td => 
+            td.TreatmentId == value.TreatmentId && td.PatientId == value.PatientId))
+            {
+                return Conflict();
+            }
+
+            await tdetailsRepo.CreateAsync(value);
+
+            return CreatedAtAction(
+                actionName: nameof(Get),
+                value: value);
         }
 
         // PUT api/<TreatmentDetailsController>/5

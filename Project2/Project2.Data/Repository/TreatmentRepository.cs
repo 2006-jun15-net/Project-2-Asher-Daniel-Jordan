@@ -24,7 +24,7 @@ namespace Project2.Data.Repository
             var Entities = await _context.TreatmentEntity.ToListAsync();
 
 
-            return Entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
+            return Entities.Select(e => new Treatment(e.TreatmentId, e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
         }
 
         public async Task<IEnumerable<Treatment>> GetDoctorTreatmentsAsync(int id)
@@ -33,7 +33,7 @@ namespace Project2.Data.Repository
                 .Where(e => e.DoctorId == id)
                 .ToListAsync();
 
-            return entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
+            return entities.Select(e => new Treatment(e.TreatmentId, e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
 
         }
 
@@ -43,14 +43,20 @@ namespace Project2.Data.Repository
                 .Where(e => e.IllnessId == illnessId && e.DoctorId == doctorId)
                 .ToListAsync();
 
-            return entities.Select(e => new Treatment(e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
+            return entities.Select(e => new Treatment(e.TreatmentId, e.IllnessId, e.DoctorId, e.Name, e.TimeToTreat));
         }
 
-        public async Task<Treatment> GetTreatmentAsync(int doctorId, int illnessId)
+        public async Task<Treatment> GetTreatmentAsync(int id)
         {
-            var entity = await _context.TreatmentEntity.FindAsync(illnessId, doctorId);
+            var entity = await _context.TreatmentEntity.FindAsync(id);
 
-            return new Treatment(entity.IllnessId, entity.DoctorId, entity.Name, entity.TimeToTreat);
+            return new Treatment(
+                entity.TreatmentId, 
+                entity.IllnessId, 
+                entity.DoctorId, 
+                entity.Name, 
+                entity.TimeToTreat
+                );
         }
     }
 }

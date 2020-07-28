@@ -25,7 +25,8 @@ namespace Project2.Data.Repository
             {
                 StartTime = td.StartTime,
                 PatientId = td.PatientId,
-                OpsRoomId = td.OpsRoomId
+                OpsRoomId = td.OpsRoomId,
+                TreatmentId = td.TreatmentId
             };
 
             _context.TreatmentDetailsEntity.Add(tdEntity);
@@ -47,9 +48,16 @@ namespace Project2.Data.Repository
             return Entities.Select(e => new TreatmentDetails((int)e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
         }
 
-        public Task<TreatmentDetails> GetByIdAsync()
+        public async Task<TreatmentDetails> GetByIdAsync(int patientId, int treatmentId)
         {
-            throw new NotImplementedException();
+            var entity = await _context.TreatmentDetailsEntity.FindAsync(patientId, treatmentId);
+
+            return new TreatmentDetails(
+                entity.OpsRoomId, 
+                entity.PatientId, 
+                entity.TreatmentId, 
+                entity.StartTime
+                );
         }
 
         public Task UpdateAsync(TreatmentDetails td)

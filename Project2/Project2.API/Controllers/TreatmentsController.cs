@@ -52,10 +52,10 @@ namespace Project2.API.Controllers
         }
 
         // GET api/Treatments/5
-        [HttpGet("{doctorId}/{illnessId}")]
-        public async Task<ActionResult<Treatment>> Get(int doctorId, int illnessId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Treatment>> Get(int id)
         {
-            var treatment = await tRepo.GetTreatmentAsync(doctorId, illnessId);
+            var treatment = await tRepo.GetTreatmentAsync(id);
            if(treatment is Treatment item)
            {
                 return item;

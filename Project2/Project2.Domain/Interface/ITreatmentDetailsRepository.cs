@@ -10,7 +10,7 @@ namespace Project2.Domain.Interface
     {
         Task<IEnumerable<TreatmentDetails>> GetAllAsync();
 
-        Task<TreatmentDetails> GetByIdAsync();
+        Task<TreatmentDetails> GetByIdAsync(int patientId, int treatmentId);
 
         Task<TreatmentDetails> CreateAsync(TreatmentDetails td);
 
