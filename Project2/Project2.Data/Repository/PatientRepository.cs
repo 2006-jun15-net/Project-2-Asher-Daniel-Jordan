@@ -43,6 +43,7 @@ namespace Project2.Data.Repository
             PatientEntity currentPatient = await _context.PatientEntity.FindAsync(patient.PatientId);
             var Entity = new PatientEntity
             {
+                PatientId = patient.PatientId,
                 FirstName = patient.FirstName,
                 LastName = patient.LastName,
                 PatientRoomId = patient.PatientRoomId
@@ -117,6 +118,17 @@ namespace Project2.Data.Repository
                 patientEntitiy.FirstName,
                 patientEntitiy.LastName
                 );
+        }
+
+        public async Task<Patient> GetByPatientRoom(int id)
+        {
+            var entity = await _context.PatientEntity.FirstOrDefaultAsync(p => p.PatientRoomId == id);
+
+            if(entity == null)
+            {
+                return null;
+            }
+            return new Patient(entity.PatientId, entity.PatientRoomId, entity.FirstName, entity.LastName);
         }
 
         public async Task DeletePatientAsync(Patient patient)

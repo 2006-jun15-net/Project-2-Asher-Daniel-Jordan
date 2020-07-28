@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
+using Project2.Domain.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,17 +29,24 @@ namespace Project2.API.Controllers
             return Ok(treatmentDetails);
         }
 
-        // GET api/<TreatmentDetailsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/TreatmentDetails/5/2
+        [HttpGet("{patientId}/{treatmentId}")]
+        public async Task<IActionResult> GetTreatmentDetail(int patientId, int treatmentId)
         {
-            return "value";
+            return Ok(await tdetailsRepo.GetByIdAsync(patientId, treatmentId));
         }
 
         // POST api/<TreatmentDetailsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> Post([FromBody] TreatmentDetails value)
         {
+            await tdetailsRepo.CreateAsync(value);
+
+            return CreatedAtAction(
+                actionName: nameof(GetTreatmentDetail),
+                value: value);
         }
 
         // PUT api/<TreatmentDetailsController>/5

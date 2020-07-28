@@ -12,7 +12,7 @@ namespace Project2.Domain.Model
         public int TreatmentId { get; set; }
         public string StartTime { get; set; }
 
-        public TreatmentDetails(int opsroomid, int patientid, int treatmentid, string starttime)
+        public TreatmentDetails(int? opsroomid, int patientid, int treatmentid, string starttime)
         {
             OpsRoomId = opsroomid;
             PatientId = patientid;

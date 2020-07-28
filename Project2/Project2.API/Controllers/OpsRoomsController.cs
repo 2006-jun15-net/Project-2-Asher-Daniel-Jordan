@@ -34,7 +34,7 @@ namespace Project2.API.Controllers
 
         // GET: api/OpsRooms/AvailableRooms
         [HttpGet]
-        [Route("/AvailableRooms")]
+        [Route("AvailableRooms")]
         public async Task<IActionResult> GetAvailableRooms()
         {
             var opsRooms = await opsroomRepo.GetAvailableRoomsAsync();

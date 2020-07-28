@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
 
@@ -15,10 +16,12 @@ namespace Project2.API.Controllers
     public class TreatmentsController : ControllerBase
     {
         private readonly ITreatmentRepository tRepo;
+        private readonly ILogger<TreatmentsController> _logger;
 
-        public TreatmentsController(ITreatmentRepository treatmentRepository)
+        public TreatmentsController(ITreatmentRepository treatmentRepository, ILogger<TreatmentsController> logger)
         {
             tRepo = treatmentRepository;
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
         // GET: api/Treatments
@@ -32,19 +35,19 @@ namespace Project2.API.Controllers
 
         // GET: api/Treatments/GetByDoctor/2
         [HttpGet]
-        [Route("/GetByDoctor/{id}")]
+        [Route("GetByDoctor/{id}")]
         public async Task<IActionResult> GetTreatments(int id)
         {
             var treatments = await tRepo.GetDoctorTreatmentsAsync(id);
             return Ok(treatments);
         }
 
-        // GET: api/Treatments/GetByIllness/3
+        // GET: api/Treatments/GetByIllness/3/1
         [HttpGet]
-        [Route("/GetByIllness/{id}")]
-        public async Task<IActionResult> GetIllnessTreatments(int id)
+        [Route("GetByIllness/{doctorId}/{illnessId}")]
+        public async Task<IActionResult> GetIllnessTreatments(int doctorId, int illnessId)
         {
-            var treatments = await tRepo.TreatmentsByIlllnessAsync(id);
+            var treatments = await tRepo.TreatmentsByIlllnessAsync(doctorId, illnessId);
             return Ok(treatments);
         }
 

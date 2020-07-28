@@ -17,6 +17,7 @@ namespace Project2.Domain.Interface
         Task UpdateAsync(Patient patient);
         Task<IEnumerable<Patient>> GetByNurseAsync(int nurseId);
         Task<IEnumerable<Patient>> GetByDoctorAsync(int doctorId);
+        Task<Patient> GetByPatientRoom(int id);
 
     }
 }
