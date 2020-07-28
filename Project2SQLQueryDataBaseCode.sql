@@ -69,11 +69,12 @@ CREATE TABLE PatientEntity(
 );
 
 CREATE TABLE TreatmentDetailsEntity (
+	TreatmentDetailsID INT IDENTITY(1, 1) NOT NULL,
 	OpsRoomID INT,
 	PatientID INT NOT NULL,
 	TreatmentID INT NOT NULL,
 	StartTime NVARCHAR(200) NOT NULL,
-	CONSTRAINT PK_TreatmentDetailsEntity PRIMARY KEY (TreatmentID, PatientID),
+	CONSTRAINT PK_TreatmentDetailsEntity PRIMARY KEY (TreatmentDetailsID),
 	CONSTRAINT FK_TreatmentDetailsEntity_PatientEntity_PatientID FOREIGN KEY (PatientID)
 		REFERENCES PatientEntity (PatientID) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_TreatmentDetailsEntity_TreatmentEntity_TreatmentID FOREIGN KEY (TreatmentID)
