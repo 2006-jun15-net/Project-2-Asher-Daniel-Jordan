@@ -71,7 +71,11 @@ namespace Project2.Data.Repository
                 LastName = doctor.LastName 
             };
 
+
+            _context.Entry(Entity).State = EntityState.Deleted;
             _context.DoctorEntity.Remove(Entity);
+
+            
 
             await _context.SaveChangesAsync();
 

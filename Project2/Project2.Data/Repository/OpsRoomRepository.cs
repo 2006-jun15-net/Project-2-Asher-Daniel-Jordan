@@ -86,6 +86,7 @@ namespace Project2.Data.Repository
                 Available = opsRoom.Available
             };
 
+            _context.Entry(opsRoomEntity).State = EntityState.Deleted;
             _context.OpsRoomEntity.Remove(opsRoomEntity);
 
             await SaveAsync();

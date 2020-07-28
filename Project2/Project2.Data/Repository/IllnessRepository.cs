@@ -40,6 +40,8 @@ namespace Project2.Data.Repository
 
             };
 
+            _context.Entry(Entity).State = EntityState.Deleted;
+
             _context.IllnessEntity.Remove(Entity);
 
             await _context.SaveChangesAsync();
