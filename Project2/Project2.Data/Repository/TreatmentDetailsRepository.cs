@@ -19,11 +19,11 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<TreatmentDetails> CreateAsync(TreatmentDetails td)
+        public async Task CreateAsync(TreatmentDetails td)
         {
             var tdEntity = new TreatmentDetailsEntity
             {
-                StartTime = td.StartTime,
+                StartTime = DateTime.Now.Date.ToString(),
                 PatientId = td.PatientId,
                 OpsRoomId = td.OpsRoomId,
                 TreatmentId = td.TreatmentId
@@ -32,8 +32,6 @@ namespace Project2.Data.Repository
             _context.TreatmentDetailsEntity.Add(tdEntity);
 
             await _context.SaveChangesAsync();
-
-            return td;
         }
 
         public Task DeleteAsync(TreatmentDetails td)
@@ -45,7 +43,7 @@ namespace Project2.Data.Repository
         {
             var Entities = await _context.TreatmentDetailsEntity.ToListAsync();
 
-            return Entities.Select(e => new TreatmentDetails((int)e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
+            return Entities.Select(e => new TreatmentDetails(e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
         }
 
         public async Task<TreatmentDetails> GetByIdAsync(int patientId, int treatmentId)

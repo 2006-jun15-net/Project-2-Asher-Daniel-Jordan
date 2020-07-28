@@ -12,7 +12,7 @@ namespace Project2.Domain.Interface
 
         Task<TreatmentDetails> GetByIdAsync(int patientId, int treatmentId);
 
-        Task<TreatmentDetails> CreateAsync(TreatmentDetails td);
+        Task CreateAsync(TreatmentDetails td);
 
         Task UpdateAsync(TreatmentDetails td);
 

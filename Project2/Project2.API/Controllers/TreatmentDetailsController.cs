@@ -31,7 +31,7 @@ namespace Project2.API.Controllers
 
         // GET api/TreatmentDetails/5/2
         [HttpGet("{patientId}/{treatmentId}")]
-        public async Task<IActionResult> Get(int patientId, int treatmentId)
+        public async Task<IActionResult> GetTreatmentDetail(int patientId, int treatmentId)
         {
             return Ok(await tdetailsRepo.GetByIdAsync(patientId, treatmentId));
         }
@@ -42,16 +42,10 @@ namespace Project2.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Post([FromBody] TreatmentDetails value)
         {
-            if(tdetailsRepo.GetAllAsync().Result.Any(td => 
-            td.TreatmentId == value.TreatmentId && td.PatientId == value.PatientId))
-            {
-                return Conflict();
-            }
-
             await tdetailsRepo.CreateAsync(value);
 
             return CreatedAtAction(
-                actionName: nameof(Get),
+                actionName: nameof(GetTreatmentDetail),
                 value: value);
         }
 
