@@ -55,6 +55,18 @@ namespace Project2.API.Controllers
 
         }
 
+        [HttpGet("PatientRoom/{id}")]
+        public async Task<IActionResult> GetByPatientRoom(int id)
+        {
+            var patient = await pRepo.GetByPatientRoom(id);
+            if(patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
+
         // POST api/Patients
         [HttpPost("Patients")]
         public async Task<IActionResult> Post([FromBody] Patient patient)
@@ -72,8 +84,12 @@ namespace Project2.API.Controllers
 
         public async Task<IActionResult> Put(int id, [FromBody] Patient patient)
         {
-            var existingPatient = await pRepo.GetByIdAsync(id);
+            if(id != patient.PatientId)
+            {
+                return BadRequest();
+            }
 
+            var existingPatient = await pRepo.GetByIdAsync(id);
             if (existingPatient != null)
             {
                 await pRepo.UpdateAsync(patient);
