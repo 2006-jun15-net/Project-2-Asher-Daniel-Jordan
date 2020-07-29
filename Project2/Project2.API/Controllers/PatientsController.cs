@@ -72,6 +72,32 @@ namespace Project2.API.Controllers
             return Ok(patient);
         }
 
+        [HttpPut("AssignPatient/{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> AssignPatientRoom(int id, [FromBody] Patient patient)
+        {
+
+            if (id != patient.PatientId)
+            {
+                return BadRequest();
+            }
+
+            var existingPatient = await pRepo.GetByIdAsync(id);
+            if (existingPatient != null)
+            {
+                await patientService.AssignPatientToRoomAsync(existingPatient);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
         // POST api/Patients
         [HttpPost("Patients")]
         public async Task<IActionResult> Post([FromBody] Patient patient)

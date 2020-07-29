@@ -20,7 +20,7 @@ namespace Project2.Domain.Service
             patientRoomRepository = proomRepo;
         }
 
-        public async Task<PatientRoom> AssignPatientToRoom(Patient patient)
+        public async Task<PatientRoom> AssignPatientToRoomAsync(Patient patient)
         {
             if(patientRoomRepository.GetRoomsAsync().Result.Any(pr => pr.Available == true))
             {
