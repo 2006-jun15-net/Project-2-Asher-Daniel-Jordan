@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Project2.Data.Model;
 using Project2.Data.Repository;
 using Project2.Domain.Interface;
+using Project2.Domain.Service;
 
 namespace Project2.API
 {
@@ -63,6 +64,7 @@ namespace Project2.API
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<IWorkingDetailsRepository, WorkingDetailsRepository>();
             services.AddScoped<IPatientRoomRepository, PatientRoomRepository>();
+            services.AddScoped<PatientService>();
             services.AddControllers();
         }
 
