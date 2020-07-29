@@ -77,13 +77,8 @@ namespace Project2.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<IActionResult> AssignPatientRoom(int id, [FromBody] Patient patient)
+        public async Task<IActionResult> AssignPatientRoom(int id)
         {
-
-            if (id != patient.PatientId)
-            {
-                return BadRequest();
-            }
 
             var existingPatient = await pRepo.GetByIdAsync(id);
             if (existingPatient != null)

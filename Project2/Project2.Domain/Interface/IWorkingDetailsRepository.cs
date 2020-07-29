@@ -9,5 +9,9 @@ namespace Project2.Domain.Interface
     public interface IWorkingDetailsRepository
     {
         Task<IEnumerable<WorkingDetails>> GetAllAsync();
+
+        Task UpdateAsync(WorkingDetails wd);
+
+        Task DeleteAsync(int id);
     }
 }

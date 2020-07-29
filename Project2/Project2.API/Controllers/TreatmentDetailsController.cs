@@ -48,6 +48,21 @@ namespace Project2.API.Controllers
             return Ok(result);
         }
 
+        //GET api/TreatmentDetails/Doctor/5
+        [HttpGet("Doctor/{id}")]
+
+        public async Task<IActionResult> GetTreatmentDetailsByDoctor(int doctorId)
+        {
+            var result = await tdetailsRepo.GetByDoctorAsync(doctorId);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+
+        }
+
         // POST api/<TreatmentDetailsController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -78,8 +93,23 @@ namespace Project2.API.Controllers
 
         // DELETE api/<TreatmentDetailsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingTreatmentDetails = await tdetailsRepo.GetByIdAsync(id);
+
+            if (existingTreatmentDetails != null)
+            {
+                await tdetailsRepo.DeleteAsync(existingTreatmentDetails);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

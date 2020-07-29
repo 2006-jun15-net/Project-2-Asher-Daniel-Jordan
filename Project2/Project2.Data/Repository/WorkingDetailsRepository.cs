@@ -19,11 +19,21 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<WorkingDetails>> GetAllAsync()
         {
             var Entities = await _context.WorkingDetailsEntity.ToListAsync();
 
             return Entities.Select(e => new WorkingDetails(e.DoctorId, e.NurseId, e.ActiveAssociation));
+        }
+
+        public Task UpdateAsync(WorkingDetails wd)
+        {
+            throw new NotImplementedException();
         }
     }
 }
