@@ -2,6 +2,7 @@
 using Project2.Domain.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,8 +20,41 @@ namespace Project2.Domain.Service
             patientRoomRepository = proomRepo;
         }
 
-        public async Task AssignPatientToRoom(Patient patient)
+        public async Task<PatientRoom> AssignPatientToRoom(Patient patient)
         {
+            if(patientRoomRepository.GetRoomsAsync().Result.Any(pr => pr.Available == true))
+            {
+                var patientRoom = patientRoomRepository.GetRoomsAsync().Result.Where(pr => pr.Available == true).FirstOrDefault();
+
+                patient.PatientRoomId = patientRoom.PatientRoomId;
+
+                await patientRepository.UpdateAsync(patient);
+
+                return patientRoom;
+            }
+            else
+            {
+                var patientRoom = new PatientRoom(0, false);
+
+                await patientRoomRepository.CreateAsync(patientRoom);
+
+                patient.PatientRoomId = patientRoom.PatientRoomId;
+
+                await patientRepository.UpdateAsync(patient);
+
+                return patientRoom;
+
+
+            }
+
+            
+
+
+
+
+
+
+
 
         }
     }

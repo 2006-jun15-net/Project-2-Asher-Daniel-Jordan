@@ -23,11 +23,13 @@ namespace Project2.Data.Repository
         {
             var prEntity = new PatientRoomEntity
             {
-                PatientRoomId = patientRoom.PatientRoomId,
+                PatientRoomId = _context.PatientRoomEntity.Last().PatientRoomId + 1,
                 Available = patientRoom.Available
             };
 
             _context.PatientRoomEntity.Add(prEntity);
+
+            
 
             await SaveAsync();
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
+using Project2.Domain.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 //change made
@@ -18,9 +19,13 @@ namespace Project2.API.Controllers
     {
         private readonly IPatientRepository pRepo;
 
-        public PatientsController(IPatientRepository patientRepository)
+        private readonly PatientService patientService;
+
+        public PatientsController(IPatientRepository patientRepository, PatientService pService)
         {
             pRepo = patientRepository;
+
+            patientService = pService;
         }
         // GET: api/Patients
         [HttpGet]
