@@ -49,7 +49,7 @@ namespace Project2.API.Controllers
         }
 
         //GET api/TreatmentDetails/Doctor/5
-        [HttpGet("Doctor/{id}")]
+        [HttpGet("Doctor/{doctorId}")]
 
         public async Task<IActionResult> GetTreatmentDetailsByDoctor(int doctorId)
         {
