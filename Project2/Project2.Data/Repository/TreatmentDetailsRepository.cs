@@ -46,9 +46,9 @@ namespace Project2.Data.Repository
             return Entities.Select(e => new TreatmentDetails(e.TreatmentDetailsId, e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
         }
 
-        public async Task<TreatmentDetails> GetByIdAsync(int patientId, int treatmentId)
+        public async Task<TreatmentDetails> GetByIdAsync(int id)
         {
-            var entity = await _context.TreatmentDetailsEntity.FindAsync(patientId, treatmentId);
+            var entity = await _context.TreatmentDetailsEntity.FindAsync(id);
 
             return new TreatmentDetails(
                 entity.TreatmentDetailsId,
@@ -59,9 +59,44 @@ namespace Project2.Data.Repository
                 );
         }
 
-        public Task UpdateAsync(TreatmentDetails td)
+        public async Task<TreatmentDetails> GetPatientTreatment(int id)
         {
-            throw new NotImplementedException();
+            var entities = await _context.TreatmentDetailsEntity.Where(e => e.PatientId == id).ToListAsync();
+            DateTime maxDate = DateTime.MinValue;
+            foreach(var e in entities)
+            {
+                if(DateTime.Parse(e.StartTime) > maxDate)
+                {
+                    maxDate = DateTime.Parse(e.StartTime);
+                }
+            }
+            var entity = await _context.TreatmentDetailsEntity
+                .FirstOrDefaultAsync(e => e.StartTime == maxDate.ToString());
+
+            return new TreatmentDetails(
+                entity.TreatmentDetailsId, 
+                entity.OpsRoomId, 
+                entity.PatientId, 
+                entity.TreatmentId, 
+                entity.StartTime
+                );
+        }
+
+        public async Task UpdateAsync(TreatmentDetails td)
+        {
+            var currentDetail = await _context.TreatmentDetailsEntity.FindAsync(td.TreatmentDetailsId);
+            var entity = new TreatmentDetailsEntity
+            {
+                TreatmentDetailsId = td.TreatmentDetailsId,
+                PatientId = td.PatientId,
+                TreatmentId = td.TreatmentId,
+                OpsRoomId = td.OpsRoomId,
+                StartTime = td.StartTime
+            };
+
+            _context.Entry(currentDetail).CurrentValues.SetValues(entity);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

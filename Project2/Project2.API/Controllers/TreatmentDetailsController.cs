@@ -29,31 +29,51 @@ namespace Project2.API.Controllers
             return Ok(treatmentDetails);
         }
 
-        // GET api/TreatmentDetails/5/2
-        [HttpGet("{patientId}/{treatmentId}")]
-        public async Task<IActionResult> GetTreatmentDetail(int patientId, int treatmentId)
+        // GET api/TreatmentDetails/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTreatmentDetail(int id)
         {
-            return Ok(await tdetailsRepo.GetByIdAsync(patientId, treatmentId));
+            return Ok(await tdetailsRepo.GetByIdAsync(id));
+        }
+
+        // GET
+        [HttpGet("GetPatientsTreatment/{patientId}")]
+        public async Task<IActionResult> GetPatientsTreatment(int patientId)
+        {
+            var result = await tdetailsRepo.GetPatientTreatment(patientId);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // POST api/<TreatmentDetailsController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Post([FromBody] TreatmentDetails value)
+        public async Task<IActionResult> Post([FromBody] TreatmentDetails treatmentDetails)
         {
-            await tdetailsRepo.CreateAsync(value);
+            await tdetailsRepo.CreateAsync(treatmentDetails);
 
             return CreatedAtAction(
                 actionName: nameof(Get),
-                value: value);
+                routeValues: new {id = treatmentDetails.TreatmentDetailsId},
+                value: treatmentDetails);
         }
 
-        // PUT api/<TreatmentDetailsController>/5/3
-        [HttpPut("{treatmentId}/{patientId}")]
-        public void Put(int treatmentId, int patientId, [FromBody] TreatmentDetails value)
+        // PUT api/<TreatmentDetailsController>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] TreatmentDetails treatmentDetails)
         {
-            
+            if(id != treatmentDetails.TreatmentDetailsId)
+            {
+                return BadRequest();
+            }
+
+            await tdetailsRepo.UpdateAsync(treatmentDetails);
+
+            return NoContent();
         }
 
         // DELETE api/<TreatmentDetailsController>/5
