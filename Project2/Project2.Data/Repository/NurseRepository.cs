@@ -45,6 +45,7 @@ namespace Project2.Data.Repository
                 LastName = nurse.LastName
             };
 
+            _context.Entry(Entity).State = EntityState.Deleted;
             _context.NurseEntity.Remove(Entity);
 
             await _context.SaveChangesAsync();

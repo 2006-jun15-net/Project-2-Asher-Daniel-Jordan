@@ -43,7 +43,7 @@ namespace Project2.Data.Repository
         {
             var Entities = await _context.TreatmentDetailsEntity.ToListAsync();
 
-            return Entities.Select(e => new TreatmentDetails(e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
+            return Entities.Select(e => new TreatmentDetails(e.TreatmentDetailsId, e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
         }
 
         public async Task<TreatmentDetails> GetByIdAsync(int patientId, int treatmentId)
@@ -51,6 +51,7 @@ namespace Project2.Data.Repository
             var entity = await _context.TreatmentDetailsEntity.FindAsync(patientId, treatmentId);
 
             return new TreatmentDetails(
+                entity.TreatmentDetailsId,
                 entity.OpsRoomId, 
                 entity.PatientId, 
                 entity.TreatmentId, 

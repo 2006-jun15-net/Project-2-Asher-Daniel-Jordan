@@ -78,6 +78,7 @@ namespace Project2.Data.Repository
                 Available = patientRoom.Available
             };
 
+            _context.Entry(pRoomEntity).State = EntityState.Deleted;
             _context.PatientRoomEntity.Remove(pRoomEntity);
 
             await SaveAsync();

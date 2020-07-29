@@ -25,6 +25,7 @@ namespace Project2.Data.Model
         public virtual DbSet<TreatmentEntity> TreatmentEntity { get; set; }
         public virtual DbSet<WorkingDetailsEntity> WorkingDetailsEntity { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DoctorEntity>(entity =>
@@ -110,17 +111,19 @@ namespace Project2.Data.Model
 
             modelBuilder.Entity<TreatmentDetailsEntity>(entity =>
             {
-                entity.HasKey(e => new { e.TreatmentId, e.PatientId });
+                entity.HasKey(e => e.TreatmentDetailsId);
 
-                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
-
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
+                entity.Property(e => e.TreatmentDetailsId).HasColumnName("TreatmentDetailsID");
 
                 entity.Property(e => e.OpsRoomId).HasColumnName("OpsRoomID");
+
+                entity.Property(e => e.PatientId).HasColumnName("PatientID");
 
                 entity.Property(e => e.StartTime)
                     .IsRequired()
                     .HasMaxLength(200);
+
+                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
 
                 entity.HasOne(d => d.Patient)
                     .WithMany(p => p.TreatmentDetailsEntity)
