@@ -74,13 +74,8 @@ namespace Project2.Data.Repository
 
         public async Task DeleteAsync(PatientRoom patientRoom)
         {
-            var pRoomEntity = new PatientRoomEntity
-            {
-                PatientRoomId = patientRoom.PatientRoomId,
-                Available = patientRoom.Available
-            };
+            var pRoomEntity = _context.PatientRoomEntity.Find(patientRoom.PatientRoomId);
 
-            _context.Entry(pRoomEntity).State = EntityState.Deleted;
             _context.PatientRoomEntity.Remove(pRoomEntity);
 
             await SaveAsync();

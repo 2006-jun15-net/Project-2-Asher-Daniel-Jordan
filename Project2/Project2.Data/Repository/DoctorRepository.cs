@@ -64,15 +64,10 @@ namespace Project2.Data.Repository
 
         public async Task<Doctor> DeleteDoctorAsync(Doctor doctor)
         {
-            var Entity = new DoctorEntity 
-            { 
-                DoctorId = doctor.DoctorId, 
-                FirstName = doctor.FirstName, 
-                LastName = doctor.LastName 
-            };
+            var Entity = _context.DoctorEntity.Find(doctor.DoctorId);
 
 
-            _context.Entry(Entity).State = EntityState.Deleted;
+            
             _context.DoctorEntity.Remove(Entity);
 
             

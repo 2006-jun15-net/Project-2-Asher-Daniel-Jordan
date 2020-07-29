@@ -99,7 +99,7 @@ namespace Project2.API.Controllers
         }
 
         // POST api/Patients
-        [HttpPost("Patients")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] Patient patient)
         {
             var person = await pRepo.CreateAsync(patient);

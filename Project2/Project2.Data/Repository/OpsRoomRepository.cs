@@ -80,13 +80,8 @@ namespace Project2.Data.Repository
 
         public async Task DeleteAsync(OpsRoom opsRoom)
         {
-            var opsRoomEntity = new OpsRoomEntity
-            {
-                OpsRoomId = opsRoom.OpsRoomId,
-                Available = opsRoom.Available
-            };
+            var opsRoomEntity = _context.OpsRoomEntity.Find(opsRoom.OpsRoomId);
 
-            _context.Entry(opsRoomEntity).State = EntityState.Deleted;
             _context.OpsRoomEntity.Remove(opsRoomEntity);
 
             await SaveAsync();

@@ -33,14 +33,9 @@ namespace Project2.Data.Repository
 
         public async Task<Illness> DeleteIllnessAsync(Illness illness)
         {
-            var Entity = new IllnessEntity
-            {
-                IllnessId = illness.IllnessId,
-                Name = illness.Name  
+            var Entity = _context.IllnessEntity.Find(illness.IllnessId);
 
-            };
-
-            _context.Entry(Entity).State = EntityState.Deleted;
+            
 
             _context.IllnessEntity.Remove(Entity);
 

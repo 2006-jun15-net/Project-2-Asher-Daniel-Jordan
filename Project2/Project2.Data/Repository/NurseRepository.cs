@@ -38,14 +38,9 @@ namespace Project2.Data.Repository
 
         public async Task<Nurse> DeleteNurseAsync(Nurse nurse)
         {
-            var Entity = new NurseEntity
-            {
-                NurseId = nurse.NurseId,
-                FirstName = nurse.FirstName,
-                LastName = nurse.LastName
-            };
+            var Entity = _context.NurseEntity.Find(nurse.NurseId);
 
-            _context.Entry(Entity).State = EntityState.Deleted;
+            
             _context.NurseEntity.Remove(Entity);
 
             await _context.SaveChangesAsync();
