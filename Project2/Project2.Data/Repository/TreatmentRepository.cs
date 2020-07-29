@@ -58,6 +58,46 @@ namespace Project2.Data.Repository
                 entity.TimeToTreat
                 );
         }
+
+        public async Task CreateTreatmentAsync(Treatment t)
+        {
+            var entity = new TreatmentEntity
+            {
+                Name = t.Name,
+                TimeToTreat = t.TimeToTreat,
+                IllnessId = t.IllnessId
+            };
+
+            _context.TreatmentEntity.Add(entity);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateTreatmentAsync(Treatment t)
+        {
+            var currentEntity = _context.TreatmentEntity.Find(t.TreatmentId);
+            var updatedEntity = new TreatmentEntity
+            {
+                TreatmentId = currentEntity.TreatmentId,
+                Name = currentEntity.Name,
+                TimeToTreat = currentEntity.TimeToTreat,
+                IllnessId = currentEntity.IllnessId,
+                DoctorId = currentEntity.DoctorId
+            };
+
+            _context.Entry(currentEntity).CurrentValues.SetValues(updatedEntity);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteTreatmentAsync(int id)
+        {
+           var entity = _context.TreatmentEntity.Find(id);
+
+            _context.TreatmentEntity.Remove(entity);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
 

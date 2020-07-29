@@ -34,9 +34,15 @@ namespace Project2.Data.Repository
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(TreatmentDetails td)
+        public async Task DeleteAsync(TreatmentDetails td)
         {
-            throw new NotImplementedException();
+            var tdEntity = _context.TreatmentDetailsEntity.Find(td.TreatmentDetailsId);
+
+            _context.TreatmentDetailsEntity.Remove(tdEntity);
+
+            await _context.SaveChangesAsync();
+
+
         }
 
         public async Task<IEnumerable<TreatmentDetails>> GetAllAsync()
@@ -44,6 +50,23 @@ namespace Project2.Data.Repository
             var Entities = await _context.TreatmentDetailsEntity.ToListAsync();
 
             return Entities.Select(e => new TreatmentDetails(e.TreatmentDetailsId, e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
+        }
+
+        public async Task<IEnumerable<TreatmentDetails>> GetByDoctorAsync(int doctorId)
+        {
+            var treatmentIds = await _context.TreatmentEntity.Where(t => t.DoctorId == doctorId).Select(t => t.TreatmentId).ToListAsync();
+
+            var tdEntities = new List<TreatmentDetailsEntity>();
+
+            foreach (int id in treatmentIds)
+            {
+                tdEntities.AddRange(_context.TreatmentDetailsEntity.Where(td => td.TreatmentId == id).ToList());
+            }
+
+            return tdEntities.Select(e => new TreatmentDetails(e.TreatmentDetailsId, e.OpsRoomId, e.PatientId, e.TreatmentId, e.StartTime));
+
+
+
         }
 
         public async Task<TreatmentDetails> GetByIdAsync(int id)
