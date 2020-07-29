@@ -45,14 +45,15 @@ namespace Project2.API.Controllers
             await tdetailsRepo.CreateAsync(value);
 
             return CreatedAtAction(
-                actionName: nameof(GetTreatmentDetail),
+                actionName: nameof(Get),
                 value: value);
         }
 
-        // PUT api/<TreatmentDetailsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<TreatmentDetailsController>/5/3
+        [HttpPut("{treatmentId}/{patientId}")]
+        public void Put(int treatmentId, int patientId, [FromBody] TreatmentDetails value)
         {
+            
         }
 
         // DELETE api/<TreatmentDetailsController>/5

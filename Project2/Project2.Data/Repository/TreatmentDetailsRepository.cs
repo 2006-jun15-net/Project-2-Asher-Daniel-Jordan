@@ -23,7 +23,7 @@ namespace Project2.Data.Repository
         {
             var tdEntity = new TreatmentDetailsEntity
             {
-                StartTime = DateTime.Now.Date.ToString(),
+                StartTime = DateTime.Now.ToString(),
                 PatientId = td.PatientId,
                 OpsRoomId = td.OpsRoomId,
                 TreatmentId = td.TreatmentId
