@@ -14,6 +14,5 @@ namespace Project2.Domain.Interface
 
         Task DeleteAsync(PatientRoom patientRoom);
         Task Update(PatientRoom patientRoom);
-        Task SaveAsync();
     }
 }

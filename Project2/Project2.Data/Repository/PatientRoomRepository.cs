@@ -29,10 +29,7 @@ namespace Project2.Data.Repository
 
             _context.PatientRoomEntity.Add(prEntity);
 
-            
-
-            await SaveAsync();
-
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<PatientRoom>> GetRoomsAsync()
@@ -50,7 +47,10 @@ namespace Project2.Data.Repository
             }
 
             var entity = await _context.PatientRoomEntity.FindAsync(id);
-
+            if(entity == null)
+            {
+                return null;
+            }
             return new PatientRoom(entity.PatientRoomId, entity.Available);
         }
 
@@ -67,18 +67,13 @@ namespace Project2.Data.Repository
             _context.Entry(entity).CurrentValues.SetValues(newEntity);
         }
 
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
-
         public async Task DeleteAsync(PatientRoom patientRoom)
         {
             var pRoomEntity = _context.PatientRoomEntity.Find(patientRoom.PatientRoomId);
 
             _context.PatientRoomEntity.Remove(pRoomEntity);
 
-            await SaveAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

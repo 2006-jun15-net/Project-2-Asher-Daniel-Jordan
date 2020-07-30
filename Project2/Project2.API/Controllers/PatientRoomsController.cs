@@ -34,7 +34,12 @@ namespace Project2.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoomById(int id)
         {
-            return Ok(await proomRepo.GetRoomAsync(id));
+            var result = await proomRepo.GetRoomAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
             
         }
 
@@ -66,22 +71,13 @@ namespace Project2.API.Controllers
                 return BadRequest();
             }
 
-            await proomRepo.Update(value);
-
-            try
+            if (proomRepo.GetRoomAsync(value.PatientRoomId).Result == null)
             {
-                await proomRepo.SaveAsync();
+                return NotFound();
             }
-            catch(DbUpdateConcurrencyException)
+            else
             {
-                if(proomRepo.GetRoomAsync(value.PatientRoomId).Result == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                await proomRepo.Update(value);
             }
 
             return NoContent();

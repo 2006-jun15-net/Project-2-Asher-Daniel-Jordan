@@ -10,53 +10,53 @@ using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using Xunit;
 
-namespace Project2.Test
+namespace Project2.Test.Controllers
 {
-    public class DoctorControllerTests
+    public class PatientRoomsControllerTests
     {
         //initial setup
-        private readonly Mock<IDoctorRepository> _mockRepo;
-        private readonly DoctorsController _controller;
+        private readonly Mock<IPatientRoomRepository> _mockRepo;
+        private readonly PatientRoomsController _controller;
 
 
         //initial setup
-        public DoctorControllerTests()
+        public PatientRoomsControllerTests()
         {
-            _mockRepo = new Mock<IDoctorRepository>();
-            _controller = new DoctorsController(_mockRepo.Object);
+            _mockRepo = new Mock<IPatientRoomRepository>();
+            _controller = new PatientRoomsController(_mockRepo.Object);
 
-            List<Doctor> doctors = new List<Doctor>()
+            List<PatientRoom> rooms = new List<PatientRoom>()
             {
-                new Doctor(1, "Test", "Dummy")
+                new PatientRoom(1, true)
             };
 
             // get all doctors
-            _mockRepo.Setup(repo => repo.GetDoctorsAsync())
-                .Returns(async () => await Task.Run(() => doctors));
+            _mockRepo.Setup(repo => repo.GetRoomsAsync())
+                .Returns(async () => await Task.Run(() => rooms));
 
             // get doctor by id
-            _mockRepo.Setup(repo => repo.GetDoctorAsync(It.IsAny<int>()))
-                .Returns(async (int id) => await Task.Run(() => 
-                    doctors.Where<Doctor>(d => d.DoctorId == id).FirstOrDefault()));
+            _mockRepo.Setup(repo => repo.GetRoomAsync(It.IsAny<int>()))
+                .Returns(async (int id) => await Task.Run(() =>
+                    rooms.Where<PatientRoom>(r => r.PatientRoomId == id).FirstOrDefault()));
 
             // create doctor
-            _mockRepo.Setup(repo => repo.CreateDoctorAsync(It.IsAny<Doctor>()))
-                .Returns(async (Doctor doctor) => await Task.Run(() => doctors.Add(doctor)));
+            _mockRepo.Setup(repo => repo.CreateAsync(It.IsAny<PatientRoom>()))
+                .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Add(room)));
 
             // updates doctor
-            _mockRepo.Setup(repo => repo.UpdateDoctorAsync(It.IsAny<Doctor>()))
-                .Returns(async (Doctor doctor) => await Task.Run(() => doctors));
+            _mockRepo.Setup(repo => repo.Update(It.IsAny<PatientRoom>()))
+                .Returns(async (PatientRoom room) => await Task.Run(() => rooms));
 
             // deletes a doctor
-            _mockRepo.Setup(repo => repo.DeleteDoctorAsync(It.IsAny<Doctor>()))
-                .Returns(async (Doctor doctor) => await Task.Run(() => doctors.Remove(doctor)));
+            _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<PatientRoom>()))
+                .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Remove(room)));
         }
 
-        
+
         [Fact]
         public async void GetDoctors_ActionExecutes_ReturnsOKStatus()
         {
-            var result = await _controller.GetDoctors();
+            var result = await _controller.Get();
 
             var okResult = result as OkObjectResult;
 
@@ -67,7 +67,7 @@ namespace Project2.Test
         [Fact]
         public async void GetDoctorById_Action_ReturnsOK_IfFound()
         {
-            var result = await _controller.GetDoctorById(1);
+            var result = await _controller.GetRoomById(1);
 
             var okResult = result as OkObjectResult;
 
@@ -78,7 +78,7 @@ namespace Project2.Test
         [Fact]
         public async void GetDoctorById_Action_ReturnsNotFound()
         {
-            var result = await _controller.GetDoctorById(23);
+            var result = await _controller.GetRoomById(23);
 
             var notFoundResult = result as NotFoundResult;
 
@@ -89,8 +89,8 @@ namespace Project2.Test
         [Fact]
         public async void PostDoctor_Action_ReturnsCreatedAtAction()
         {
-            Doctor doctor = new Doctor(3, "Test", "Dummy");
-            var result = await _controller.PostDoctor(doctor);
+            PatientRoom room = new PatientRoom(3, true);
+            var result = await _controller.Post(room);
 
             var createdResult = result as CreatedAtActionResult;
 
@@ -101,8 +101,8 @@ namespace Project2.Test
         [Fact]
         public async void PostDoctor_Action_ReturnsConflict_OnDuplicate()
         {
-            Doctor doctor = new Doctor(1, "Test", "Dummy");
-            var result = await _controller.PostDoctor(doctor);
+            PatientRoom room = new PatientRoom(1, true);
+            var result = await _controller.Post(room);
 
             var createdResult = result as ConflictResult;
 
@@ -113,20 +113,20 @@ namespace Project2.Test
         [Fact]
         public async void PutDoctor_Action_ReturnsOk()
         {
-            Doctor doctor = new Doctor(1, "Test", "Dummy");
-            var result = await _controller.Put(1, doctor);
+            PatientRoom room = new PatientRoom(1, false);
+            var result = await _controller.Put(1, room);
 
-            var okResult = result as OkResult;
+            var okResult = result as NoContentResult;
 
             Assert.NotNull(okResult);
-            Assert.Equal(200, okResult.StatusCode);
+            Assert.Equal(204, okResult.StatusCode);
         }
 
         [Fact]
         public async void PutDoctor_Action_ReturnsBadRequest()
         {
-            Doctor doctor = new Doctor(1, "Test", "Dummy");
-            var result = await _controller.Put(2, doctor);
+            PatientRoom room = new PatientRoom(1, false);
+            var result = await _controller.Put(2, room);
 
             var badRequestResult = result as BadRequestResult;
 
@@ -137,8 +137,8 @@ namespace Project2.Test
         [Fact]
         public async void PutDoctor_Action_ReturnsNotFound()
         {
-            Doctor doctor = new Doctor(23, "Test", "Dummy");
-            var result = await _controller.Put(23, doctor);
+            PatientRoom room = new PatientRoom(23, false);
+            var result = await _controller.Put(23, room);
 
             var notFoundResult = result as NotFoundResult;
 
