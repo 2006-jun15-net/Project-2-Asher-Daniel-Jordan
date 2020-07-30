@@ -19,7 +19,7 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Nurse> CreateNurseAsync(Nurse nurse)
+        public async Task CreateNurseAsync(Nurse nurse)
         {
             var nurseEntity = new NurseEntity
             {
@@ -31,27 +31,24 @@ namespace Project2.Data.Repository
             _context.NurseEntity.Add(nurseEntity);
 
             await _context.SaveChangesAsync();
-
-            return nurse;
-
         }
 
-        public async Task<Nurse> DeleteNurseAsync(Nurse nurse)
+        public async Task DeleteNurseAsync(Nurse nurse)
         {
             var Entity = _context.NurseEntity.Find(nurse.NurseId);
 
-            
             _context.NurseEntity.Remove(Entity);
 
             await _context.SaveChangesAsync();
-
-            return nurse;
-
         }
 
         public async Task<Nurse> GetByNurseIdAsync(int nurseId)
         {
             var nurseEntity = await _context.NurseEntity.FindAsync(nurseId);
+            if(nurseEntity == null)
+            {
+                return null;
+            }
             return new Nurse(nurseEntity.NurseId, nurseEntity.FirstName, nurseEntity.LastName);
         }
 

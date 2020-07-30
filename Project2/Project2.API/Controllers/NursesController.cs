@@ -37,7 +37,12 @@ namespace Project2.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNurseById(int id)
         {
-            return Ok(await nRepo.GetByNurseIdAsync(id));
+            var result = await nRepo.GetByNurseIdAsync(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // POST api/Nurses
@@ -67,6 +72,11 @@ namespace Project2.API.Controllers
 
         public async Task<IActionResult> Put(int id, [FromBody] Nurse nurse)
         {
+            if(id != nurse.NurseId)
+            {
+                return BadRequest();
+            }
+
             var existingNurse = await nRepo.GetByNurseIdAsync(id);
 
             if (existingNurse != null)

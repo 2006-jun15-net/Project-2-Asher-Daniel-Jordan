@@ -12,10 +12,10 @@ namespace Project2.Domain.Interface
 
         Task<Nurse> GetByNurseIdAsync(int nureseId);
 
-        Task<Nurse> CreateNurseAsync(Nurse nurse);
+        Task CreateNurseAsync(Nurse nurse);
 
         Task UpdateNurseAsync(Nurse nurse);
 
-        Task<Nurse> DeleteNurseAsync(Nurse nurse);
+        Task DeleteNurseAsync(Nurse nurse);
     }
 }

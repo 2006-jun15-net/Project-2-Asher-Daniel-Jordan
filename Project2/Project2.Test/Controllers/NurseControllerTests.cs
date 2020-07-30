@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -10,53 +10,50 @@ using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using Xunit;
 
-namespace Project2.Test
+namespace Project2.Test.Controllers
 {
-    public class DoctorControllerTests
+    public class NurseControllerTests
     {
         //initial setup
-        private readonly Mock<IDoctorRepository> _mockRepo;
-        private readonly DoctorsController _controller;
+        private readonly Mock<INurseRepository> _mockRepo;
+        private readonly NursesController _controller;
 
-
-        //initial setup
-        public DoctorControllerTests()
+        public NurseControllerTests()
         {
-            _mockRepo = new Mock<IDoctorRepository>();
-            _controller = new DoctorsController(_mockRepo.Object);
+            _mockRepo = new Mock<INurseRepository>();
+            _controller = new NursesController(_mockRepo.Object);
 
-            List<Doctor> doctors = new List<Doctor>()
+            List<Nurse> nurses = new List<Nurse>()
             {
-                new Doctor(1, "Test", "Dummy")
+                new Nurse(1, "Test", "Dummy")
             };
 
             // get all doctors
-            _mockRepo.Setup(repo => repo.GetDoctorsAsync())
-                .Returns(async () => await Task.Run(() => doctors));
+            _mockRepo.Setup(repo => repo.GetNursesAsync())
+                .Returns(async () => await Task.Run(() => nurses));
 
             // get doctor by id
-            _mockRepo.Setup(repo => repo.GetDoctorAsync(It.IsAny<int>()))
-                .Returns(async (int id) => await Task.Run(() => 
-                    doctors.Where<Doctor>(d => d.DoctorId == id).FirstOrDefault()));
+            _mockRepo.Setup(repo => repo.GetByNurseIdAsync(It.IsAny<int>()))
+                .Returns(async (int id) => await Task.Run(() =>
+                    nurses.Where<Nurse>(n => n.NurseId == id).FirstOrDefault()));
 
             // create doctor
-            _mockRepo.Setup(repo => repo.CreateDoctorAsync(It.IsAny<Doctor>()))
-                .Returns(async (Doctor doctor) => await Task.Run(() => doctors.Add(doctor)));
+            _mockRepo.Setup(repo => repo.CreateNurseAsync(It.IsAny<Nurse>()))
+                .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Add(nurse)));
 
             // updates doctor
-            _mockRepo.Setup(repo => repo.UpdateDoctorAsync(It.IsAny<Doctor>()))
-                .Returns(async (Doctor doctor) => await Task.Run(() => doctors));
+            _mockRepo.Setup(repo => repo.UpdateNurseAsync(It.IsAny<Nurse>()))
+                .Returns(async (Nurse nurse) => await Task.Run(() => nurses));
 
             // deletes a doctor
-            _mockRepo.Setup(repo => repo.DeleteDoctorAsync(It.IsAny<Doctor>()))
-                .Returns(async (Doctor doctor) => await Task.Run(() => doctors.Remove(doctor)));
+            _mockRepo.Setup(repo => repo.DeleteNurseAsync(It.IsAny<Nurse>()))
+                .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Remove(nurse)));
         }
 
-        
         [Fact]
         public async void GetDoctors_ActionExecutes_ReturnsOKStatus()
         {
-            var result = await _controller.GetDoctors();
+            var result = await _controller.Get();
 
             var okResult = result as OkObjectResult;
 
@@ -67,7 +64,7 @@ namespace Project2.Test
         [Fact]
         public async void GetDoctorById_Action_ReturnsOK_IfFound()
         {
-            var result = await _controller.GetDoctorById(1);
+            var result = await _controller.GetNurseById(1);
 
             var okResult = result as OkObjectResult;
 
@@ -78,7 +75,7 @@ namespace Project2.Test
         [Fact]
         public async void GetDoctorById_Action_ReturnsNotFound()
         {
-            var result = await _controller.GetDoctorById(23);
+            var result = await _controller.GetNurseById(23);
 
             var notFoundResult = result as NotFoundResult;
 
@@ -89,8 +86,8 @@ namespace Project2.Test
         [Fact]
         public async void PostDoctor_Action_ReturnsCreatedAtAction()
         {
-            Doctor doctor = new Doctor(3, "Test", "Dummy");
-            var result = await _controller.PostDoctor(doctor);
+            Nurse nurse = new Nurse(3, "Test", "Dummy");
+            var result = await _controller.PostDoctor(nurse);
 
             var createdResult = result as CreatedAtActionResult;
 
@@ -101,8 +98,8 @@ namespace Project2.Test
         [Fact]
         public async void PostDoctor_Action_ReturnsConflict_OnDuplicate()
         {
-            Doctor doctor = new Doctor(1, "Test", "Dummy");
-            var result = await _controller.PostDoctor(doctor);
+            Nurse nurse = new Nurse(1, "Test", "Dummy");
+            var result = await _controller.PostDoctor(nurse);
 
             var createdResult = result as ConflictResult;
 
@@ -113,8 +110,8 @@ namespace Project2.Test
         [Fact]
         public async void PutDoctor_Action_ReturnsOk()
         {
-            Doctor doctor = new Doctor(1, "Test", "Dummy");
-            var result = await _controller.Put(1, doctor);
+            Nurse nurse = new Nurse(1, "Test", "Dummy");
+            var result = await _controller.Put(1, nurse);
 
             var okResult = result as OkResult;
 
@@ -125,8 +122,8 @@ namespace Project2.Test
         [Fact]
         public async void PutDoctor_Action_ReturnsBadRequest()
         {
-            Doctor doctor = new Doctor(1, "Test", "Dummy");
-            var result = await _controller.Put(2, doctor);
+            Nurse nurse = new Nurse(1, "Test", "Dummy");
+            var result = await _controller.Put(2, nurse);
 
             var badRequestResult = result as BadRequestResult;
 
@@ -137,8 +134,8 @@ namespace Project2.Test
         [Fact]
         public async void PutDoctor_Action_ReturnsNotFound()
         {
-            Doctor doctor = new Doctor(23, "Test", "Dummy");
-            var result = await _controller.Put(23, doctor);
+            Nurse nurse = new Nurse(23, "Test", "Dummy");
+            var result = await _controller.Put(23, nurse);
 
             var notFoundResult = result as NotFoundResult;
 
