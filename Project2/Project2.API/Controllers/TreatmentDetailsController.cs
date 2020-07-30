@@ -33,7 +33,12 @@ namespace Project2.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTreatmentDetail(int id)
         {
-            return Ok(await tdetailsRepo.GetByIdAsync(id));
+            var result = await tdetailsRepo.GetByIdAsync(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // GET
