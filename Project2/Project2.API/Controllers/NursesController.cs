@@ -49,7 +49,7 @@ namespace Project2.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> PostDoctor([FromBody] Nurse nurse)
+        public async Task<IActionResult> Post([FromBody] Nurse nurse)
         {
             if (nRepo.GetNursesAsync().Result.Any(n => n.NurseId == nurse.NurseId))
             {

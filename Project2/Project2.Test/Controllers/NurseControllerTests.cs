@@ -28,30 +28,30 @@ namespace Project2.Test.Controllers
                 new Nurse(1, "Test", "Dummy")
             };
 
-            // get all doctors
+            // get all nurses
             _mockRepo.Setup(repo => repo.GetNursesAsync())
                 .Returns(async () => await Task.Run(() => nurses));
 
-            // get doctor by id
+            // get nurse by id
             _mockRepo.Setup(repo => repo.GetByNurseIdAsync(It.IsAny<int>()))
                 .Returns(async (int id) => await Task.Run(() =>
                     nurses.Where<Nurse>(n => n.NurseId == id).FirstOrDefault()));
 
-            // create doctor
+            // create nurse
             _mockRepo.Setup(repo => repo.CreateNurseAsync(It.IsAny<Nurse>()))
                 .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Add(nurse)));
 
-            // updates doctor
+            // updates nurse
             _mockRepo.Setup(repo => repo.UpdateNurseAsync(It.IsAny<Nurse>()))
                 .Returns(async (Nurse nurse) => await Task.Run(() => nurses));
 
-            // deletes a doctor
+            // deletes a nurse
             _mockRepo.Setup(repo => repo.DeleteNurseAsync(It.IsAny<Nurse>()))
                 .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Remove(nurse)));
         }
 
         [Fact]
-        public async void GetDoctors_ActionExecutes_ReturnsOKStatus()
+        public async void Get_ActionExecutes_ReturnsOKStatus()
         {
             var result = await _controller.Get();
 
@@ -62,7 +62,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void GetDoctorById_Action_ReturnsOK_IfFound()
+        public async void GetNurseById_Action_ReturnsOK_IfFound()
         {
             var result = await _controller.GetNurseById(1);
 
@@ -73,7 +73,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void GetDoctorById_Action_ReturnsNotFound()
+        public async void GetNurseById_Action_ReturnsNotFound()
         {
             var result = await _controller.GetNurseById(23);
 
@@ -84,10 +84,10 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PostDoctor_Action_ReturnsCreatedAtAction()
+        public async void Post_Action_ReturnsCreatedAtAction()
         {
             Nurse nurse = new Nurse(3, "Test", "Dummy");
-            var result = await _controller.PostDoctor(nurse);
+            var result = await _controller.Post(nurse);
 
             var createdResult = result as CreatedAtActionResult;
 
@@ -96,10 +96,10 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PostDoctor_Action_ReturnsConflict_OnDuplicate()
+        public async void Post_Action_ReturnsConflict_OnDuplicate()
         {
             Nurse nurse = new Nurse(1, "Test", "Dummy");
-            var result = await _controller.PostDoctor(nurse);
+            var result = await _controller.Post(nurse);
 
             var createdResult = result as ConflictResult;
 
@@ -108,7 +108,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsOk()
+        public async void Put_Action_ReturnsOk()
         {
             Nurse nurse = new Nurse(1, "Test", "Dummy");
             var result = await _controller.Put(1, nurse);
@@ -120,7 +120,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsBadRequest()
+        public async void Put_Action_ReturnsBadRequest()
         {
             Nurse nurse = new Nurse(1, "Test", "Dummy");
             var result = await _controller.Put(2, nurse);
@@ -132,7 +132,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsNotFound()
+        public async void Put_Action_ReturnsNotFound()
         {
             Nurse nurse = new Nurse(23, "Test", "Dummy");
             var result = await _controller.Put(23, nurse);
