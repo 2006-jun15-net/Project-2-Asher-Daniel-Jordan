@@ -31,13 +31,16 @@ jobs:
         displayName: Build Project/Application and Release Config
         workingDirectory: $(solutionPath)
 
-      - task: DotNetCoreCLI@2
+      - script: dotnet test -c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
         displayName: Run project tests
-        inputs:
-          command: 'test'
-          projects: '$(solutionPath)'
-          arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
-          testRunTitle: 'ubuntu'
+        workingDirectory: $(solutionPath)
+      # - task: DotNetCoreCLI@2
+      #   displayName: Run project tests
+      #   inputs:
+      #     command: 'test'
+      #     projects: '$(solutionPath)'
+      #     arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
+      #     testRunTitle: 'ubuntu'
       
       - task: SonarCloudAnalyze@1
         displayName: Run SonarCloud Analysis
