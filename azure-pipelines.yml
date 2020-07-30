@@ -25,7 +25,7 @@ jobs:
           extraProperties: |
             sonar.exclusions=**/lib/**
             sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-            sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
+            sonar.cs.opencover.reportsPaths=$(solutionPath)/*/TestResults/*/coverage.cobertura.xml
 
       - script: dotnet build -c Release
         displayName: Build Project/Application and Release Config
@@ -49,10 +49,6 @@ jobs:
         displayName: Publish Analysis
         inputs:
           pollingTimeoutSec: '300'
-      
-      - script: cat coverage.cobertura.xml
-        displayName: open coverage file
-        workingDirectory: '$(solutionPath)/*/TestResults/*/coverage.cobertura.xml'
       
       #$(Agent.TempDirectory)/*/coverage.cobertura.xml
       - task: PublishCodeCoverageResults@1
