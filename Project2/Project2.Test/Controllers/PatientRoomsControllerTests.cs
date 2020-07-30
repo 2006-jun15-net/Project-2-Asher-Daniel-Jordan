@@ -30,31 +30,31 @@ namespace Project2.Test.Controllers
                 new PatientRoom(1, true)
             };
 
-            // get all doctors
+            // get all patient rooms
             _mockRepo.Setup(repo => repo.GetRoomsAsync())
                 .Returns(async () => await Task.Run(() => rooms));
 
-            // get doctor by id
+            // get patient room by id
             _mockRepo.Setup(repo => repo.GetRoomAsync(It.IsAny<int>()))
                 .Returns(async (int id) => await Task.Run(() =>
                     rooms.Where<PatientRoom>(r => r.PatientRoomId == id).FirstOrDefault()));
 
-            // create doctor
+            // create patient room
             _mockRepo.Setup(repo => repo.CreateAsync(It.IsAny<PatientRoom>()))
                 .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Add(room)));
 
-            // updates doctor
+            // updates patient room
             _mockRepo.Setup(repo => repo.Update(It.IsAny<PatientRoom>()))
                 .Returns(async (PatientRoom room) => await Task.Run(() => rooms));
 
-            // deletes a doctor
+            // deletes a patient room
             _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<PatientRoom>()))
                 .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Remove(room)));
         }
 
 
         [Fact]
-        public async void GetDoctors_ActionExecutes_ReturnsOKStatus()
+        public async void Get_ActionExecutes_ReturnsOKStatus()
         {
             var result = await _controller.Get();
 
@@ -65,7 +65,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void GetDoctorById_Action_ReturnsOK_IfFound()
+        public async void GetRoomById_Action_ReturnsOK_IfFound()
         {
             var result = await _controller.GetRoomById(1);
 
@@ -76,7 +76,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void GetDoctorById_Action_ReturnsNotFound()
+        public async void GetRoomById_Action_ReturnsNotFound()
         {
             var result = await _controller.GetRoomById(23);
 
@@ -87,7 +87,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PostDoctor_Action_ReturnsCreatedAtAction()
+        public async void Post_Action_ReturnsCreatedAtAction()
         {
             PatientRoom room = new PatientRoom(3, true);
             var result = await _controller.Post(room);
@@ -99,7 +99,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PostDoctor_Action_ReturnsConflict_OnDuplicate()
+        public async void Post_Action_ReturnsConflict_OnDuplicate()
         {
             PatientRoom room = new PatientRoom(1, true);
             var result = await _controller.Post(room);
@@ -111,7 +111,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsOk()
+        public async void Put_Action_ReturnsOk()
         {
             PatientRoom room = new PatientRoom(1, false);
             var result = await _controller.Put(1, room);
@@ -123,7 +123,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsBadRequest()
+        public async void Put_Action_ReturnsBadRequest()
         {
             PatientRoom room = new PatientRoom(1, false);
             var result = await _controller.Put(2, room);
@@ -135,7 +135,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsNotFound()
+        public async void Put_Action_ReturnsNotFound()
         {
             PatientRoom room = new PatientRoom(23, false);
             var result = await _controller.Put(23, room);
