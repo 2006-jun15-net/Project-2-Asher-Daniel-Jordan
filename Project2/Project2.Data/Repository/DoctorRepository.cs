@@ -31,18 +31,23 @@ namespace Project2.Data.Repository
         {
             var entity = await _context.DoctorEntity.FindAsync(id);
 
-            return new Doctor(entity.DoctorId, entity.FirstName, entity.LastName);
+            if(entity == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new Doctor(entity.DoctorId, entity.FirstName, entity.LastName);
+            }
         }
 
-        public async Task<Doctor> CreateDoctorAsync(Doctor doctor)
+        public async Task CreateDoctorAsync(Doctor doctor)
         {
             var Entity = new DoctorEntity { DoctorId = doctor.DoctorId, FirstName = doctor.FirstName, LastName = doctor.LastName };
 
             _context.DoctorEntity.Add(Entity);
 
             await _context.SaveChangesAsync();
-
-            return doctor;
         }
 
         public async Task UpdateDoctorAsync(Doctor doctor)
@@ -62,19 +67,13 @@ namespace Project2.Data.Repository
 
         }
 
-        public async Task<Doctor> DeleteDoctorAsync(Doctor doctor)
+        public async Task DeleteDoctorAsync(Doctor doctor)
         {
-            var Entity = _context.DoctorEntity.Find(doctor.DoctorId);
+            var Entity = await _context.DoctorEntity.FindAsync(doctor.DoctorId);
 
-
-            
             _context.DoctorEntity.Remove(Entity);
 
-            
-
             await _context.SaveChangesAsync();
-
-            return doctor;
         }
     }
 }
