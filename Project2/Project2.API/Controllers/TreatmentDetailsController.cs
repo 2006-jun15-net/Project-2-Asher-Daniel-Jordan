@@ -74,6 +74,12 @@ namespace Project2.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Post([FromBody] TreatmentDetails treatmentDetails)
         {
+            if(tdetailsRepo.GetAllAsync().Result.Any(td => 
+                td.TreatmentDetailsId == treatmentDetails.TreatmentDetailsId))
+            {
+                return Conflict();
+            }
+
             await tdetailsRepo.CreateAsync(treatmentDetails);
 
             return CreatedAtAction(
@@ -91,7 +97,15 @@ namespace Project2.API.Controllers
                 return BadRequest();
             }
 
-            await tdetailsRepo.UpdateAsync(treatmentDetails);
+            var existingDetails = await tdetailsRepo.GetByIdAsync(id);
+            if(existingDetails != null)
+            {
+                await tdetailsRepo.UpdateAsync(treatmentDetails);
+            }
+            else
+            {
+                return NotFound();
+            }
 
             return NoContent();
         }

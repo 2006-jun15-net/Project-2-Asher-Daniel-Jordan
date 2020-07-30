@@ -111,15 +111,15 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsOk()
+        public async void PutDoctor_Action_ReturnsNoContent()
         {
             TreatmentDetails detail = new TreatmentDetails(1, 1, 2, 1, "Dummy");
             var result = await _controller.Put(1, detail);
 
-            var okResult = result as OkResult;
+            var noContentResult = result as NoContentResult;
 
-            Assert.NotNull(okResult);
-            Assert.Equal(200, okResult.StatusCode);
+            Assert.NotNull(noContentResult);
+            Assert.Equal(204, noContentResult.StatusCode);
         }
 
         [Fact]
