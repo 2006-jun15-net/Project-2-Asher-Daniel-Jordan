@@ -55,14 +55,10 @@ namespace Project2.Data.Repository
             };
 
             _context.Entry(entity).CurrentValues.SetValues(newEntity);
-        }
-
-        public async Task SaveAsync()
-        {
             await _context.SaveChangesAsync();
         }
 
-        public async Task<OpsRoom> CreateOpsRoomAsync(OpsRoom opsRoom)
+        public async Task CreateOpsRoomAsync(OpsRoom opsRoom)
         {
             var opsroomEntity = new OpsRoomEntity 
             { 
@@ -73,9 +69,7 @@ namespace Project2.Data.Repository
 
             _context.OpsRoomEntity.Add(opsroomEntity);
 
-            await SaveAsync();
-
-            return opsRoom;
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(OpsRoom opsRoom)
@@ -84,8 +78,8 @@ namespace Project2.Data.Repository
 
             _context.OpsRoomEntity.Remove(opsRoomEntity);
 
-            await SaveAsync();
-           
+            await _context.SaveChangesAsync();
+
         }
     }
 }
