@@ -52,7 +52,7 @@ jobs:
       
       - script: cat coverage.cobertura.xml
         displayName: open coverage file
-        workingDirectory: $(solutionPath)/*/TestResults/*/coverage.cobertura.xml
+        workingDirectory: '$(solutionPath)/*/TestResults/*/coverage.cobertura.xml'
       
       #$(Agent.TempDirectory)/*/coverage.cobertura.xml
       - task: PublishCodeCoverageResults@1
