@@ -14,7 +14,7 @@ namespace Project2.Test.Controllers
 {
     public class OpsRoomControllerTests
     {
-        //initial setup
+        /*//initial setup
         private readonly Mock<IOpsRoomRepository> _mockRepo;
         private readonly OpsRoomsController _controller;
 
@@ -164,6 +164,6 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
     }
 }

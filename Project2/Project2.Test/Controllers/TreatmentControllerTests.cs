@@ -15,7 +15,7 @@ namespace Project2.Test.Controllers
 {
     public class TreatmentControllerTests
     {
-        //initial setup
+        /*//initial setup
         private readonly Mock<ITreatmentRepository> _mockRepo;
         private readonly TreatmentsController _controller;
         private readonly ILogger<TreatmentsController> _logger;
@@ -113,7 +113,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(409, createdResult.StatusCode);
         }
 
-        /*[Fact]
+        *//*[Fact]
         public async void Put_Action_ReturnsOk()
         {
             Treatment treatment = new Treatment(1, 1, 1, "Dummy", 5);

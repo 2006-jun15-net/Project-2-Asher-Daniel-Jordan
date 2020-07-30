@@ -14,7 +14,7 @@ namespace Project2.Test.Controllers
 {
     public class TreatmentDetailsControllerTests
     {
-        //initial setup
+        /*//initial setup
         private readonly Mock<ITreatmentDetailsRepository> _mockRepo;
         private readonly TreatmentDetailsController _controller;
 
@@ -166,6 +166,6 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
     }
 }
