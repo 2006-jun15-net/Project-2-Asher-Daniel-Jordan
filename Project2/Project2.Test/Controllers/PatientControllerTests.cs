@@ -17,16 +17,18 @@ namespace Project2.Test.Controllers
     {
         //initial setup
         private readonly Mock<IPatientRepository> _mockRepo;
+        private readonly Mock<IPatientRoomRepository> _roomMockRepo;
         private readonly PatientsController _controller;
-        //private readonly PatientService _service;
+        private readonly Mock<PatientService> _service;
 
 
         //initial setup
-        /*public PatientControllerTests()
+        public PatientControllerTests()
         {
             _mockRepo = new Mock<IPatientRepository>();
-            //_service = new Mock<PatientService>();
-            _controller = new PatientsController(_mockRepo.Object);
+            _roomMockRepo = new Mock<IPatientRoomRepository>();
+            _service = new Mock<PatientService>(_mockRepo.Object, _roomMockRepo.Object);
+            _controller = new PatientsController(_mockRepo.Object, _service.Object);
 
             List<Patient> patients = new List<Patient>()
             {
@@ -169,6 +171,6 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }*/
+        }
     }
 }

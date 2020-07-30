@@ -96,11 +96,21 @@ namespace Project2.API.Controllers
 
         // POST api/Patients
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Post([FromBody] Patient patient)
         {
-            var person = await pRepo.CreateAsync(patient);
+            if(pRepo.GetPatientsAsync().Result.Any(p => p.PatientId == patient.PatientId))
+            {
+                return Conflict();
+            }
 
-            return Ok(person);
+            await pRepo.CreateAsync(patient);
+
+            return CreatedAtAction(
+                actionName: nameof(Get),
+                routeValues: new { id = patient.PatientId },
+                value: patient);
         }
 
         // PUT api/Patients/5
