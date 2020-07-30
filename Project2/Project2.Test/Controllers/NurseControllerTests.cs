@@ -14,13 +14,13 @@ namespace Project2.Test.Controllers
 {
     public class NurseControllerTests
     {
-        //initial setup
+        /*//initial setup
         private readonly Mock<INurseRepository> _mockRepo;
         private readonly NursesController _controller;
 
         public NurseControllerTests()
         {
-            _mockRepo = new Mock<INurseRepository>();
+            *//*_mockRepo = new Mock<INurseRepository>();
             _controller = new NursesController(_mockRepo.Object);
 
             List<Nurse> nurses = new List<Nurse>()
@@ -163,6 +163,6 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
     }
 }
