@@ -14,7 +14,7 @@ namespace Project2.Test.Controllers
 {
     public class IllnessControllerTests
     {
-        /*private readonly Mock<IIllnessRepository> _mockRepo;
+        private readonly Mock<IIllnessRepository> _mockRepo;
         private readonly IllnessesController _controller;
 
         public IllnessControllerTests()
@@ -162,6 +162,6 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }*/
+        }
     }
 }
