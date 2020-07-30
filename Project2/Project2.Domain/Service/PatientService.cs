@@ -46,16 +46,6 @@ namespace Project2.Domain.Service
 
 
             }
-
-            
-
-
-
-
-
-
-
-
         }
     }
 }

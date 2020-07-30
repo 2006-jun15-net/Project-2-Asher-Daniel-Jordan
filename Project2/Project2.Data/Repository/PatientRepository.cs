@@ -110,6 +110,10 @@ namespace Project2.Data.Repository
         public async Task<Patient> GetByIdAsync(int id)
         {
             var patientEntitiy = await _context.PatientEntity.FindAsync(id);
+            if(patientEntitiy == null)
+            {
+                return null;
+            }
 
             return new Patient
                 (
@@ -135,14 +139,9 @@ namespace Project2.Data.Repository
         {
             var patientEntiy = _context.PatientEntity.Find(patient.PatientId);
 
-            
-
             _context.PatientEntity.Remove(patientEntiy);
 
-           
-
             await _context.SaveChangesAsync();
-            
         }
     }
 }
