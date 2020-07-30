@@ -34,6 +34,9 @@ namespace Project2.Test
             _mockRepo.Setup(repo => repo.GetDoctorsAsync())
                 .Returns(async () => await Task.Run(() => doctors));
 
+            /*_mockRepo.Setup(repo => repo.GetDoctorsAsync())
+                .ReturnsAsync(doctors);*/
+
             // get doctor by id
             _mockRepo.Setup(repo => repo.GetDoctorAsync(It.IsAny<int>()))
                 .Returns(async (int id) => await Task.Run(() => 
