@@ -32,5 +32,22 @@ namespace Project2.Test
         }
 
         */
+
+        [Fact]
+
+        public void GetDoctorsMethodShouldNotBeNull()
+        {
+            var result = _controller.GetDoctors();
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetDoctorShouldNotBeNull()
+        {
+            var result = _controller.GetDoctorById(1);
+            Assert.NotNull(result);
+        }
+
+
     }
 }
