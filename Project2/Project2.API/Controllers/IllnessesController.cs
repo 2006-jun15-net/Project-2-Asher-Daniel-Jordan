@@ -34,7 +34,12 @@ namespace Project2.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIllnessId(int id)
         {
-            return Ok(await iRepo.GetByIdAsync(id));
+            var result = await iRepo.GetByIdAsync(id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // POST api/Illnesses
@@ -61,9 +66,13 @@ namespace Project2.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-
         public async Task<IActionResult> Put(int id, [FromBody] Illness illness)
         {
+            if(id != illness.IllnessId)
+            {
+                return BadRequest();
+            }
+
             var existingIllness = await iRepo.GetByIdAsync(id);
 
             if (existingIllness != null)

@@ -47,6 +47,7 @@ namespace Project2.Test
             _mockRepo.Setup(repo => repo.UpdateDoctorAsync(It.IsAny<Doctor>()))
                 .Returns(async (Doctor doctor) => await Task.Run(() => doctors));
 
+            // deletes a doctor
             _mockRepo.Setup(repo => repo.DeleteDoctorAsync(It.IsAny<Doctor>()))
                 .Returns(async (Doctor doctor) => await Task.Run(() => doctors.Remove(doctor)));
         }
