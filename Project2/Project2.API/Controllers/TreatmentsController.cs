@@ -54,15 +54,15 @@ namespace Project2.API.Controllers
 
         // GET api/Treatments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Treatment>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var treatment = await tRepo.GetTreatmentAsync(id);
-           if(treatment is Treatment item)
+           if(treatment == null)
            {
-                return item;
+                return NotFound();
            }
 
-            return NotFound();
+            return Ok(treatment);
         }
 
         // POST api/Treatments
