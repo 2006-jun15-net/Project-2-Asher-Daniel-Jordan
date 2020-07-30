@@ -14,13 +14,13 @@ namespace Project2.Test.Controllers
 {
     public class NurseControllerTests
     {
-        /*//initial setup
+        //initial setup
         private readonly Mock<INurseRepository> _mockRepo;
         private readonly NursesController _controller;
 
         public NurseControllerTests()
         {
-            *//*_mockRepo = new Mock<INurseRepository>();
+            _mockRepo = new Mock<INurseRepository>();
             _controller = new NursesController(_mockRepo.Object);
 
             List<Nurse> nurses = new List<Nurse>()
@@ -37,7 +37,7 @@ namespace Project2.Test.Controllers
                 .Returns(async (int id) => await Task.Run(() =>
                     nurses.Where<Nurse>(n => n.NurseId == id).FirstOrDefault()));
 
-            // create nurse
+            /*// create nurse
             _mockRepo.Setup(repo => repo.CreateNurseAsync(It.IsAny<Nurse>()))
                 .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Add(nurse)));
 
@@ -47,7 +47,7 @@ namespace Project2.Test.Controllers
 
             // deletes a nurse
             _mockRepo.Setup(repo => repo.DeleteNurseAsync(It.IsAny<Nurse>()))
-                .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Remove(nurse)));
+                .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Remove(nurse)));*/
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Post_Action_ReturnsCreatedAtAction()
         {
             Nurse nurse = new Nurse(3, "Test", "Dummy");
@@ -141,9 +141,9 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
 
-        [Fact]
+        /*[Fact]
         public async void Delete_Action_ReturnsOk()
         {
             var result = await _controller.Delete(1);

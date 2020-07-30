@@ -14,7 +14,7 @@ namespace Project2.Test.Controllers
 {
     public class OpsRoomControllerTests
     {
-        /*//initial setup
+        //initial setup
         private readonly Mock<IOpsRoomRepository> _mockRepo;
         private readonly OpsRoomsController _controller;
 
@@ -38,17 +38,17 @@ namespace Project2.Test.Controllers
                 .Returns(async (int id) => await Task.Run(() =>
                     opsRooms.Where<OpsRoom>(o => o.OpsRoomId == id).FirstOrDefault()));
 
-            // create opsRoom
+            /*// create opsRoom
             _mockRepo.Setup(repo => repo.CreateOpsRoomAsync(It.IsAny<OpsRoom>()))
-                .Returns(async (OpsRoom room) => await Task.Run(() => opsRooms.Add(room)));
+                .Returns(async (OpsRoom room) => await Task.Run(() => opsRooms.Add(room)));*/
 
             // updates opsRoom
             _mockRepo.Setup(repo => repo.Update(It.IsAny<OpsRoom>()))
                 .Returns(async (OpsRoom room) => await Task.Run(() => opsRooms));
 
-            // deletes a opsRoom
+            /*// deletes a opsRoom
             _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<OpsRoom>()))
-                .Returns(async (OpsRoom room) => await Task.Run(() => opsRooms.Remove(room)));
+                .Returns(async (OpsRoom room) => await Task.Run(() => opsRooms.Remove(room)));*/
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Post_Action_ReturnsCreatedAtAction()
         {
             OpsRoom room = new OpsRoom(3, true);
@@ -106,7 +106,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(createdResult);
             Assert.Equal(409, createdResult.StatusCode);
-        }
+        }*/
 
         [Fact]
         public async void Put_Action_ReturnsOk()
@@ -144,7 +144,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Delete_Action_ReturnsOk()
         {
             var result = await _controller.Delete(1);

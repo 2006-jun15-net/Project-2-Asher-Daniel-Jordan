@@ -14,7 +14,7 @@ namespace Project2.Test.Controllers
 {
     public class PatientRoomsControllerTests
     {
-        /*//initial setup
+        //initial setup
         private readonly Mock<IPatientRoomRepository> _mockRepo;
         private readonly PatientRoomsController _controller;
 
@@ -39,17 +39,17 @@ namespace Project2.Test.Controllers
                 .Returns(async (int id) => await Task.Run(() =>
                     rooms.Where<PatientRoom>(r => r.PatientRoomId == id).FirstOrDefault()));
 
-            // create patient room
+            /*// create patient room
             _mockRepo.Setup(repo => repo.CreateAsync(It.IsAny<PatientRoom>()))
-                .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Add(room)));
+                .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Add(room)));*/
 
             // updates patient room
             _mockRepo.Setup(repo => repo.Update(It.IsAny<PatientRoom>()))
                 .Returns(async (PatientRoom room) => await Task.Run(() => rooms));
 
-            // deletes a patient room
+            /*// deletes a patient room
             _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<PatientRoom>()))
-                .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Remove(room)));
+                .Returns(async (PatientRoom room) => await Task.Run(() => rooms.Remove(room)));*/
         }
 
 
@@ -86,7 +86,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Post_Action_ReturnsCreatedAtAction()
         {
             PatientRoom room = new PatientRoom(3, true);
@@ -108,7 +108,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(createdResult);
             Assert.Equal(409, createdResult.StatusCode);
-        }
+        }*/
 
         [Fact]
         public async void Put_Action_ReturnsOk()
@@ -146,7 +146,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Delete_Action_ReturnsOk()
         {
             var result = await _controller.Delete(1);
