@@ -9,6 +9,7 @@ using Project2.API.Controllers;
 using Project2.Domain.Interface;
 using Project2.Domain.Model;
 using Xunit;
+using Microsoft.Extensions.Logging;
 
 namespace Project2.Test.Controllers
 {
@@ -17,44 +18,46 @@ namespace Project2.Test.Controllers
         //initial setup
         private readonly Mock<ITreatmentRepository> _mockRepo;
         private readonly TreatmentsController _controller;
+        private readonly ILogger<TreatmentsController> _logger;
 
 
         //initial setup
         public TreatmentControllerTests()
         {
             _mockRepo = new Mock<ITreatmentRepository>();
-            _controller = new TreatmentsController(_mockRepo.Object, null);
+            //_logger = new ILogger<TreatmentsController>();
+            _controller = new TreatmentsController(_mockRepo.Object);
 
             List<Treatment> treatments = new List<Treatment>()
             {
                 new Treatment(1, 1, 1, "Test", 1)
             };
 
-            // get all doctors
+            // get all treatments
             _mockRepo.Setup(repo => repo.GetTreatmentsAsync())
                 .Returns(async () => await Task.Run(() => treatments));
 
-            // get doctor by id
+            // get treatment by id
             _mockRepo.Setup(repo => repo.GetTreatmentAsync(It.IsAny<int>()))
                 .Returns(async (int id) => await Task.Run(() =>
                     treatments.Where<Treatment>(d => d.DoctorId == id).FirstOrDefault()));
 
-            // create doctor
+            // create treatment
             _mockRepo.Setup(repo => repo.CreateTreatmentAsync(It.IsAny<Treatment>()))
                 .Returns(async (Treatment treatment) => await Task.Run(() => treatments.Add(treatment)));
 
-            // updates doctor
+            // updates treatment
             _mockRepo.Setup(repo => repo.UpdateTreatmentAsync(It.IsAny<Treatment>()))
                 .Returns(async (Treatment treatment) => await Task.Run(() => treatments));
 
-            // deletes a doctor
+            // deletes a treatment
             _mockRepo.Setup(repo => repo.DeleteTreatmentAsync(It.IsAny<int>()))
                 .Returns(async (Treatment treatment) => await Task.Run(() => treatments.Remove(treatment)));
         }
 
 
         [Fact]
-        public async void GetDoctors_ActionExecutes_ReturnsOKStatus()
+        public async void Get_ActionExecutes_ReturnsOKStatus()
         {
             var result = await _controller.Get();
 
@@ -65,7 +68,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void GetDoctorById_Action_ReturnsOK_IfFound()
+        public async void GetById_Action_ReturnsOK_IfFound()
         {
             var result = await _controller.GetById(1);
 
@@ -76,7 +79,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void GetDoctorById_Action_ReturnsNotFound()
+        public async void GetById_Action_ReturnsNotFound()
         {
             var result = await _controller.GetById(23);
 
@@ -87,7 +90,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PostDoctor_Action_ReturnsCreatedAtAction()
+        public async void PostTreatment_Action_ReturnsCreatedAtAction()
         {
             Treatment treatment = new Treatment(3, 1, 1, "Dummy", 1);
             var result = await _controller.PostTreatment(treatment);
@@ -99,7 +102,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PostDoctor_Action_ReturnsConflict_OnDuplicate()
+        public async void PostTreatment_Action_ReturnsConflict_OnDuplicate()
         {
             Treatment treatment = new Treatment(1, 1, 1, "Dummy", 1);
             var result = await _controller.PostTreatment(treatment);
@@ -111,7 +114,7 @@ namespace Project2.Test.Controllers
         }
 
         /*[Fact]
-        public async void PutDoctor_Action_ReturnsOk()
+        public async void Put_Action_ReturnsOk()
         {
             Treatment treatment = new Treatment(1, 1, 1, "Dummy", 5);
             var result = await _controller.Put(1, treatment);
@@ -123,7 +126,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsBadRequest()
+        public async void Put_Action_ReturnsBadRequest()
         {
             Treatment treatment = new Treatment(1, 1, 1, "Dummy", 5);
             var result = await _controller.Put(2, treatment);
@@ -135,7 +138,7 @@ namespace Project2.Test.Controllers
         }
 
         [Fact]
-        public async void PutDoctor_Action_ReturnsNotFound()
+        public async void Put_Action_ReturnsNotFound()
         {
             Treatment treatment = new Treatment(23, 1, 1, "Dummy", 5);
             var result = await _controller.Put(23, treatment);

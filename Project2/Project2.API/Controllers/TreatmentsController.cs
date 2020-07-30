@@ -19,10 +19,10 @@ namespace Project2.API.Controllers
         private readonly ITreatmentRepository tRepo;
         private readonly ILogger<TreatmentsController> _logger;
 
-        public TreatmentsController(ITreatmentRepository treatmentRepository, ILogger<TreatmentsController> logger)
+        public TreatmentsController(ITreatmentRepository treatmentRepository /*,ILogger<TreatmentsController> logger*/)
         {
             tRepo = treatmentRepository;
-            _logger = logger ?? throw new ArgumentException(nameof(logger));
+            //_logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
         // GET: api/Treatments
