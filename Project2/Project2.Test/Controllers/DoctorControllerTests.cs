@@ -98,7 +98,7 @@ namespace Project2.Test
             Assert.Equal(201, createdResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void PostDoctor_Action_ReturnsConflict_OnDuplicate()
         {
             Doctor doctor = new Doctor(1, "Test", "Dummy");
@@ -108,7 +108,7 @@ namespace Project2.Test
 
             Assert.NotNull(createdResult);
             Assert.Equal(409, createdResult.StatusCode);
-        }
+        }*/
 
         [Fact]
         public async void PutDoctor_Action_ReturnsOk()
