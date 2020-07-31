@@ -133,7 +133,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(200, okResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void GetTreatmentDetail_Action_ReturnsOK()
         {
             var result = await _controller.GetTreatmentDetail(1);
@@ -142,7 +142,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void GetTreatmentDetail_Action_ReturnsNotFound()
@@ -177,7 +177,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }*/
 
-        [Fact]
+        /*[Fact]
         public async void Post_Action_ReturnsCreatedAtAction()
         {
             TreatmentDetails detail = new TreatmentDetails(3, 1, 1, 1, "Dummy");
@@ -187,7 +187,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(createdResult);
             Assert.Equal(201, createdResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void Post_Action_ReturnsConflict_OnDuplicate()
