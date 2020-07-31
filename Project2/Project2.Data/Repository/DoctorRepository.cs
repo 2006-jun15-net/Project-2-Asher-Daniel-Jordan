@@ -44,7 +44,7 @@ namespace Project2.Data.Repository
         public async Task CreateDoctorAsync(Doctor doctor)
         {
             //Map doctor domain model to doctor entity
-            var Entity = new DoctorEntity { DoctorId = doctor.DoctorId, FirstName = doctor.FirstName, LastName = doctor.LastName };
+            var Entity = new DoctorEntity { FirstName = doctor.FirstName, LastName = doctor.LastName };
 
             _context.DoctorEntity.Add(Entity);
 
