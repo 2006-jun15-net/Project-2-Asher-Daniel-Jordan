@@ -11,7 +11,7 @@ namespace Project2.Test
     {
         private readonly Illness illness = new Illness();
 
-        [Fact]
+        /*[Fact]
 
         public void NameShouldBeSettable()
         {
@@ -27,7 +27,7 @@ namespace Project2.Test
         {
 
             Assert.ThrowsAny<ArgumentNullException>(() => illness.Name = string.Empty);
-        }
+        }*/
 
 
 
