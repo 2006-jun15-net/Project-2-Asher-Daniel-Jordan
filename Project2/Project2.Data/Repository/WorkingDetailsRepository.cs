@@ -19,9 +19,13 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = _context.WorkingDetailsEntity.Find(id);
+
+            _context.WorkingDetailsEntity.Remove(entity);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<WorkingDetails>> GetAllAsync()
@@ -31,9 +35,19 @@ namespace Project2.Data.Repository
             return Entities.Select(e => new WorkingDetails(e.DoctorId, e.NurseId, e.ActiveAssociation));
         }
 
-        public Task UpdateAsync(WorkingDetails wd)
+        public async Task UpdateAsync(WorkingDetails wd)
         {
-            throw new NotImplementedException();
+            var currentEntity = _context.WorkingDetailsEntity.Where(w => w.DoctorId == wd.DoctorId && w.NurseId == wd.NurseId && w.ActiveAssociation == wd.ActiveAssociation).FirstOrDefault();
+            var updatedEntity = new WorkingDetailsEntity
+            {
+                DoctorId = wd.DoctorId,
+                NurseId = wd.NurseId,
+                ActiveAssociation = wd.ActiveAssociation
+            };
+
+            _context.Entry(currentEntity).CurrentValues.SetValues(updatedEntity);
+
+            await _context.SaveChangesAsync();
         }
     }
 }
