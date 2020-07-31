@@ -73,7 +73,11 @@ namespace Project2.Data.Repository
             {
                 patientEntities.AddRange(_context.PatientEntity.Where(p => p.PatientId == id).ToList());
             }
-                
+
+            if (patientEntities.Count == 0)
+            {
+                return null;
+            }
             return patientEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId,  e.FirstName, e.LastName));
 
         }
@@ -100,6 +104,10 @@ namespace Project2.Data.Repository
 
             }
 
+            if(patientEntities.Count == 0)
+            {
+                return null;
+            }
 
             return patientEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId,  e.FirstName, e.LastName));
 

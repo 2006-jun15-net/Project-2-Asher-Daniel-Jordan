@@ -32,12 +32,73 @@ namespace Project2.Test.Controllers
 
             List<Patient> patients = new List<Patient>()
             {
-                new Patient(1, 1, "Test", "Dummy")
+                new Patient(1, 1, "Test", "Dummy"),
+                new Patient(2, 4, "Test2", "Dummy2")
+            };
+
+            Nurse nurse = new Nurse(2, "Testy", "Dolly");
+
+            List<Doctor> doctors = new List<Doctor>() {
+                new Doctor(1, "Dr.Test", "Dummulus"),
+                new Doctor(2, "Dr.Test2", "Dum")
+            };
+
+            List<WorkingDetails> workingDetails = new List<WorkingDetails>() {
+                new WorkingDetails(2, 1, true),
+                new WorkingDetails(3, 1, true)
+            };
+
+            List<Treatment> treatments = new List<Treatment>() {
+                new Treatment(1, 2, 1, "TestDrug", 6),
+                new Treatment(2, 5, 3, "Drug", 9)
+            };
+
+            List<TreatmentDetails> details = new List<TreatmentDetails>()
+            {
+                new TreatmentDetails(1, 4, 1, 1, "now"),
+                new TreatmentDetails(2, 7, 3, 5, "then")
+            };
+
+            List<PatientRoom> rooms = new List<PatientRoom>()
+            {
+                new PatientRoom(1, true),
+                new PatientRoom(2, true)
             };
 
             // get all patients
             _mockRepo.Setup(repo => repo.GetPatientsAsync())
                 .Returns(async () => await Task.Run(() => patients));
+
+            /*// get all patients by nurse
+            _mockRepo.Setup(repo => repo.GetByNurseAsync(It.IsAny<int>()))
+                .Returns(async (int id) => await Task.Run(() =>
+                {
+                    List<int> treatmentIds = new List<int>();
+                    List<int> detailsIds = new List<int>();
+
+                    var doctorIds= workingDetails.Where<WorkingDetails>(wd => wd.NurseId == id).Select(wd => wd.DoctorId).ToList();
+
+                    foreach (var id in doctorIds)
+                    {
+                        treatmentIds.AddRange(treatments.Where(t => t.DoctorId == id).Select(t => t.TreatmentId).ToList());
+                    }
+
+                    foreach (var id in treatmentIds)
+                    {
+                        detailsIds.AddRange(details.Where(t => t.TreatmentId == id).Select(t => t.PatientId).ToList());
+                    }
+
+                    if(detailsIds.Count == 0)
+                    {
+                        return null;
+                    }
+
+                    return detailsIds;
+                })*/
+            // gets patient based on patient room
+            _mockRepo.Setup(repo => repo.GetByPatientRoom(It.IsAny<int>()))
+                .Returns(async (int id) => await Task.Run(() => 
+                    patients.Where<Patient>(p => p.PatientRoomId == id).FirstOrDefault()));
 
             // get patient by id
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
@@ -67,6 +128,28 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetByPatientRoom_ActionExecutes_ReturnsOKStatus()
+        {
+            var result = await _controller.GetByPatientRoom(1);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetByPatientRoom_Action_ReturnsNotFound()
+        {
+            var result = await _controller.GetByPatientRoom(23);
+
+            var notFoundResult = result as NotFoundResult;
+
+            Assert.NotNull(notFoundResult);
+            Assert.Equal(404, notFoundResult.StatusCode);
         }
 
         [Fact]

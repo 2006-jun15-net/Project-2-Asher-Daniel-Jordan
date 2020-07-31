@@ -26,12 +26,17 @@ namespace Project2.Test.Controllers
 
             List<OpsRoom> opsRooms = new List<OpsRoom>()
             {
-                new OpsRoom(1, true)
+                new OpsRoom(1, true),
+                new OpsRoom(2, false)
             };
 
             // get all opsRooms
             _mockRepo.Setup(repo => repo.GetAllRoomsAsync())
                 .Returns(async () => await Task.Run(() => opsRooms));
+
+            // get all available opsRooms
+            _mockRepo.Setup(repo => repo.GetAvailableRoomsAsync())
+                .Returns(async () => await Task.Run(() => opsRooms.Where<OpsRoom>(room => room.Available == true)));
 
             // get opsRoom by id
             _mockRepo.Setup(repo => repo.GetOpsRoomAsync(It.IsAny<int>()))
@@ -55,6 +60,17 @@ namespace Project2.Test.Controllers
         public async void Get_ActionExecutes_ReturnsOKStatus()
         {
             var result = await _controller.Get();
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetAvailableRooms_ActionExecutes_ReturnsOKStatus()
+        {
+            var result = await _controller.GetAvailableRooms();
 
             var okResult = result as OkObjectResult;
 

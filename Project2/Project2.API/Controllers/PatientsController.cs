@@ -51,14 +51,25 @@ namespace Project2.API.Controllers
 
         public async Task<IActionResult> GetByNurse(int nurseId)
         {
-            return Ok(await pRepo.GetByNurseAsync(nurseId));
+            var results = await pRepo.GetByNurseAsync(nurseId);
+            if(results == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(results);
         }
 
         [HttpGet("Doctors/{id}")]
 
         public async Task<IActionResult> GetByDoctor(int doctorId)
         {
-            return Ok(await pRepo.GetByDoctorAsync(doctorId));
+            var results = await pRepo.GetByDoctorAsync(doctorId);
+            if(results == null)
+            {
+                return NotFound();
+            }
+            return Ok(results);
         }
 
         [HttpGet("PatientRoom/{id}")]
