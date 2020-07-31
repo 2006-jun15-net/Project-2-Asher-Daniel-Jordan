@@ -23,7 +23,7 @@ namespace Project2.Data.Repository
         {
             var nurseEntity = new NurseEntity
             {
-                NurseId = nurse.NurseId,
+                
                 FirstName = nurse.FirstName,
                 LastName = nurse.LastName,
             };

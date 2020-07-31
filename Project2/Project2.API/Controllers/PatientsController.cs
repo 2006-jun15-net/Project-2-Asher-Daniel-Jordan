@@ -47,7 +47,7 @@ namespace Project2.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("Nurses/{id}")]
+        [HttpGet("Nurses/{nurseId}")]
 
         public async Task<IActionResult> GetByNurse(int nurseId)
         {

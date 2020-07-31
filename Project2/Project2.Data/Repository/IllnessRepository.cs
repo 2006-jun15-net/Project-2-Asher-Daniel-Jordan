@@ -21,7 +21,7 @@ namespace Project2.Data.Repository
 
         public async Task CreateAsync(Illness illness)
         {
-            var illnessEntity = new IllnessEntity { IllnessId = illness.IllnessId, Name = illness.Name };
+            var illnessEntity = new IllnessEntity { Name = illness.Name };
 
             _context.IllnessEntity.Add(illnessEntity);
 

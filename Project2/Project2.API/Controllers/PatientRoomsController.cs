@@ -64,6 +64,9 @@ namespace Project2.API.Controllers
 
         // PUT api/PatientRooms/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Put(int id, [FromBody] PatientRoom value)
         {
             if(id != value.PatientRoomId)

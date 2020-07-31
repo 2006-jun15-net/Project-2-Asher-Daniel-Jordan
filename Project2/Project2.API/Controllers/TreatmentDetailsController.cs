@@ -11,8 +11,12 @@ using Project2.Domain.Model;
 
 namespace Project2.API.Controllers
 {
+    /// <summary>
+    /// Controller Class responsible for Treatment Details resource
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+   
     public class TreatmentDetailsController : ControllerBase
     {
         private readonly ITreatmentDetailsRepository tdetailsRepo;
@@ -40,6 +44,13 @@ namespace Project2.API.Controllers
             }
             return Ok(result);
         }
+        /// <summary>
+        /// Gets treatment details based on patient
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns>
+        /// An array of treatment details related to a specific patient
+        /// </returns>
 
         // GET
         [HttpGet("GetPatientsTreatment/{patientId}")]
@@ -52,6 +63,13 @@ namespace Project2.API.Controllers
             }
             return Ok(result);
         }
+        /// <summary>
+        /// Gets treatment details based on patient
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns>
+        /// A singular treatment details object related to a specific patient
+        /// </returns>
 
         [HttpGet("GetSinglePatientsTreatment/{patientId}")]
         public async Task<IActionResult> GetSinglePatientsTreatment(int patientId)
@@ -63,6 +81,13 @@ namespace Project2.API.Controllers
             }
             return Ok(result);
         }
+        /// <summary>
+        /// Gets treatment details based on doctor
+        /// </summary>
+        /// <param name="doctorId"></param>
+        /// <returns>
+        /// A single treatment details object related to a specific Doctor
+        /// </returns>
 
         //GET api/TreatmentDetails/Doctor/5
         [HttpGet("Doctor/{doctorId}")]

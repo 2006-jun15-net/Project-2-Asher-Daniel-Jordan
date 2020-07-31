@@ -62,7 +62,7 @@ namespace Project2.Data.Repository
         {
             var opsroomEntity = new OpsRoomEntity 
             { 
-                OpsRoomId = opsRoom.OpsRoomId,
+                
                 Available = opsRoom.Available,
                 
             };
