@@ -30,12 +30,22 @@ namespace Project2.Test.Controllers
 
             List<Treatment> treatments = new List<Treatment>()
             {
-                new Treatment(1, 1, 1, "Test", 1)
+                new Treatment(1, 1, 1, "Test", 1),
+                new Treatment(2, 4, 5, "Dummy", 6)
             };
 
             // get all treatments
             _mockRepo.Setup(repo => repo.GetTreatmentsAsync())
                 .Returns(async () => await Task.Run(() => treatments));
+
+            // get all doctor treatments
+            _mockRepo.Setup(repo => repo.GetDoctorTreatmentsAsync(It.IsAny<int>()))
+                .Returns(async (int id) => await Task.Run(() => treatments.Where<Treatment>(t => t.DoctorId == id)));
+
+            // get all illness treatments
+            _mockRepo.Setup(repo => repo.TreatmentsByIlllnessAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(async (int doctorid, int illId) => await Task.Run(() => 
+                    treatments.Where<Treatment>(t => t.DoctorId == doctorid && t.IllnessId == illId)));
 
             // get treatment by id
             _mockRepo.Setup(repo => repo.GetTreatmentAsync(It.IsAny<int>()))
@@ -60,6 +70,28 @@ namespace Project2.Test.Controllers
         public async void Get_ActionExecutes_ReturnsOKStatus()
         {
             var result = await _controller.Get();
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetIllnessTreatments_ActionExecutes_ReturnsOKStatus()
+        {
+            var result = await _controller.GetIllnessTreatments(1, 1);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetTreatments_ActionExecutes_ReturnsOKStatus()
+        {
+            var result = await _controller.GetTreatments(1);
 
             var okResult = result as OkObjectResult;
 
