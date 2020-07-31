@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Project2.Data.Repository
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PatientRepository : IPatientRepository
     {
         private readonly Project2Context _context;
@@ -82,6 +85,7 @@ namespace Project2.Data.Repository
         {
             List<int> treatmentIds = new List<int>();
 
+            List<int> patientIds = new List<int>();
             List < PatientEntity > patientEntities = new List<PatientEntity>();
 
             List<int> doctorIds = await _context.WorkingDetailsEntity
@@ -93,14 +97,24 @@ namespace Project2.Data.Repository
             {
                 treatmentIds.AddRange( _context.TreatmentEntity.Where(t => t.DoctorId == id).Select(t => t.DoctorId).ToList());
             }
+            
 
             foreach(var id in treatmentIds)
             {
-                patientEntities.AddRange( _context.PatientEntity.Where(p => p.PatientId == id).ToList());
+                patientIds.AddRange(_context.TreatmentDetailsEntity
+                    .Where(td => td.TreatmentId == id)
+                    .Select(td => td.PatientId)
+                    .ToList());
 
             }
+            
 
+            foreach(var id in patientIds)
+            {
+                patientEntities.Add(_context.PatientEntity.Find(id));
+            }
 
+            
             return patientEntities.Select(e => new Patient(e.PatientId, e.PatientRoomId,  e.FirstName, e.LastName));
 
         }

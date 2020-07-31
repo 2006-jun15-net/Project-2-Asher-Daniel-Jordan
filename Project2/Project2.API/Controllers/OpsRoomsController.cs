@@ -75,6 +75,9 @@ namespace Project2.API.Controllers
 
         // PUT api/OpsRooms/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Put(int id, [FromBody] OpsRoom value)
         {
             if(id != value.OpsRoomId)
