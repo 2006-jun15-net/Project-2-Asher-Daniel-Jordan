@@ -19,29 +19,22 @@ namespace Project2.Data.Repository
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Illness> CreateAsync(Illness illness)
+        public async Task CreateAsync(Illness illness)
         {
             var illnessEntity = new IllnessEntity { IllnessId = illness.IllnessId, Name = illness.Name };
 
             _context.IllnessEntity.Add(illnessEntity);
 
             await _context.SaveChangesAsync();
-
-            return illness;
-
         }
 
-        public async Task<Illness> DeleteIllnessAsync(Illness illness)
+        public async Task DeleteIllnessAsync(Illness illness)
         {
-            var Entity = _context.IllnessEntity.Find(illness.IllnessId);
-
+            var Entity = await _context.IllnessEntity.FindAsync(illness.IllnessId);
             
-
             _context.IllnessEntity.Remove(Entity);
 
             await _context.SaveChangesAsync();
-
-            return illness;
         }
 
         public async Task<IEnumerable<Illness>> GetAllAsync()
@@ -55,6 +48,10 @@ namespace Project2.Data.Repository
         {
             var illnessEntity = await _context.IllnessEntity.FindAsync(id);
 
+            if(illnessEntity == null)
+            {
+                return null;
+            }
             return (new Illness(illnessEntity.IllnessId, illnessEntity.Name));
         }
 
@@ -66,8 +63,6 @@ namespace Project2.Data.Repository
             {
                 IllnessId = illness.IllnessId,
                 Name = illness.Name,
-                
-   
             };
 
             _context.Entry(entity).CurrentValues.SetValues(newEntity);

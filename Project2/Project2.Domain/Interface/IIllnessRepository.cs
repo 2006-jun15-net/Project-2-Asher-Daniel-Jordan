@@ -12,10 +12,10 @@ namespace Project2.Domain.Interface
 
         Task<Illness> GetByIdAsync(int id);
 
-        Task<Illness> CreateAsync(Illness illness);
+        Task CreateAsync(Illness illness);
 
         Task UpdateIllnessAsync(Illness illness);
 
-        Task<Illness> DeleteIllnessAsync(Illness illness);
+        Task DeleteIllnessAsync(Illness illness);
     }
 }

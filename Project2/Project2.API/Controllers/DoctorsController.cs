@@ -36,6 +36,11 @@ namespace Project2.API.Controllers
         public async Task<IActionResult> GetDoctorById(int id)
         {
             var doctor = await drepo.GetDoctorAsync(id);
+            if(doctor == null)
+            {
+                return NotFound();
+            }
+
             return Ok(doctor);
         }
 
@@ -66,6 +71,11 @@ namespace Project2.API.Controllers
 
         public async Task<IActionResult> Put(int id, [FromBody] Doctor doctor)
         {
+            if(id != doctor.DoctorId)
+            {
+                return BadRequest();
+            }
+
             var existingDoctor = await drepo.GetDoctorAsync(id);
 
             if(existingDoctor != null)

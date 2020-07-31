@@ -12,9 +12,8 @@ namespace Project2.Domain.Interface
         Task<OpsRoom> GetOpsRoomAsync(int? id);
         Task<IEnumerable<OpsRoom>> GetAvailableRoomsAsync();
         Task Update(OpsRoom opsRoom);
-        Task SaveAsync();
 
-        Task<OpsRoom> CreateOpsRoomAsync(OpsRoom opsRoom);
+        Task CreateOpsRoomAsync(OpsRoom opsRoom);
 
         Task DeleteAsync(OpsRoom opsRoom);
     }

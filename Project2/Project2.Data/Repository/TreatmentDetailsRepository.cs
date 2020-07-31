@@ -72,6 +72,10 @@ namespace Project2.Data.Repository
         public async Task<TreatmentDetails> GetByIdAsync(int id)
         {
             var entity = await _context.TreatmentDetailsEntity.FindAsync(id);
+            if(entity == null)
+            {
+                return null;
+            }
 
             return new TreatmentDetails(
                 entity.TreatmentDetailsId,

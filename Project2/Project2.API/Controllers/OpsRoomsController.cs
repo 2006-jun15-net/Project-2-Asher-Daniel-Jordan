@@ -43,22 +43,22 @@ namespace Project2.API.Controllers
 
         // GET api/OpsRooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OpsRoom>> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var room = await opsroomRepo.GetOpsRoomAsync(id);
-            if (room is OpsRoom item)
+            if (room == null)
             {
-                return item;
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok(room);
         }
 
         // POST api/OpsRooms
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> PostIllness([FromBody] OpsRoom opsRoom)
+        public async Task<IActionResult> Post([FromBody] OpsRoom opsRoom)
         {
             if (opsroomRepo.GetAllRoomsAsync().Result.Any(or => or.OpsRoomId == opsRoom.OpsRoomId))
             {
@@ -82,22 +82,14 @@ namespace Project2.API.Controllers
                 return BadRequest();
             }
 
-            await opsroomRepo.Update(value);
-
-            try
+            
+            if (opsroomRepo.GetOpsRoomAsync(id).Result == null)
             {
-                await opsroomRepo.SaveAsync();
+                return NotFound();
             }
-            catch(DbUpdateConcurrencyException)
+            else
             {
-                if(opsroomRepo.GetOpsRoomAsync(id).Result == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                await opsroomRepo.Update(value);
             }
 
             return NoContent();
