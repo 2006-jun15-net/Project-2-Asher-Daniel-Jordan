@@ -134,7 +134,7 @@ namespace Project2.Test
             Assert.Equal(400, badRequestResult.StatusCode);
         }*/
 
-        [Fact]
+        /*[Fact]
         public async void PutDoctor_Action_ReturnsNotFound()
         {
             Doctor doctor = new Doctor(23, "Test", "Dummy");
@@ -144,9 +144,9 @@ namespace Project2.Test
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
 
-        [Fact]
+        /*[Fact]
         public async void Delete_Action_ReturnsOk()
         {
             var result = await _controller.Delete(1);
@@ -155,7 +155,7 @@ namespace Project2.Test
 
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void Delete_Action_ReturnsNotFound()
