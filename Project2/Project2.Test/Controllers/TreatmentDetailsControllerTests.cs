@@ -155,7 +155,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void GetSinglePatientsTreatment_Action_ReturnsOK()
         {
             var result = await _controller.GetSinglePatientsTreatment(1);
@@ -164,7 +164,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void GetSinglePatientsTreatment_Action_ReturnsNotFound()
