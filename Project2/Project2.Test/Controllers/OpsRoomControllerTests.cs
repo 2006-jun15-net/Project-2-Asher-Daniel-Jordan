@@ -78,7 +78,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(200, okResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Get_Action_ReturnsOK_IfFound()
         {
             var result = await _controller.Get(1);
@@ -98,7 +98,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void Post_Action_ReturnsCreatedAtAction()
