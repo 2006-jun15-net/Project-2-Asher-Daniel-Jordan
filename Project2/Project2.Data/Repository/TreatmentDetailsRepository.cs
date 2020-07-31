@@ -82,7 +82,7 @@ namespace Project2.Data.Repository
                 );
         }
 
-        public async Task<TreatmentDetails> GetPatientTreatment(int id)
+        public async Task<IEnumerable<TreatmentDetails>> GetPatientTreatment(int id)
         {
             var entities = await _context.TreatmentDetailsEntity.Where(e => e.PatientId == id).ToListAsync();
             DateTime maxDate = DateTime.MinValue;
@@ -93,16 +93,17 @@ namespace Project2.Data.Repository
                     maxDate = DateTime.Parse(e.StartTime);
                 }
             }
-            var entity = await _context.TreatmentDetailsEntity
-                .FirstOrDefaultAsync(e => e.StartTime == maxDate.ToString());
+            var filteredEntities = await _context.TreatmentDetailsEntity
+                .Where(e => e.StartTime == maxDate.ToString())
+                .ToListAsync();
 
-            return new TreatmentDetails(
-                entity.TreatmentDetailsId, 
-                entity.OpsRoomId, 
-                entity.PatientId, 
-                entity.TreatmentId, 
-                entity.StartTime
-                );
+            return filteredEntities.Select(td => new TreatmentDetails(
+                td.TreatmentDetailsId, 
+                td.OpsRoomId, 
+                td.PatientId, 
+                td.TreatmentId, 
+                td.StartTime
+                ));
         }
 
         public async Task UpdateAsync(TreatmentDetails td)

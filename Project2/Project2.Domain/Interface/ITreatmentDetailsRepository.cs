@@ -18,7 +18,7 @@ namespace Project2.Domain.Interface
 
         Task DeleteAsync(TreatmentDetails td);
 
-        Task<TreatmentDetails> GetPatientTreatment(int id);
+        Task<IEnumerable<TreatmentDetails>> GetPatientTreatment(int id);
 
         Task<IEnumerable<TreatmentDetails>> GetByDoctorAsync(int doctorId);
     }
