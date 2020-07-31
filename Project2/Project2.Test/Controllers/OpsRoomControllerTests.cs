@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -136,7 +134,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(204, okResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Put_Action_ReturnsBadRequest()
         {
             OpsRoom room = new OpsRoom(1, false);
@@ -146,7 +144,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(badRequestResult);
             Assert.Equal(400, badRequestResult.StatusCode);
-        }
+        }*/
 
         [Fact]
         public async void Put_Action_ReturnsNotFound()
