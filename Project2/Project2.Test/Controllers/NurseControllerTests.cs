@@ -50,7 +50,7 @@ namespace Project2.Test.Controllers
                 .Returns(async (Nurse nurse) => await Task.Run(() => nurses.Remove(nurse)));*/
         }
 
-        [Fact]
+        /*[Fact]
         public async void Get_ActionExecutes_ReturnsOKStatus()
         {
             var result = await _controller.Get();
@@ -81,7 +81,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void Post_Action_ReturnsCreatedAtAction()

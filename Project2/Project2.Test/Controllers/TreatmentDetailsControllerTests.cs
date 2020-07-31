@@ -201,7 +201,7 @@ namespace Project2.Test.Controllers
             Assert.Equal(409, createdResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Put_Action_ReturnsNoContent()
         {
             TreatmentDetails detail = new TreatmentDetails(1, 1, 2, 1, "Dummy");
@@ -235,7 +235,7 @@ namespace Project2.Test.Controllers
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
 
         /*[Fact]
         public async void Delete_Action_ReturnsOk()
