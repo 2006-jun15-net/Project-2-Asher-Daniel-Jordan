@@ -72,10 +72,6 @@ namespace Project2.Data.Repository
         public async Task<TreatmentDetails> GetByIdAsync(int id)
         {
             var entity = await _context.TreatmentDetailsEntity.FindAsync(id);
-            if(entity == null)
-            {
-                return null;
-            }
 
             return new TreatmentDetails(
                 entity.TreatmentDetailsId,
@@ -110,6 +106,28 @@ namespace Project2.Data.Repository
                 ));
         }
 
+        public async Task<TreatmentDetails> GetSinglePatientTreatment(int id)
+        {
+            var entities = await _context.TreatmentDetailsEntity.Where(e => e.PatientId == id).ToListAsync();
+            DateTime maxDate = DateTime.MinValue;
+            foreach (var e in entities)
+            {
+                if (DateTime.Parse(e.StartTime) > maxDate)
+                {
+                    maxDate = DateTime.Parse(e.StartTime);
+                }
+            }
+            var entity = await _context.TreatmentDetailsEntity
+                .FirstOrDefaultAsync(e => e.StartTime == maxDate.ToString());
+
+            return new TreatmentDetails(
+                entity.TreatmentDetailsId,
+                entity.OpsRoomId,
+                entity.PatientId,
+                entity.TreatmentId,
+                entity.StartTime
+                );
+        }
         public async Task UpdateAsync(TreatmentDetails td)
         {
             var currentDetail = await _context.TreatmentDetailsEntity.FindAsync(td.TreatmentDetailsId);
