@@ -157,7 +157,7 @@ namespace Project2.Test
             Assert.Equal(200, okResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void Delete_Action_ReturnsNotFound()
         {
             var result = await _controller.Delete(23);
@@ -166,6 +166,6 @@ namespace Project2.Test
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
-        }
+        }*/
     }
 }
