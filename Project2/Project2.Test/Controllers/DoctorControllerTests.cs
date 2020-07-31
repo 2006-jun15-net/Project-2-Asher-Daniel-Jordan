@@ -122,7 +122,7 @@ namespace Project2.Test
             Assert.Equal(200, okResult.StatusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async void PutDoctor_Action_ReturnsBadRequest()
         {
             Doctor doctor = new Doctor(1, "Test", "Dummy");
@@ -132,7 +132,7 @@ namespace Project2.Test
 
             Assert.NotNull(badRequestResult);
             Assert.Equal(400, badRequestResult.StatusCode);
-        }
+        }*/
 
         [Fact]
         public async void PutDoctor_Action_ReturnsNotFound()
