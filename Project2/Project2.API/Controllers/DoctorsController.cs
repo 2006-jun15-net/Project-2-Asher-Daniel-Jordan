@@ -12,6 +12,10 @@ using Project2.Domain.Model;
 
 namespace Project2.API.Controllers
 {
+    /// <summary>
+    /// The controller responsible for managine the Doctor Resource
+    /// </summary>
+    
     [Route("api/[controller]")]
     [ApiController]
     public class DoctorsController : ControllerBase
@@ -23,6 +27,13 @@ namespace Project2.API.Controllers
             drepo = doctorRepository;
         }
 
+        /// <summary>
+        /// Gets All Doctors
+        /// </summary>
+        /// <returns>
+        /// Doctors
+        /// </returns>
+
         // GET: api/Doctors
         [HttpGet]
         public async Task<IActionResult> GetDoctors()
@@ -30,7 +41,13 @@ namespace Project2.API.Controllers
             var Doctors =  await drepo.GetDoctorsAsync();
             return Ok(Doctors);
         }
-
+        /// <summary>
+        /// Gets a single doctor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>
+        /// A single doctor depending on the id
+        /// </returns>
         // GET api/Doctors/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDoctorById(int id)
@@ -43,6 +60,13 @@ namespace Project2.API.Controllers
 
             return Ok(doctor);
         }
+        /// <summary>
+        /// Creates a new doctor resource
+        /// </summary>
+        /// <param name="doctor"></param>
+        /// <returns>
+        /// Status code: 201 Created
+        /// </returns>
 
         // POST api/Doctors
         [HttpPost]
@@ -62,6 +86,14 @@ namespace Project2.API.Controllers
                 routeValues: new { id = doctor.DoctorId },
                 value: doctor);
         }
+        /// <summary>
+        /// Updates a specific doctor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="doctor"></param>
+        /// <returns>
+        /// Status code 200 Success
+        /// </returns>
 
         // PUT api/Doctors/5
         [HttpPut("{id}")]
@@ -90,6 +122,13 @@ namespace Project2.API.Controllers
             return Ok();
 
         }
+        /// <summary>
+        /// Deletes a doctor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>
+        /// Status code: 200 Success
+        /// </returns>
 
         // DELETE api/Doctors/5
         [HttpDelete("{id}")]

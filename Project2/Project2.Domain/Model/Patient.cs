@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Project2.Domain.Model
 {
-    public class Patient
+    public class Patient : IEquatable<Patient>
     {
         private string _firstName;
         private string _lastName;
@@ -47,6 +47,16 @@ namespace Project2.Domain.Model
 
         public Patient() { }
 
+        public bool Equals(Patient other)
+        {
+            //Check whether the compared object is null.
+            if (ReferenceEquals(other, null)) return false;
 
+            //Check whether the compared object references the same data.
+            if (ReferenceEquals(this, other)) return true;
+
+            //Check whether the products' properties are equal.
+            return PatientId.Equals(other.PatientId) && FirstName.Equals(other.FirstName);
+        }
     }
 }
